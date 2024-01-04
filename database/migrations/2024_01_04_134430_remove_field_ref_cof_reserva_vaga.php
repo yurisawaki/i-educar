@@ -8,8 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
-         Schema::table('pmieducar.matricula', function (Blueprint $table) {
-            $table->dropColumn('ref_cod_reserva_vaga');
-        });
+        if (Schema::hasColumn('pmieducar.matricula', 'ref_cod_reserva_vaga')) {
+            Schema::table('pmieducar.matricula', function (Blueprint $table) {
+                $table->dropColumn('ref_cod_reserva_vaga');
+            });
+        }
     }
 };
