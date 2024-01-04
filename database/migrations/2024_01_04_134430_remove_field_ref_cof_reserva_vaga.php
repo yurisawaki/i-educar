@@ -8,7 +8,8 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::dropIfExists('pmieducar.candidato_reserva_vaga');
-        Schema::dropIfExists('pmieducar.reserva_vaga');
+         Schema::table('pmieducar.matricula', function (Blueprint $table) {
+            $table->dropColumn('ref_cod_reserva_vaga');
+        });
     }
 };

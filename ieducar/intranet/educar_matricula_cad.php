@@ -21,8 +21,6 @@ return new class extends clsCadastro
 {
     public $cod_matricula;
 
-    public $ref_cod_reserva_vaga;
-
     public $ref_ref_cod_escola;
 
     public $ref_ref_cod_serie;
@@ -553,49 +551,6 @@ return new class extends clsCadastro
 
             $vagas_restantes = 1;
 
-            if (!$this->ref_cod_reserva_vaga) {
-                $obj_turmas = new clsPmieducarTurma();
-
-                $lst_turmas = $obj_turmas->lista(
-                    int_ref_ref_cod_serie: $this->ref_cod_serie,
-                    int_ref_ref_cod_escola: $this->ref_cod_escola,
-                    int_ativo: 1,
-                    bool_verifica_serie_multiseriada: true
-                );
-
-                if (is_array(value: $lst_turmas)) {
-                    $total_vagas = 0;
-
-                    foreach ($lst_turmas as $turmas) {
-                        $total_vagas += $turmas['max_aluno'];
-                    }
-                } else {
-                    $this->mensagem = 'A série selecionada não possui turmas cadastradas.<br />';
-
-                    return false;
-                }
-
-                $obj_matricula = new clsPmieducarMatricula();
-
-                $lst_matricula = $obj_matricula->lista(
-                    int_ref_ref_cod_escola: $this->ref_cod_escola,
-                    int_ref_ref_cod_serie: $this->ref_cod_serie,
-                    int_aprovado: 3,
-                    int_ativo: 1,
-                    int_ano: $this->ano,
-                    int_ref_cod_curso2: $this->ref_cod_curso,
-                    int_ref_cod_instituicao: $this->ref_cod_instituicao,
-                    int_ultima_matricula: 1
-                );
-
-                if (is_array(value: $lst_matricula)) {
-                    $matriculados = count(value: $lst_matricula);
-                }
-
-                $reservados = 0;
-                $vagas_restantes = $total_vagas - ($matriculados + $reservados);
-            }
-
             if ($vagas_restantes <= 0) {
                 echo sprintf(
                     '<script>
@@ -650,7 +605,6 @@ return new class extends clsCadastro
             $this->data_matricula = Portabilis_Date_Utils::brToPgSQL(date: $this->data_matricula);
 
             $obj = new clsPmieducarMatricula(
-                ref_cod_reserva_vaga: $this->ref_cod_reserva_vaga,
                 ref_ref_cod_escola: $this->ref_cod_escola,
                 ref_ref_cod_serie: $this->ref_cod_serie,
                 ref_usuario_cad: $this->pessoa_logada,
