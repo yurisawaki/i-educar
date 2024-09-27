@@ -2699,6 +2699,8 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
         // situação de todas as disciplinas e não só da que está sendo lançada
         $this->reloadComponentes();
         $tipoProgressao = $this->getRegraAvaliacaoTipoProgressao();
+        $aprovarPelaFrequenciaAposExame = $this->getRegraAvaliacaoAprovarPelaFrequenciaAposExame();
+
         $situacaoMatricula = $this->getOption('aprovado');
         $situacaoBoletim = $this->getSituacaoAluno();
         $exceptionMsg = '';
@@ -2733,7 +2735,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
                                         $novaSituacaoMatricula = App_Model_MatriculaSituacao::REPROVADO_POR_FALTAS;
                                     }
                                 } else {
-                                    $novaSituacaoMatricula = App_Model_MatriculaSituacao::REPROVADO;
+                                    $novaSituacaoMatricula = $aprovarPelaFrequenciaAposExame ? App_Model_MatriculaSituacao::APROVADO : App_Model_MatriculaSituacao::REPROVADO;
                                 }
                             }
                         }
@@ -2751,7 +2753,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
                                 }
                             } else {
                                 if (!$situacaoBoletim->aprovado) {
-                                    $novaSituacaoMatricula = App_Model_MatriculaSituacao::REPROVADO;
+                                    $novaSituacaoMatricula = $aprovarPelaFrequenciaAposExame ? App_Model_MatriculaSituacao::APROVADO : App_Model_MatriculaSituacao::REPROVADO;
                                 } else {
                                     $novaSituacaoMatricula = App_Model_MatriculaSituacao::APROVADO;
                                 }

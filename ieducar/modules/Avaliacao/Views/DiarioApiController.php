@@ -1770,6 +1770,7 @@ class DiarioApiController extends ApiCoreController
         $rule['definir_componente_por_etapa'] = $evaluationRule->definir_componente_etapa == 1;
         $rule['formula_recuperacao_final'] = $evaluationRule->formula_recuperacao_id;
         $rule['desconsiderar_lancamento_frequencia'] = $evaluationRule->desconsiderar_lancamento_frequencia;
+        $rule['aprovar_pela_frequencia_apos_exame'] = $evaluationRule->aprovar_pela_frequencia_apos_exame;
 
         return $rule;
     }
