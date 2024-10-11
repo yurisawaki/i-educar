@@ -33,7 +33,7 @@ class AvailableTimeService
     {
         $schoolClass = LegacySchoolClass::findOrFail($schoolClassId);
 
-        if ($schoolClass->tipo_mediacao_didatico_pedagogico != 1) {
+        if ($schoolClass->tipo_mediacao_didatico_pedagogico != 1 || ($this->onlySchoolClassesInformedOnCensus && $schoolClass->nao_informar_educacenso == 1)) {
             return true;
         }
 
