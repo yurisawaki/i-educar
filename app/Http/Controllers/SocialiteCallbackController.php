@@ -32,6 +32,6 @@ class SocialiteCallbackController
 
         Auth::login($user);
 
-        return redirect('/');
+        return redirect()->intended();
     }
 }
