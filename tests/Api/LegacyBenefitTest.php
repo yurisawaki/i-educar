@@ -30,7 +30,7 @@ class LegacyBenefitTest extends TestCase
         $this->post('/intranet/educar_aluno_beneficio_cad.php', $payload)
             ->assertRedirectContains('educar_aluno_beneficio_lst.php');
 
-        $this->assertDatabaseHas($benefit, [
+        $this->assertDatabaseHas($benefit->getTable(), [
             'nm_beneficio' => $benefit->name,
             'desc_beneficio' => $benefit->description,
             'ref_usuario_cad' => $user->getKey(),

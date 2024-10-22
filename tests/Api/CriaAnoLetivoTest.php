@@ -158,7 +158,7 @@ class CriaAnoLetivoTest extends TestCase
         $this->post('/intranet/educar_ano_letivo_modulo_cad.php?ref_cod_escola=' . $school->getKey() . '&ano=' . $nextYear, $request)
             ->assertRedirectContains('educar_escola_det.php?cod_escola=' . $school->getKey() . '#ano_letivo');
 
-        $this->assertDatabaseHas($schoolAcademicYearFactory, [
+        $this->assertDatabaseHas($schoolAcademicYearFactory->getTable(), [
             'ano' => $nextYear,
             'ref_cod_escola' => $school->getKey(),
         ]);
