@@ -31,7 +31,7 @@ class LegacyProjectTest extends TestCase
         $this->post('/intranet/educar_projeto_cad.php', $payload)
             ->assertRedirectContains('educar_projeto_lst.php');
 
-        $this->assertDatabaseHas($project, [
+        $this->assertDatabaseHas($project->getTable(), [
             'nome' => $project->nome,
             'observacao' => $project->observacao,
         ]);
