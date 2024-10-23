@@ -105,6 +105,11 @@ class LegacyEvaluationRule extends Model
         return $this->tipo_recuperacao_paralela == self::PARALLEL_REMEDIAL_PER_SPECIFIC_STAGE;
     }
 
+    public function isByStage(): bool
+    {
+        return $this->tipo_recuperacao_paralela == self::PARALLEL_REMEDIAL_PER_STAGE;
+    }
+
     public function isSumScoreCalculation(): bool
     {
         return $this->tipo_recuperacao_paralela == self::PARALLEL_REMEDIAL_PER_STAGE
