@@ -747,7 +747,7 @@ return new class extends clsDetalhe
             $this->addDetalhe(detalhe: ['<span id="tr_tit_dados_hospital">Em caso de emergência, autorizo levar meu(minha) filho(a) para o Hospital ou Clínica mais próximos:</span>']);
             $this->addDetalhe(detalhe: ['Responsável', $reg['desc_aceita_hospital_proximo']]);
             $this->addDetalhe(detalhe: ['<span id="tr_tit_dados_hospital">Em caso de emergência, se não for possível contatar os responsáveis, comunicar</span>']);
-            $this->addDetalhe(detalhe: ['Nome', $reg['responsavel_nome']]);
+            $this->addDetalhe(detalhe: ['Nome', $reg['responsavel']]);
             $this->addDetalhe(detalhe: ['Parentesco', $reg['responsavel_parentesco']]);
             $this->addDetalhe(detalhe: ['Telefone', $reg['responsavel_parentesco_telefone']]);
             $this->addDetalhe(detalhe: ['<span id="ffmedica"></span>Celular', $reg['responsavel_parentesco_celular']]);
