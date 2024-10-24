@@ -316,6 +316,7 @@ if(possui_ficha_medica){
 
   // Pega o número dessa linha
   linha_inicial_fmedica = $j('#tfmedica').index() + 1;
+  linha_final_fmedica = $j('#ffmedica').closest('tr').index() + 1;
 
   // hide nos campos das outras abas (deixando só os campos da primeira aba)
   $j('.tableDetalhe >tbody  > tr').each(function(index, row) {
@@ -353,6 +354,7 @@ if(possui_moradia){
 
   // Pega o número dessa linha
   linha_inicial_fmoradia = $j('#tfmoradia').index() + 1;
+  linha_final_fmoradia = $j('#ffmoradia').closest('tr').index() + 1;
 
   // hide nos campos das outras abas (deixando só os campos da primeira aba)
   $j('.tableDetalhe >tbody  > tr').each(function(index, row) {
@@ -370,7 +372,7 @@ if(participa_projetos){
   $j('#fprojeto').closest('tr').attr('id','tfprojeto');
 
   // Pega o número dessa linha
-  linha_inicial_fprojeto = $j('#tfprojeto').index() + 1;
+  linha_inicial_fprojeto = $j('#tfprojeto').index();
 
   // hide nos campos das outras abas (deixando só os campos da primeira aba)
   $j('.tableDetalhe >tbody  > tr').each(function(index, row) {
@@ -428,7 +430,7 @@ $j(document).ready(function() {
           $j('#tab2').toggleClass('alunoTab2 alunoTab-active2')
           $j('.tableDetalhe >tbody  > tr').each(function(index, row) {
             if (row.id!='stop'){
-              if (index>=linha_inicial_fmedica && index<linha_inicial_funiforme){
+              if (index>=linha_inicial_fmedica && index<linha_final_fmedica){
                 row.show();
               }else if (index>1){
                 row.hide();
@@ -466,10 +468,10 @@ $j(document).ready(function() {
         function(){
           if (possui_moradia){
             $j('.alunoTab-active2').toggleClass('alunoTab-active2 alunoTab2');
-            $j('#tab4').toggleClass('alunoTab2 alunoTab-active2')
+            $j('#tab4').toggleClass('alunoTab2 alunoTab-active2');
             $j('.tableDetalhe >tbody  > tr').each(function(index, row) {
               if (row.id!='stop'){
-                if (index>=linha_inicial_fmoradia){
+                if (index>=linha_inicial_fmoradia && index<linha_final_fmoradia){
                   row.show();
                 }else if (index>1){
                   row.hide();

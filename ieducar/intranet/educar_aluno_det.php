@@ -640,7 +640,7 @@ return new class extends clsDetalhe
         $reg = $objFichaMedica->detalhe();
 
         if ($reg) {
-            $this->addDetalhe(detalhe: ['<span id="fmedica"></span>', null]);
+            $this->addHtml('<span id="fmedica"></span>');
             if (trim(string: $reg['grupo_sanguineo']) != '') {
                 $this->addDetalhe(detalhe: ['Grupo sanguíneo', $reg['grupo_sanguineo']]);
             }
@@ -750,7 +750,7 @@ return new class extends clsDetalhe
             $this->addDetalhe(detalhe: ['Nome', $reg['responsavel_nome']]);
             $this->addDetalhe(detalhe: ['Parentesco', $reg['responsavel_parentesco']]);
             $this->addDetalhe(detalhe: ['Telefone', $reg['responsavel_parentesco_telefone']]);
-            $this->addDetalhe(detalhe: ['Celular', $reg['responsavel_parentesco_celular']]);
+            $this->addDetalhe(detalhe: ['<span id="ffmedica"></span>Celular', $reg['responsavel_parentesco_celular']]);
         }
 
         $uniformDistribution = UniformDistribution::where('student_id', $this->cod_aluno)
@@ -873,7 +873,7 @@ return new class extends clsDetalhe
             $this->addDetalhe(detalhe: ['Possui energia elétrica', $reg['energia']]);
             $this->addDetalhe(detalhe: ['Possui tratamento de esgoto', $reg['esgoto']]);
             $this->addDetalhe(detalhe: ['Possui fossa', $reg['fossa']]);
-            $this->addDetalhe(detalhe: ['Possui coleta de lixo', $reg['lixo']]);
+            $this->addDetalhe(detalhe: ['<span id="ffmoradia"></span>Possui coleta de lixo', $reg['lixo']]);
         }
 
         $reg = LegacyProject::query()->where(column: 'pmieducar.projeto_aluno.ref_cod_aluno', operator: $this->cod_aluno)
@@ -881,7 +881,7 @@ return new class extends clsDetalhe
             ->orderBy(column: 'nome', direction: 'ASC')
             ->get();
 
-        if (!empty($reg)) {
+        if ($reg->isNotEmpty()) {
             $tabela_projetos = '
             <table>
               <tr align="center">
