@@ -4,6 +4,7 @@ namespace Api;
 
 use App\Events\StudentCreated;
 use Database\Factories\LegacyIndividualFactory;
+use Database\Factories\LegacyMaritalStatusFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Event;
 use Tests\Api\DiarioApiRequestTestTrait;
@@ -18,8 +19,17 @@ class StudentCreatedEventTest extends TestCase
     {
         Event::fake();
 
-        $studentIndividual = LegacyIndividualFactory::new()->create();
-        $guardianIndividual = LegacyIndividualFactory::new()->create();
+        $legacyMaritalStatus = LegacyMaritalStatusFactory::new()->create([
+            'ideciv' => 1,
+            'descricao' => 'Solteiro',
+        ]);
+
+        $studentIndividual = LegacyIndividualFactory::new()->create([
+            'ideciv' => $legacyMaritalStatus,
+        ]);
+        $guardianIndividual = LegacyIndividualFactory::new()->create([
+            'ideciv' => $legacyMaritalStatus,
+        ]);
 
         $data = [
             'oper' => 'post',
