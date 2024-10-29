@@ -104,9 +104,7 @@ from modules.professor_turma pt
                           CASE WHEN (ARRAY[99] <@ scfc.complementacao_pedagogica::integer[])::bool THEN 'Outras áreas do conhecimento'::VARCHAR ELSE NULL::VARCHAR END
                     ) AS complementacao_pedagogica
          FROM pmieducar.servidor as scfc
-         WHERE scfc.complementacao_pedagogica IS NOT NULL
-           AND scfc.complementacao_pedagogica != '{}'
-           AND scfc.cod_servidor = servidor.cod_servidor
+         WHERE scfc.cod_servidor = servidor.cod_servidor
          ) form_complementacao_pedagogica,
      LATERAL (
          SELECT STRING_AGG(
