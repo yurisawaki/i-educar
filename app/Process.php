@@ -77,4 +77,6 @@ class Process
     public const ACTIVE_LOOKING = 9998921;
 
     public const ANNOUNCEMENT = 9999114;
+
+    public const BLOCK_ENROLLMENT = 9999115;
 }
