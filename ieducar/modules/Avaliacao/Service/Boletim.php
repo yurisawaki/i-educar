@@ -988,7 +988,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
             } elseif ($etapa == $this->getOption('etapas') && $media < $this->getRegraAvaliacaoMedia()) {
                 $situacaoGeral = App_Model_MatriculaSituacao::REPROVADO;
             } elseif ($etapa == 'Rc' && $media < $this->getRegraAvaliacaoMediaRecuperacao()) {
-                $situacaoGeral = App_Model_MatriculaSituacao::REPROVADO;
+                $situacaoGeral = $this->getRegraAvaliacaoAprovarPelaFrequenciaAposExame() ? App_Model_MatriculaSituacao::APROVADO_APOS_EXAME : App_Model_MatriculaSituacao::REPROVADO;
             } elseif ($etapa == 'Rc' && $media >= $this->getRegraAvaliacaoMediaRecuperacao() && $this->hasRegraAvaliacaoFormulaRecuperacao()) {
                 $situacaoGeral = App_Model_MatriculaSituacao::APROVADO_APOS_EXAME;
             } elseif ($etapa < $this->getOption('etapas') && $etapa != 'Rc') {
@@ -1096,7 +1096,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
                 if ($this->hasRegraAvaliacaoReprovacaoAutomatica()) {
                     $previsaoRecuperacao = $this->preverNotaRecuperacao($id);
                     if (is_numeric($previsaoRecuperacao) && ($previsaoRecuperacao == '+' . $this->getRegraAvaliacaoNotaMaximaExameFinal())) {
-                        $situacao->componentesCurriculares[$id]->situacao = App_Model_MatriculaSituacao::REPROVADO;
+                        $situacao->componentesCurriculares[$id]->situacao = App_Model_MatriculaSituacao::APROVADO;
                         if ($this->exibeSituacao($id)) {
                             $qtdComponenteReprovado++;
                         }
@@ -1111,7 +1111,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
                 if ($this->exibeSituacao($id)) {
                     $qtdComponenteReprovado++;
                 }
-                $situacao->componentesCurriculares[$id]->situacao = App_Model_MatriculaSituacao::REPROVADO;
+                $situacao->componentesCurriculares[$id]->situacao = $this->getRegraAvaliacaoAprovarPelaFrequenciaAposExame() ? App_Model_MatriculaSituacao::APROVADO_APOS_EXAME :App_Model_MatriculaSituacao::REPROVADO;
             } elseif (
                 (string) $etapa == 'Rc' &&
                 $media >= $this->getRegraAvaliacaoMediaRecuperacao()
@@ -2699,7 +2699,6 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
         // situação de todas as disciplinas e não só da que está sendo lançada
         $this->reloadComponentes();
         $tipoProgressao = $this->getRegraAvaliacaoTipoProgressao();
-        $aprovarPelaFrequenciaAposExame = $this->getRegraAvaliacaoAprovarPelaFrequenciaAposExame();
 
         $situacaoMatricula = $this->getOption('aprovado');
         $situacaoBoletim = $this->getSituacaoAluno();
@@ -2735,7 +2734,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
                                         $novaSituacaoMatricula = App_Model_MatriculaSituacao::REPROVADO_POR_FALTAS;
                                     }
                                 } else {
-                                    $novaSituacaoMatricula = $aprovarPelaFrequenciaAposExame ? App_Model_MatriculaSituacao::APROVADO : App_Model_MatriculaSituacao::REPROVADO;
+                                    $novaSituacaoMatricula = $this->getRegraAvaliacaoAprovarPelaFrequenciaAposExame() ? App_Model_MatriculaSituacao::APROVADO : App_Model_MatriculaSituacao::REPROVADO;
                                 }
                             }
                         }
@@ -2753,7 +2752,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
                                 }
                             } else {
                                 if (!$situacaoBoletim->aprovado) {
-                                    $novaSituacaoMatricula = $aprovarPelaFrequenciaAposExame ? App_Model_MatriculaSituacao::APROVADO : App_Model_MatriculaSituacao::REPROVADO;
+                                    $novaSituacaoMatricula = $this->getRegraAvaliacaoAprovarPelaFrequenciaAposExame() ? App_Model_MatriculaSituacao::APROVADO : App_Model_MatriculaSituacao::REPROVADO;
                                 } else {
                                     $novaSituacaoMatricula = App_Model_MatriculaSituacao::APROVADO;
                                 }
