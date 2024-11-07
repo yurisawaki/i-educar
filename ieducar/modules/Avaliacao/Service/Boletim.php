@@ -1096,7 +1096,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
                 if ($this->hasRegraAvaliacaoReprovacaoAutomatica()) {
                     $previsaoRecuperacao = $this->preverNotaRecuperacao($id);
                     if (is_numeric($previsaoRecuperacao) && ($previsaoRecuperacao == '+' . $this->getRegraAvaliacaoNotaMaximaExameFinal())) {
-                        $situacao->componentesCurriculares[$id]->situacao = App_Model_MatriculaSituacao::APROVADO;
+                        $situacao->componentesCurriculares[$id]->situacao = App_Model_MatriculaSituacao::REPROVADO;
                         if ($this->exibeSituacao($id)) {
                             $qtdComponenteReprovado++;
                         }
