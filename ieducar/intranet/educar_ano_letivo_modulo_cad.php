@@ -323,7 +323,7 @@ return new class extends clsCadastro
                 $this->copyEmployeeAllocations(refCodEscola: $this->ref_ref_cod_escola, anoDestino: $this->ref_ano);
             }
 
-            Portabilis_Utils_Database::selectField(sql: "SELECT pmieducar.copiaAnosLetivos({$this->ref_ano}::smallint, {$this->ref_ref_cod_escola});");
+            DB::unprepared("SELECT pmieducar.copiaAnosLetivos({$this->ref_ano}::smallint, {$this->ref_ref_cod_escola});");
 
             $schoolAcademicYear = new LegacySchoolAcademicYear();
 

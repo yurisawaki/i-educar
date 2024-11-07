@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\EmployeeCreated;
 use App\Models\Employee;
 use App\Models\EmployeeGraduation;
 use App\Models\EmployeePosgraduate;
@@ -551,6 +552,9 @@ JS;
                 $this->storePosgraduate($this->cod_servidor);
 
                 include 'educar_limpa_sessao_curso_disciplina_servidor.php';
+
+                $employee = Employee::query()->find($this->cod_servidor);
+                EmployeeCreated::dispatch($employee);
 
                 $this->mensagem = 'Cadastro efetuado com sucesso.<br>';
                 $this->simpleRedirect("educar_servidor_det.php?cod_servidor={$this->cod_servidor}&ref_cod_instituicao={$this->ref_cod_instituicao}");
