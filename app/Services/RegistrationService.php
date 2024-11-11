@@ -130,11 +130,11 @@ class RegistrationService
 
     private function processDisciplineScoreSituation(LegacyRegistration $registration, $newStatus)
     {
-       /* $registrationScoreId = $registration->registrationStores()->value('id');
+        $registrationScoreId = $registration->registrationStores()->value('id');
 
         if ($registrationScoreId) {
             (new Avaliacao_Model_NotaComponenteMediaDataMapper())->updateSituation($registrationScoreId, $newStatus);
-        }*/
+        }
     }
 
     private function markEnrollmentsAsTransferred(LegacyRegistration $registration)
