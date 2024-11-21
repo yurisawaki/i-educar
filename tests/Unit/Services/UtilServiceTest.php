@@ -45,6 +45,7 @@ class UtilServiceTest extends TestCase
         $this->assertEquals('00:30', Util::formatWorkload(0.5));
         $this->assertEquals('23:24', Util::formatWorkload(23.4));
         $this->assertEquals('25:54', Util::formatWorkload(25.9));
+        $this->assertEquals('10:00', Util::formatWorkload(9.999999));
     }
 
     public function testFormat()
