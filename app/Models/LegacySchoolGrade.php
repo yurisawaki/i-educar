@@ -59,4 +59,9 @@ class LegacySchoolGrade extends LegacyModel
     {
         return $this->belongsTo(LegacyGrade::class, 'ref_cod_serie');
     }
+
+    public function school(): BelongsTo
+    {
+        return $this->belongsTo(LegacySchool::class, 'ref_cod_escola');
+    }
 }
