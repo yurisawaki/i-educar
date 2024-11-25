@@ -158,13 +158,13 @@ class CriaAnoLetivoTest extends TestCase
         $this->post('/intranet/educar_ano_letivo_modulo_cad.php?ref_cod_escola=' . $school->getKey() . '&ano=' . $nextYear, $request)
             ->assertRedirectContains('educar_escola_det.php?cod_escola=' . $school->getKey() . '#ano_letivo');
 
-        $this->assertDatabaseHas($schoolAcademicYearFactory, [
+        $this->assertDatabaseHas($schoolAcademicYearFactory->getTable(), [
             'ano' => $nextYear,
             'ref_cod_escola' => $school->getKey(),
         ]);
 
         $this->assertDatabaseHas(
-            $schoolClass,
+            $schoolClass->getTable(),
             [
                 'ref_ref_cod_escola' => $schoolGrade->school_id,
                 'ref_ref_cod_serie' => $schoolGrade->grade_id,
@@ -196,7 +196,7 @@ class CriaAnoLetivoTest extends TestCase
         )->first();
 
         $this->assertDatabaseHas(
-            $legacySchoolClassTeacher,
+            $legacySchoolClassTeacher->getTable(),
             [
                 'servidor_id' => $employee->getKey(),
                 'turma_id' => $newSchoolClass->getKey(),
@@ -388,13 +388,13 @@ class CriaAnoLetivoTest extends TestCase
         $this->post('/intranet/educar_ano_letivo_modulo_cad.php?ref_cod_escola=' . $school->getKey() . '&ano=' . $nextYear, $request)
             ->assertRedirectContains('educar_escola_det.php?cod_escola=' . $school->getKey() . '#ano_letivo');
 
-        $this->assertDatabaseHas($schoolAcademicYearFactory, [
+        $this->assertDatabaseHas($schoolAcademicYearFactory->getTable(), [
             'ano' => $nextYear,
             'ref_cod_escola' => $school->getKey(),
         ]);
 
         $this->assertDatabaseHas(
-            $schoolClass,
+            $schoolClass->getTable(),
             [
                 'ref_ref_cod_escola' => $schoolGrade->school_id,
                 'ref_ref_cod_serie' => $schoolGrade->grade_id,

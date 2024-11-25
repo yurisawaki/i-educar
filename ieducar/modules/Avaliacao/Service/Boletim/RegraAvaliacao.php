@@ -103,6 +103,16 @@ trait Avaliacao_Service_Boletim_RegraAvaliacao
     }
 
     /**
+     * Retorna aprovar pela frequencia após exame da regra de avaliação.
+     *
+     * @return bool
+     */
+    public function getRegraAvaliacaoAprovarPelaFrequenciaAposExame()
+    {
+        return $this->getRegraAvaliacao()->get('aprovarPelaFrequenciaAposExame') && $this->hasRegraAvaliacaoFormulaRecuperacao();
+    }
+
+    /**
      * Retorna "1" se a regra de avaliação é do tipo nota geral por etapa.
      *
      * @return string

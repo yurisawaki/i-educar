@@ -319,7 +319,6 @@ return new class extends clsCadastro
         $obj_permissoes = new clsPermissoes();
         $obj_permissoes->permissao_cadastra(int_processo_ap: 578, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 7, str_pagina_redirecionar: "educar_historico_escolar_lst.php?ref_cod_aluno={$this->ref_cod_aluno}");
 
-        $this->carga_horaria = is_numeric($this->carga_horaria) ? intval($this->carga_horaria) : $this->carga_horaria;
         $this->frequencia = $this->fixupFrequencia($this->frequencia);
         $this->extra_curricular = is_null($this->extra_curricular) ? 0 : 1;
 
@@ -392,7 +391,6 @@ return new class extends clsCadastro
         $obj_permissoes = new clsPermissoes();
         $obj_permissoes->permissao_cadastra(int_processo_ap: 578, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 7, str_pagina_redirecionar: "educar_historico_escolar_lst.php?ref_cod_aluno={$this->ref_cod_aluno}");
 
-        $this->carga_horaria = is_numeric($this->carga_horaria) ? (int) $this->carga_horaria : $this->carga_horaria;
         $this->frequencia = $this->fixupFrequencia($this->frequencia);
 
         $faltasGlobalizadas = $this->faltas_globalizadas;
