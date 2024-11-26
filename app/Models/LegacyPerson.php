@@ -174,4 +174,12 @@ class LegacyPerson extends LegacyModel
         // @phpstan-ignore-next-line
         return $this->deficiencies()->where('desconsidera_regra_diferenciada', false);
     }
+
+    /**
+     * @return HasOne<LegacyStudent, $this>
+     */
+    public function student(): HasOne
+    {
+        return $this->hasOne(LegacyStudent::class, 'ref_idpes', 'idpes');
+    }
 }
