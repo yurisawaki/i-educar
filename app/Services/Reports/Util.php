@@ -42,6 +42,9 @@ class Util
 
     public static function format(mixed $value, ?int $decimalPlaces = null): string
     {
+        $value = str_replace(',', '.', (string) $value);
+        $value = bcdiv($value, '1', $decimalPlaces ?? 1);
+
         return number_format($value, $decimalPlaces ?? 1, ',', '.');
     }
 
