@@ -148,11 +148,18 @@ return new class extends clsDetalhe
 
         $vinculos = collect();
         if ($aluno = LegacyStudent::active()->where('ref_idpes', $cod_pessoa)->first(['cod_aluno'])) {
-            $vinculos->push('<a target="_blank" href="/intranet/educar_aluno_det.php?cod_aluno=' . $aluno->getKey() . '">Aluno</a>');
+            $vinculos->push(sprintf(
+                '<a target="_blank" href="/intranet/educar_aluno_det.php?cod_aluno=%s">Aluno</a>',
+                $aluno->getKey()
+            ));
         }
 
         if ($servidor = Employee::active()->find($cod_pessoa, ['cod_servidor', 'ref_cod_instituicao'])) {
-            $vinculos->push('<a target="_blank"  href="/intranet/educar_servidor_det.php?cod_servidor=' . $servidor->getKey() . '&ref_cod_instituicao=' . $servidor->ref_cod_instituicao . '">Servidor</a>');
+            $vinculos->push(sprintf(
+                '<a target="_blank" href="/intranet/educar_servidor_det.php?cod_servidor=%s&ref_cod_instituicao=%s">Servidor</a>',
+                $servidor->getKey(),
+                $servidor->ref_cod_instituicao
+            ));
         }
 
         if ($vinculos->isEmpty()) {
