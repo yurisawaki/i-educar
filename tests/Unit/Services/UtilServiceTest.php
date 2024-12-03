@@ -45,6 +45,7 @@ class UtilServiceTest extends TestCase
         $this->assertEquals('00:30', Util::formatWorkload(0.5));
         $this->assertEquals('23:24', Util::formatWorkload(23.4));
         $this->assertEquals('25:54', Util::formatWorkload(25.9));
+        $this->assertEquals('10:00', Util::formatWorkload(9.999999));
     }
 
     public function testFormat()
@@ -52,6 +53,12 @@ class UtilServiceTest extends TestCase
         $this->assertEquals('0,0', Util::format(null));
         $this->assertEquals('0,5', Util::format(0.5));
         $this->assertEquals('1,50', Util::format(1.5, 2));
+        $this->assertEquals('1,5', Util::format(1.52, 1));
+        $this->assertEquals('1,5', Util::format(1.55, 1));
+        $this->assertEquals('1,5', Util::format(1.59, 1));
+        $this->assertEquals('1,59', Util::format(1.599, 2));
+        $this->assertEquals('1,5', Util::format('1,59', 1));
+        $this->assertEquals('1,0', Util::format(1, 1));
     }
 
     public function testFloat()
