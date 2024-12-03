@@ -26,19 +26,15 @@ class Util
 
     public static function formatWorkload(?float $workload): string
     {
-        if ($workload) {
-            $hour = (int) $workload;
-            $workload -= $hour;
-            $minutes = round($workload * 60);
-            if ($minutes < 10) {
-                $minutes = '0' . $minutes;
+        if ($workload !== null) {
+            $hours = (int)$workload;
+            $minutes = (int)round(($workload - $hours) * 60);
+            if ($minutes === 60) {
+                $hours++;
+                $minutes = 0;
             }
 
-            if ($hour < 10) {
-                $hour = '0' . $hour;
-            }
-
-            return $hour . ':' . $minutes;
+            return sprintf('%02d:%02d', $hours, $minutes);
         }
 
         return '00:00';
@@ -46,6 +42,9 @@ class Util
 
     public static function format(mixed $value, ?int $decimalPlaces = null): string
     {
+        $value = str_replace(',', '.', (string) $value);
+        $value = bcdiv($value, '1', $decimalPlaces ?? 1);
+
         return number_format($value, $decimalPlaces ?? 1, ',', '.');
     }
 
