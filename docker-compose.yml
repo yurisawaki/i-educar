@@ -24,6 +24,9 @@ services:
     volumes:
       - ./:/var/www/ieducar
       - ./docker/nginx:/etc/nginx/conf.d/
+    ports:
+      - ${DOCKER_NGINX_PORT:-80}:80
+      - ${DOCKER_NGINX_SSL_PORT:-443}:443
 
   postgres:
     container_name: ieducar-postgres
@@ -34,11 +37,15 @@ services:
       POSTGRES_PASSWORD: ieducar
     volumes:
       - postgres:/var/lib/postgresql/data
+    ports:
+      - ${DOCKER_POSTGRES_PORT:-5432}:5432
 
   redis:
     container_name: ieducar-redis
     image: redis:7-alpine
     restart: always
+    ports:
+      - ${DOCKER_REDIS_PORT:-6379}:6379
 
 volumes:
     postgres:
