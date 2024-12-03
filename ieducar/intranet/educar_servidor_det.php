@@ -103,7 +103,12 @@ return new class extends clsDetalhe
         }
 
         if ($registro['nome']) {
-            $this->addDetalhe(['Nome', $registro['nome']]);
+            $link = sprintf(
+                '<a href="/intranet/atendidos_det.php?cod_pessoa=%s" target="_blank">%s</a>',
+                $registro['cod_servidor'],
+                $registro['nome']
+            );
+            $this->addDetalhe(['Nome', $link]);
         }
 
         // Dados no Educacenso/Inep.
