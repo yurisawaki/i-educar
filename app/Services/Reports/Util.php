@@ -42,10 +42,13 @@ class Util
 
     public static function format(mixed $value, ?int $decimalPlaces = null): string
     {
-        $value = str_replace(',', '.', (string) $value);
-        $value = bcdiv($value, '1', $decimalPlaces ?? 1);
+        $processedValue = str_replace(',', '.', trim($value));
+        if (!empty($processedValue) && !is_numeric($processedValue)) {
+            return $value;
+        }
+        $processedValue = bcdiv($processedValue, '1', $decimalPlaces ?? 1);
 
-        return number_format($value, $decimalPlaces ?? 1, ',', '.');
+        return number_format($processedValue, $decimalPlaces ?? 1, ',', '.');
     }
 
     public static function float(mixed $value): float
