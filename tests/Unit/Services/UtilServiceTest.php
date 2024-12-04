@@ -66,7 +66,7 @@ class UtilServiceTest extends TestCase
         $this->assertEquals('A', Util::format('A'));
         $this->assertEquals('A,B', Util::format('A,B'));
         $this->assertEquals('A.B', Util::format('A.B'));
-        $this->assertEquals('1,5', Util::format(' 1,59', 1));
+        $this->assertEquals('1,5', Util::format(' 1,59', 1)); //Existe notas com espaços extras antes
     }
 
     public function testFloat()
