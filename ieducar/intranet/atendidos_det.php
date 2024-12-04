@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Employee;
 use App\Models\LegacyIndividual;
 use App\Models\LegacyRace;
+use App\Models\LegacyStudent;
 use App\Services\FileService;
 use App\Services\UrlPresigner;
 
@@ -143,6 +145,27 @@ return new class extends clsDetalhe
         if ($detalhe['sexo']) {
             $this->addDetalhe(detalhe: ['Sexo', $detalhe['sexo'] == 'M' ? 'Masculino' : 'Feminino']);
         }
+
+        $vinculos = collect();
+        if ($aluno = LegacyStudent::active()->where('ref_idpes', $cod_pessoa)->first(['cod_aluno'])) {
+            $vinculos->push(sprintf(
+                '<a target="_blank" href="/intranet/educar_aluno_det.php?cod_aluno=%s">Aluno</a>',
+                $aluno->getKey()
+            ));
+        }
+
+        if ($servidor = Employee::active()->find($cod_pessoa, ['cod_servidor', 'ref_cod_instituicao'])) {
+            $vinculos->push(sprintf(
+                '<a target="_blank" href="/intranet/educar_servidor_det.php?cod_servidor=%s&ref_cod_instituicao=%s">Servidor</a>',
+                $servidor->getKey(),
+                $servidor->ref_cod_instituicao
+            ));
+        }
+
+        if ($vinculos->isEmpty()) {
+            $vinculos->push('Pessoa física não possui vínculos');
+        }
+        $this->addHtml('<tr><td class="formlttd" width="20%">Vínculos:</td><td class="formlttd">' . $vinculos->implode('<br>') . '</td></tr>');
 
         $fileService = new FileService(urlPresigner: new UrlPresigner);
         $files = $fileService->getFiles(relation: LegacyIndividual::find($cod_pessoa));
