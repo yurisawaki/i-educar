@@ -66,42 +66,16 @@ composer plug-and-play:update
 Sua instalação estará atualizada e você poderá realizar seu
 [primeiro acesso](https://github.com/portabilis/i-educar#primeiro-acesso) na nova versão do i-Educar.
 
-### Configurar ambiente com Docker
+### Personalizar o ambiente com Docker
 
-Na versão [2.9](https://github.com/portabilis/i-educar/tree/2.9) o arquivo `docker-compose.yml` não expõem nenhuma porta
-dos containers para evitar conflitos. Para isso, utilize o arquivo `docker-compose.override.yml` e configure quais 
-portas deseja que os serviços sejam executados.
+Na versão [2.9](https://github.com/portabilis/i-educar/tree/2.9) o arquivo `docker-compose.yml` utiliza variáveis de 
+ambiente para expor as portas dos containers. Você pode adicionar no seu arquivo `.env`:
 
-```bash 
-cp docker-compose.example.yml docker-compose.override.yml
-``` 
+| Variável                | Descrição                 |
+|-------------------------|---------------------------|
+| `DOCKER_NGINX_PORT`     | Porta HTTP da aplicação   |
+| `DOCKER_NGINX_SSL_PORT` | Porta HTTPS da aplicação  |
+| `DOCKER_POSTGRES_PORT`  | Porta do banco de Dados   |
+| `DOCKER_REDIS_PORT`     | Porta do serviço de cache |
 
-#### Arquivo de exemplo de configuração do `docker-compose.override.yml`
-
-O exemplo abaixo possui configurações básicas que podem ser customizadas e que não irão interferir no código fonte 
-original do projeto permitindo assim um maior controle do seu ambiente.
-
-```yml 
-services:
-
-  php:
-    container_name: ieducar-php
-    volumes:
-      - ~/.ssh:/root/.ssh:ro # permite conexões usando suas chaves SSH
-
-  nginx:
-    container_name: ieducar-nginx
-    ports:
-      - "80:80"   # permite acessar o i-Educar em http://localhost, ou
-      - "8000:80" # permite acessar o i-Educar em http://localhost:8080
-
-  postgres:
-    container_name: ieducar-postgres
-    ports:
-      - "5432:5432" # permite conectar software gerenciador de banco de dados
-
-  redis:
-    container_name: ieducar-redis
-    ports:
-      - "6379:6379" # permite conectar software gerenciador de banco de dados
-```
+Você também pode utilizar o arquivo `docker-compose.override.yml` para mais configurações.
