@@ -2,7 +2,11 @@ services:
 
   php:
     container_name: ieducar-php
-    build: docker/php
+    build:
+      context: docker/php
+      args:
+        PHP_VERSION: 8.3
+        COMPOSER_VERSION: 2.7
     links:
       - postgres
       - redis
