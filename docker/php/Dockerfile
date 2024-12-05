@@ -1,5 +1,8 @@
-FROM composer:2.7 as composer
-FROM php:8.3-fpm-alpine
+ARG PHP_VERSION=8
+ARG COMPOSER_VERSION=latest
+
+FROM composer:${COMPOSER_VERSION} AS composer
+FROM php:${PHP_VERSION}-fpm-alpine
 
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 

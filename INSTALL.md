@@ -39,12 +39,6 @@ Clone o repositório:
 git clone git@github.com:portabilis/i-educar.git && cd i-educar
 ```
 
-Copie o arquivo `docker-compose.example.yml` e faça as configurações para o seu ambiente:
-
-```bash 
-cp docker-compose.example.yml docker-compose.override.yml
-``` 
-
 Faça o build das imagens Docker utilizadas no projeto e inicie os containers da aplicação (pode levar alguns minutos):
 
 ```bash
@@ -60,8 +54,8 @@ docker-compose exec php artisan db:seed
 
 ### Personalizando a instalação
 
-No arquivo `docker-compose.override.yml` você pode personalizar sua instalação do i-Educar, mudando as portas dos
-serviços ou o mapeamento dos volumes da aplicação.
+Você pode criar o arquivo `docker-compose.override.yml` para personalizar sua instalação do i-Educar, mudando as portas
+dos serviços ou o mapeamento dos volumes.
 
 ### Xdebug
 
