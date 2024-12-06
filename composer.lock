@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "964fc1c79c1ab58d40b259280b77b310",
+    "content-hash": "83d0f994fa88a57f07d988f3cdfbb82c",
     "packages": [
         {
             "name": "ankurk91/laravel-eloquent-relationships",
@@ -550,16 +550,16 @@
         },
         {
             "name": "dex/frontier",
-            "version": "0.14.0",
+            "version": "0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/edersoares/frontier.git",
-                "reference": "0382284ea1e55ca2d6c43ee20b8c47434fc4149b"
+                "reference": "602da0c9599d05336240fb6e81b038dfbdee5a8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/edersoares/frontier/zipball/0382284ea1e55ca2d6c43ee20b8c47434fc4149b",
-                "reference": "0382284ea1e55ca2d6c43ee20b8c47434fc4149b",
+                "url": "https://api.github.com/repos/edersoares/frontier/zipball/602da0c9599d05336240fb6e81b038dfbdee5a8f",
+                "reference": "602da0c9599d05336240fb6e81b038dfbdee5a8f",
                 "shasum": ""
             },
             "require": {
@@ -601,9 +601,9 @@
             "description": "The frontier between your Laravel app and your decoupled frontend",
             "support": {
                 "issues": "https://github.com/edersoares/frontier/issues",
-                "source": "https://github.com/edersoares/frontier/tree/0.14.0"
+                "source": "https://github.com/edersoares/frontier/tree/0.15.0"
             },
-            "time": "2024-09-09T13:00:46+00:00"
+            "time": "2024-12-04T19:10:06+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
