@@ -1,13 +1,12 @@
 <?php
 
-namespace Api;
+namespace Tests\Api;
 
 use App\Events\StudentCreated;
 use Database\Factories\LegacyIndividualFactory;
 use Database\Factories\LegacyMaritalStatusFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Event;
-use Tests\Api\DiarioApiRequestTestTrait;
 use Tests\TestCase;
 
 class StudentCreatedEventTest extends TestCase
