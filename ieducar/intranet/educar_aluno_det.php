@@ -290,17 +290,23 @@ return new class extends clsDetalhe
         $this->addDetalhe(detalhe: [_cl(key: 'aluno.detalhe.codigo_estado'), $registro['aluno_estado_id']]);
 
         if ($registro['nome_aluno']) {
+            $urlAluno = sprintf(
+                '<a target="_blank" href="/intranet/atendidos_det.php?cod_pessoa=%s">%s</a>',
+                $registro['ref_idpes'],
+                $registro['nome_aluno']
+            );
+
             if ($caminhoFoto != null and $caminhoFoto != '') {
                 $url = $this->urlPresigner()->getPresignedUrl(url: $caminhoFoto);
 
                 $this->addDetalhe(detalhe: [
                     'Nome Aluno',
-                    $registro['nome_aluno'] . '<p><img id="student-picture" height="117" src="' . $url . '"/></p>'
+                    $urlAluno . '<p><img id="student-picture" height="117" src="' . $url . '"/></p>'
                     . '<div><a class="rotate-picture" data-angle="90" href="javascript:void(0)"><i class="fa fa-rotate-left"></i> Girar para esquerda</a></div>'
                     . '<div><a class="rotate-picture" data-angle="-90" href="javascript:void(0)"><i class="fa fa-rotate-right"></i> Girar para direita</a></div>',
                 ]);
             } else {
-                $this->addDetalhe(detalhe: ['Nome Aluno', $registro['nome_aluno']]);
+                $this->addDetalhe(detalhe: ['Nome Aluno', $urlAluno]);
             }
         }
 
@@ -361,7 +367,7 @@ return new class extends clsDetalhe
             $this->addDetalhe(detalhe: ['País de Origem', $registro['pais_origem']]);
         }
 
-        $responsavel = $tmp_obj->getResponsavelAluno();
+        $responsavel = $tmp_obj->getResponsavelAluno(exibirUrl: true);
 
         if ($responsavel && is_null(value: $registro['ref_idpes_responsavel'])) {
             $this->addDetalhe(detalhe: ['Nome do Responsável', $responsavel['nome_responsavel']]);
@@ -372,7 +378,13 @@ return new class extends clsDetalhe
             $det_pessoa_resp = $obj_pessoa_resp->detalhe();
 
             if ($det_pessoa_resp) {
-                $registro['ref_idpes_responsavel'] = $det_pessoa_resp['nome'];
+                $urlResponsavel = sprintf(
+                    '<a target="_blank" href="/intranet/atendidos_det.php?cod_pessoa=%s">%s</a>',
+                    $registro['ref_idpes_responsavel'],
+                    $det_pessoa_resp['nome']
+                );
+
+                $registro['ref_idpes_responsavel'] = $urlResponsavel;
             }
 
             $this->addDetalhe(detalhe: ['Responsável', $registro['ref_idpes_responsavel']]);
