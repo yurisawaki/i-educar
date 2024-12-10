@@ -11,7 +11,7 @@ return new class extends Migration
         Menu::query()->updateOrCreate(['old' => Process::SCHOOLCLASS_PERIOD], [
             'parent_id' => Menu::query()->where('old', Process::CONFIGURATIONS_TOOLS)->firstOrFail()->getKey(),
             'process' => Process::SCHOOLCLASS_PERIOD,
-            'title' => 'Atualizar etapas turma em lote',
+            'title' => 'Atualizar etapas da turma em lote',
             'order' => 0,
             'parent_old' => Process::CONFIGURATIONS_TOOLS,
             'link' => '/atualiza-etapa-turma',
