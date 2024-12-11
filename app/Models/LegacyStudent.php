@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Ankurk91\Eloquent\HasBelongsToOne;
 use Ankurk91\Eloquent\Relations\BelongsToOne;
+use App\Events\StudentCreated;
 use App\Models\Builders\LegacyStudentBuilder;
 use App\Traits\HasLegacyDates;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -41,6 +42,10 @@ class LegacyStudent extends LegacyModel
     protected $table = 'pmieducar.aluno';
 
     protected $primaryKey = 'cod_aluno';
+
+    protected $dispatchesEvents = [
+        'created' => StudentCreated::class,
+    ];
 
     protected $fillable = [
         'ref_idpes',
