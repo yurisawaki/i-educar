@@ -401,8 +401,9 @@ class DiarioApiController extends ApiCoreController
             $nota = urldecode($this->getRequest()->att_value);
             $notaOriginal = urldecode($this->getRequest()->nota_original);
             $etapa = $this->getRequest()->etapa;
+            $notaAntiga = $this->serviceBoletim()->getNotaComponente($componenteCurricularId, $etapa);
 
-            $nota = $this->serviceBoletim()->calculateStageScore($etapa, $nota, null);
+            $nota = $this->serviceBoletim()->calculateStageScore($etapa, $nota, $notaAntiga?->notaRecuperacaoParalela);
 
             $array_nota = [
                 'componenteCurricular' => $componenteCurricularId,
@@ -411,7 +412,6 @@ class DiarioApiController extends ApiCoreController
                 'notaOriginal' => $notaOriginal,
             ];
 
-            $notaAntiga = $this->serviceBoletim()->getNotaComponente($componenteCurricularId, $etapa);
             if ($notaAntiga) {
                 $array_nota['notaRecuperacaoParalela'] = $notaAntiga->notaRecuperacaoParalela;
                 $array_nota['notaRecuperacaoEspecifica'] = $notaAntiga->notaRecuperacaoEspecifica;
