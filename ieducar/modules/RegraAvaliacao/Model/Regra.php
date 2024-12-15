@@ -35,7 +35,8 @@ class RegraAvaliacao_Model_Regra extends CoreExt_Entity
         'calculaMediaRecParalela' => null,
         'tipoCalculoRecuperacaoParalela' => null,
         'desconsiderarLancamentoFrequencia' => null,
-        'aprovarPelaFrequenciaAposExame' => null
+        'aprovarPelaFrequenciaAposExame' => null,
+        'reprovarAutomaticamenteAposDependencias' => null,
     ];
 
     protected $_dataTypes = [

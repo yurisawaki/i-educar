@@ -1049,6 +1049,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
         $media = 0;
         $turmaId = $this->getOption('ref_cod_turma');
         $codigosAglutinados = $this->codigoDisciplinasAglutinadas();
+        $componentesReprovados = 0;
 
         foreach ($mediasComponentes as $id => $mediaComponente) {
             $mediaComponente = $mediaComponente[0];
@@ -1128,6 +1129,10 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
                 continue;
             }
 
+            if($situacao->componentesCurriculares[$id]->situacao === App_Model_MatriculaSituacao::REPROVADO) {
+                $componentesReprovados++;
+            }
+
             if ($this->_situacaoPrioritaria(
                 $situacao->componentesCurriculares[$id]->situacao,
                 $situacaoGeral
@@ -1145,6 +1150,13 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
             && $this->hasRegraAvaliacaoAprovaMediaDisciplina()
             && ($somaMedias / $qtdComponentes) >= $this->getRegraAvaliacaoMediaRecuperacao()) {
             $situacaoGeral = App_Model_MatriculaSituacao::APROVADO;
+        }
+
+        if(
+            $this->hasRegraAvaliacaoReprovacaoAutomatica() &&
+            $componentesReprovados > $this->getQtdeReprovarAutomaticamenteAposDependencias()
+        ) {
+            $situacaoGeral = App_Model_MatriculaSituacao::REPROVADO;
         }
 
         // Situação geral

@@ -40,7 +40,8 @@ class RegraAvaliacao_Model_RegraDataMapper extends CoreExt_DataMapper
         'aprovaMediaDisciplina' => 'aprova_media_disciplina',
         'reprovacaoAutomatica' => 'reprovacao_automatica',
         'regraDiferenciada' => 'regra_diferenciada_id',
-        'aprovarPelaFrequenciaAposExame' => 'aprovar_pela_frequencia_apos_exame'
+        'aprovarPelaFrequenciaAposExame' => 'aprovar_pela_frequencia_apos_exame',
+        'reprovarAutomaticamenteAposDependencias' => 'reprovar_automaticamente_apos_dependencias',
     ];
 
     protected $_primaryKey = [
