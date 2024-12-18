@@ -49,7 +49,7 @@ Execute o comando para fazer uma nova instalação:
 
 ```bash
 docker-compose exec php composer new-install
-docker-compose exec php artisan db:seed
+docker-compose exec php php artisan db:seed
 ```
 
 ### Personalizando a instalação
