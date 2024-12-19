@@ -242,10 +242,10 @@ return new class extends clsCadastro
 
 
         if ($enturmacao->remanejado_mesma_turma) {
-            $enturmacaoAnterior = $this->enturmacaoRemanejadaMesmaTurma($this->sequencial + 1);
+            $proximaEnturmacao = $this->enturmacaoRemanejadaMesmaTurma($this->sequencial + 1);
 
-            if ($enturmacaoAnterior) {
-                $enturmacaoAnterior->update(['remanejado_mesma_turma' => false]);
+            if ($proximaEnturmacao) {
+                $proximaEnturmacao->update(['remanejado_mesma_turma' => false]);
             }
         }
 
