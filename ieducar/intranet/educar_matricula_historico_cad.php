@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\LegacyEnrollment;
 use App\Process;
 
 return new class extends clsCadastro
@@ -220,15 +221,36 @@ return new class extends clsCadastro
         return false;
     }
 
+    private function enturmacaoRemanejadaMesmaTurma($sequencial) {
+        return LegacyEnrollment::query()
+            ->where('ref_cod_turma', $this->ref_cod_turma)
+            ->where('ref_cod_matricula', $this->ref_cod_matricula)
+            ->where('sequencial', $sequencial)
+            ->where('remanejado_mesma_turma', true)
+            ->first();
+    }
+
     public function Excluir()
     {
-        $enturmacao = new clsPmieducarMatriculaTurma();
-        $enturmacao->ref_cod_matricula = $this->ref_cod_matricula;
-        $enturmacao->ref_cod_turma = $this->ref_cod_turma;
-        $enturmacao->sequencial = $this->sequencial;
-        $enturmacao->ref_usuario_exc = $this->pessoa_logada;
-        $enturmacao->data_exclusao = dataToBanco(data_original: $this->data_exclusao);
-        $excluiu = $enturmacao->excluir();
+        $enturmacao = LegacyEnrollment::query()
+            ->where('ref_cod_turma', $this->ref_cod_turma)
+            ->where('ref_cod_matricula', $this->ref_cod_matricula)
+            ->where('sequencial', $this->sequencial)
+            ->first();
+
+        DB::beginTransaction();
+
+
+        if ($enturmacao->remanejado_mesma_turma) {
+            $proximaEnturmacao = $this->enturmacaoRemanejadaMesmaTurma($this->sequencial + 1);
+
+            if ($proximaEnturmacao) {
+                $proximaEnturmacao->update(['remanejado_mesma_turma' => false]);
+            }
+        }
+
+        $excluiu = $enturmacao->delete();
+        DB::commit();
 
         if ($excluiu) {
             $this->mensagem = 'Exclusão efetuada com sucesso.';
