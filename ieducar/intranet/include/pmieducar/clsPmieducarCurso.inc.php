@@ -54,7 +54,7 @@ class clsPmieducarCurso extends Model
         $ref_cod_tipo_regime = null,
         $ref_cod_nivel_ensino = null,
         $ref_cod_tipo_ensino = null,
-        $ref_cod_tipo_avaliacao = null,
+        $ref_cod_tipo_avaliacao = null, // TODO: remover no futuro
         $nm_curso = null,
         $sgl_curso = null,
         $qtd_etapas = null,
@@ -467,7 +467,7 @@ class clsPmieducarCurso extends Model
         $int_ref_cod_tipo_regime = null,
         $int_ref_cod_nivel_ensino = null,
         $int_ref_cod_tipo_ensino = null,
-        $int_ref_cod_tipo_avaliacao = null,
+        $int_ref_cod_tipo_avaliacao = null, // TODO: remover no futuro
         $str_nm_curso = null,
         $str_sgl_curso = null,
         $int_qtd_etapas = null,
