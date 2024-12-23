@@ -936,7 +936,7 @@ class clsPmieducarAluno extends Model
         }
     }
 
-    public function getResponsavelAluno()
+    public function getResponsavelAluno($exibirUrl = false)
     {
         if ($this->cod_aluno) {
             $registro = $this->detalhe();
@@ -955,7 +955,16 @@ class clsPmieducarAluno extends Model
                     $obj_fisica = new clsFisica($det_fisica_aluno['idpes_pai']);
                     $det_fisica = $obj_fisica->detalhe();
 
-                    $registro['nome_responsavel'] = $det_ref_idpes['nome'];
+                    if ($exibirUrl) {
+                        $pai = sprintf(
+                            '<a target="_blank" href="/intranet/atendidos_det.php?cod_pessoa=%s">%s</a>',
+                            $det_ref_idpes['idpes'],
+                            $det_ref_idpes['nome']
+                        );
+                    } else {
+                        $pai = $det_ref_idpes['nome'];
+                    }
+                    $registro['nome_responsavel'] = $pai;
                     $registro['cpf_responsavel'] = $det_fisica['cpf'] ? int2CPF($det_fisica['cpf']) : 'Não informado';
                 }
             }
@@ -974,7 +983,16 @@ class clsPmieducarAluno extends Model
                     $obj_fisica = new clsFisica($det_fisica_aluno['idpes_mae']);
                     $det_fisica = $obj_fisica->detalhe();
 
-                    $registro['nome_responsavel'] = $det_ref_idpes['nome'];
+                    if ($exibirUrl) {
+                        $mae = sprintf(
+                            '<a target="_blank" href="/intranet/atendidos_det.php?cod_pessoa=%s">%s</a>',
+                            $det_ref_idpes['idpes'],
+                            $det_ref_idpes['nome']
+                        );
+                    } else {
+                        $mae = $det_ref_idpes['nome'];
+                    }
+                    $registro['nome_responsavel'] = $mae;
                     $registro['cpf_responsavel'] = $det_fisica['cpf'] ? int2CPF($det_fisica['cpf']) : 'Não informado';
                 }
             }
@@ -993,7 +1011,16 @@ class clsPmieducarAluno extends Model
                     $det_ref_idpes = $obj_ref_idpes->detalhe();
                     $det_fisica = $obj_fisica->detalhe();
 
-                    $registro['nome_responsavel'] = $det_ref_idpes['nome'];
+                    if ($exibirUrl) {
+                        $responsavel = sprintf(
+                            '<a target="_blank" href="/intranet/atendidos_det.php?cod_pessoa=%s">%s</a>',
+                            $det_ref_idpes['idpes'],
+                            $det_ref_idpes['nome']
+                        );
+                    } else {
+                        $responsavel = $det_ref_idpes['nome'];
+                    }
+                    $registro['nome_responsavel'] = $responsavel;
                     $registro['cpf_responsavel'] = $det_fisica['cpf'] ? int2CPF($det_fisica['cpf']) : 'Não informado';
                 }
             }
@@ -1013,7 +1040,22 @@ class clsPmieducarAluno extends Model
                     $fisica_pai = (new clsFisica($det_fisica_aluno['idpes_pai']))->detalhe();
                     $det_pai = $obj_pai->detalhe();
 
-                    $registro['nome_responsavel'] = $det_pai['nome'] . ', ' . $det_mae['nome'];
+                    if ($exibirUrl) {
+                        $pai = sprintf(
+                            '<a target="_blank" href="/intranet/atendidos_det.php?cod_pessoa=%s">%s</a>',
+                            $det_pai['idpes'],
+                            $det_pai['nome']
+                        );
+                        $mae = sprintf(
+                            '<a target="_blank" href="/intranet/atendidos_det.php?cod_pessoa=%s">%s</a>',
+                            $det_mae['idpes'],
+                            $det_mae['nome']
+                        );
+                    } else {
+                        $pai = $det_pai['nome'];
+                        $mae = $det_mae['nome'];
+                    }
+                    $registro['nome_responsavel'] = $pai . ', ' . $mae;
                     $cpfPai = $fisica_pai['cpf'] ? int2CPF($fisica_pai['cpf']) : 'Não informado';
                     $cpfMae = $fisica_mae['cpf'] ? int2CPF($fisica_mae['cpf']) : 'não informado';
                     $registro['cpf_responsavel'] = $cpfPai . ', ' . $cpfMae;
