@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class CreateRelatorioViewDadosModuloView extends Migration
+class AddFunctionRelatorioGetMaxSequencialMatricula extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,7 @@ class CreateRelatorioViewDadosModuloView extends Migration
     public function up()
     {
         DB::unprepared(
-            'DROP VIEW IF EXISTS relatorio.view_dados_modulo;'
-        );
-
-        DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/views/relatorio.view_dados_modulo.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_max_sequencial_matricula.sql'))
         );
     }
 
@@ -29,7 +25,7 @@ class CreateRelatorioViewDadosModuloView extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP VIEW IF EXISTS relatorio.view_dados_modulo;'
+            'DROP FUNCTION relatorio.get_max_sequencial_matricula(integer);'
         );
     }
 }

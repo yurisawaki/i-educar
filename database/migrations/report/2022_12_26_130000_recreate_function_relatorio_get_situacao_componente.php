@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioGetMaxSequencialMatricula extends Migration
+class RecreateFunctionRelatorioGetSituacaoComponente extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioGetMaxSequencialMatricula extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_max_sequencial_matricula.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_situacao_componente.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioGetMaxSequencialMatricula extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.get_max_sequencial_matricula(integer);'
+            'DROP FUNCTION relatorio.get_situacao_componente(cod_situacao numeric);'
         );
     }
 }

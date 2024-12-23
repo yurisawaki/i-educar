@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class CreateRelatorioViewDadosHistoricoPosicionamentoView extends Migration
+class CreateRelatorioViewHistorico9anosExtraCurricularView extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateRelatorioViewDadosHistoricoPosicionamentoView extends Migration
     public function up()
     {
         DB::unprepared(
-            'DROP VIEW IF EXISTS relatorio.view_dados_historico_posicionamento;'
+            'DROP VIEW IF EXISTS relatorio.view_historico_9anos_extra_curricular;'
         );
 
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/views/relatorio.view_dados_historico_posicionamento.sql')
+            file_get_contents(database_path('sqls/views/relatorio.view_historico_9anos_extra_curricular.sql'))
         );
     }
 
@@ -29,7 +29,7 @@ class CreateRelatorioViewDadosHistoricoPosicionamentoView extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP VIEW IF EXISTS relatorio.view_dados_historico_posicionamento;'
+            'DROP VIEW IF EXISTS relatorio.view_historico_9anos_extra_curricular;'
         );
     }
 }

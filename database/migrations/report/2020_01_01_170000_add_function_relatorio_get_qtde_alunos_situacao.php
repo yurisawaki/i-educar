@@ -13,11 +13,11 @@ class AddFunctionRelatorioGetQtdeAlunosSituacao extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_qtde_alunos_situacao.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_qtde_alunos_situacao.sql'))
         );
 
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_qtde_alunos_situacao2.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_qtde_alunos_situacao2.sql'))
         );
     }
 

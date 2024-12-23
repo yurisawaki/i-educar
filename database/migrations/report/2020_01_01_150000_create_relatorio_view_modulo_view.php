@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class RecreateFunctionRelatorioGetSituacaoComponente extends Migration
+class CreateRelatorioViewModuloView extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,11 @@ class RecreateFunctionRelatorioGetSituacaoComponente extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_situacao_componente.sql')
+            'DROP VIEW IF EXISTS relatorio.view_modulo;'
+        );
+
+        DB::unprepared(
+            file_get_contents(database_path('sqls/views/relatorio.view_modulo.sql'))
         );
     }
 
@@ -25,7 +29,7 @@ class RecreateFunctionRelatorioGetSituacaoComponente extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.get_situacao_componente(cod_situacao numeric);'
+            'DROP VIEW IF EXISTS relatorio.view_modulo;'
         );
     }
 }
