@@ -58,7 +58,7 @@ CREATE OR REPLACE FUNCTION pmieducar.unifica_pessoas(pessoaprincipal numeric, pe
 	                INSERT INTO pmieducar.servidor SELECT
 	                pessoaPrincipal as cod_servidor,
         	            ref_cod_instituicao, ref_idesco, carga_horaria,
-        	            data_cadastro, data_exclusao, ativo, ref_cod_subnivel,
+        	            data_cadastro, data_exclusao, ativo,
         	            situacao_curso_superior_1, formacao_complementacao_pedagogica_1,
         	            codigo_curso_superior_1, ano_inicio_curso_superior_1,
         	            ano_conclusao_curso_superior_1, tipo_instituicao_curso_superior_1,
