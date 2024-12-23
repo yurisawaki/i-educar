@@ -3,7 +3,7 @@
 use App\Support\Database\MigrationUtils;
 use Illuminate\Database\Migrations\Migration;
 
-class FixExporterSchoolClassStagesView extends Migration
+class AlterExporterStagesView extends Migration
 {
     use MigrationUtils;
 
@@ -14,8 +14,10 @@ class FixExporterSchoolClassStagesView extends Migration
      */
     public function up()
     {
+        $this->dropView('public.exporter_stages');
+
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_school_class_stages-2020-09-18.sql'
+            database_path('sqls/views/public.exporter_stages-2020-07-10.sql')
         );
     }
 
@@ -26,8 +28,10 @@ class FixExporterSchoolClassStagesView extends Migration
      */
     public function down()
     {
+        $this->dropView('public.exporter_stages');
+
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_school_class_stages-2020-07-09.sql'
+            database_path('sqls/views/public.exporter_stages-2020-07-09.sql')
         );
     }
 }

@@ -19,15 +19,15 @@ class CreateExporterStagesView extends Migration
         $this->dropView('public.exporter_school_class_stages');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_school_stages-2020-07-09.sql'
+            database_path('sqls/views/public.exporter_school_stages-2020-07-09.sql')
         );
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_school_class_stages-2020-07-09.sql'
+            database_path('sqls/views/public.exporter_school_class_stages-2020-07-09.sql')
         );
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_stages-2020-07-09.sql'
+            database_path('sqls/views/public.exporter_stages-2020-07-09.sql')
         );
     }
 
