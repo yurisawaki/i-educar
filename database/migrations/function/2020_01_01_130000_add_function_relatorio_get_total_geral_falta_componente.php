@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioHistoricoCargaHorariaComponente extends Migration
+class AddFunctionRelatorioGetTotalGeralFaltaComponente extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioHistoricoCargaHorariaComponente extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.historico_carga_horaria_componente.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_total_geral_falta_componente.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioHistoricoCargaHorariaComponente extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.historico_carga_horaria_componente(nome_componente character varying, nome_serie character varying, escola_id integer);'
+            'DROP FUNCTION relatorio.get_total_geral_falta_componente(matricula_i integer);'
         );
     }
 }

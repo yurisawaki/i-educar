@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioGetNomeModulo extends Migration
+class AddFunctionRelatorioGetMediaGeralTurma extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioGetNomeModulo extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_nome_modulo.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_media_geral_turma.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioGetNomeModulo extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.get_nome_modulo(integer);'
+            'DROP FUNCTION relatorio.get_media_geral_turma(turma_i integer, componente_i integer);'
         );
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioGetValorCampoAuditoria extends Migration
+class AddFunctionRelatorioGetUltimaMatriculaTurma extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioGetValorCampoAuditoria extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_valor_campo_auditoria.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_ultima_matricula_turma.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioGetValorCampoAuditoria extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.get_valor_campo_auditoria(character varying, character varying, character varying);'
+            'DROP FUNCTION relatorio.get_ultima_matricula_turma(integer, integer, integer);'
         );
     }
 }

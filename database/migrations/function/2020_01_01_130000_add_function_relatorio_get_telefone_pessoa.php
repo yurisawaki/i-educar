@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioGetPaiAluno extends Migration
+class AddFunctionRelatorioGetTelefonePessoa extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,7 @@ class AddFunctionRelatorioGetPaiAluno extends Migration
      */
     public function up()
     {
-        DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_pai_aluno.sql')
-        );
+        DB::unprepared(file_get_contents(database_path('sqls/functions/relatorio.get_telefone_pessoa.sql')));
     }
 
     /**
@@ -24,8 +22,6 @@ class AddFunctionRelatorioGetPaiAluno extends Migration
      */
     public function down()
     {
-        DB::unprepared(
-            'DROP FUNCTION relatorio.get_pai_aluno(integer);'
-        );
+        DB::unprepared('DROP FUNCTION relatorio.get_telefone_pessoa(numeric);');
     }
 }

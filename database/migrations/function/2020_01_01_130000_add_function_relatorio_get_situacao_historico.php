@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioGetUltimaMatriculaTurma extends Migration
+class AddFunctionRelatorioGetSituacaoHistorico extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioGetUltimaMatriculaTurma extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_ultima_matricula_turma.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_situacao_historico.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioGetUltimaMatriculaTurma extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.get_ultima_matricula_turma(integer, integer, integer);'
+            'DROP FUNCTION relatorio.get_situacao_historico(situacao integer);'
         );
     }
 }

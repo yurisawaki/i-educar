@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioExibeAlunoConformeParametroAlunosDiferenciados extends Migration
+class AddFunctionRelatorioGetMediaTurma extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioExibeAlunoConformeParametroAlunosDiferenciados extends
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.exibe_aluno_conforme_parametro_alunos_diferenciados.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_media_turma.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioExibeAlunoConformeParametroAlunosDiferenciados extends
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.exibe_aluno_conforme_parametro_alunos_diferenciados(codigo_aluno integer, alunos_diferenciados integer);'
+            'DROP FUNCTION relatorio.get_media_turma(turma_i integer, componente_i integer, etapa_i integer);'
         );
     }
 }

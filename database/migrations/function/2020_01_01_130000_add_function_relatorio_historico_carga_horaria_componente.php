@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioGetMediaTurma extends Migration
+class AddFunctionRelatorioHistoricoCargaHorariaComponente extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioGetMediaTurma extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_media_turma.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.historico_carga_horaria_componente.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioGetMediaTurma extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.get_media_turma(turma_i integer, componente_i integer, etapa_i integer);'
+            'DROP FUNCTION relatorio.historico_carga_horaria_componente(nome_componente character varying, nome_serie character varying, escola_id integer);'
         );
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioPrioridadeHistorico extends Migration
+class AddFunctionRelatorioGetTotalFaltaComponente extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioPrioridadeHistorico extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.prioridade_historico.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_total_falta_componente.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioPrioridadeHistorico extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.prioridade_historico(situacao numeric);'
+            'DROP FUNCTION relatorio.get_total_falta_componente(matricula_i integer, componente_i integer);'
         );
     }
 }

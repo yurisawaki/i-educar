@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioGetMaeAluno extends Migration
+class AddFunctionRelatorioExibeAlunoConformeParametroAlunosDiferenciados extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioGetMaeAluno extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_mae_aluno.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.exibe_aluno_conforme_parametro_alunos_diferenciados.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioGetMaeAluno extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.get_mae_aluno(integer);'
+            'DROP FUNCTION relatorio.exibe_aluno_conforme_parametro_alunos_diferenciados(codigo_aluno integer, alunos_diferenciados integer);'
         );
     }
 }

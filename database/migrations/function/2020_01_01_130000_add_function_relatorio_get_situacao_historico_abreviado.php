@@ -13,7 +13,7 @@ class AddFunctionRelatorioGetSituacaoHistoricoAbreviado extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_situacao_historico_abreviado.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_situacao_historico_abreviado.sql'))
         );
     }
 

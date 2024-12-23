@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioGetUltimaObservacaoHistorico extends Migration
+class AddFunctionRelatorioGetDddEscola extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioGetUltimaObservacaoHistorico extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_ultima_observacao_historico.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_ddd_escola.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioGetUltimaObservacaoHistorico extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.get_ultima_observacao_historico(integer);'
+            'DROP FUNCTION relatorio.get_ddd_escola(integer);'
         );
     }
 }

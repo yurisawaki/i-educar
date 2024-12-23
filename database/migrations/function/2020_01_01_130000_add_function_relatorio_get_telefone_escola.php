@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioGetQtdeModulo extends Migration
+class AddFunctionRelatorioGetTelefoneEscola extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioGetQtdeModulo extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_qtde_modulo.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_telefone_escola.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioGetQtdeModulo extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.get_qtde_modulo(integer);'
+            'DROP FUNCTION relatorio.get_telefone_escola(integer);'
         );
     }
 }

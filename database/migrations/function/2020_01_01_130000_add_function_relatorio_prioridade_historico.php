@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioGetDddEscola extends Migration
+class AddFunctionRelatorioPrioridadeHistorico extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioGetDddEscola extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_ddd_escola.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.prioridade_historico.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioGetDddEscola extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.get_ddd_escola(integer);'
+            'DROP FUNCTION relatorio.prioridade_historico(situacao numeric);'
         );
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionRelatorioGetQtdeEtapaDisciplinaDispensadaMatricula extends Migration
+class AddFunctionRelatorioGetQtdeModulo extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddFunctionRelatorioGetQtdeEtapaDisciplinaDispensadaMatricula extends Migr
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_qtde_etapa_disciplina_dispensada_matricula.sql')
+            file_get_contents(database_path('sqls/functions/relatorio.get_qtde_modulo.sql'))
         );
     }
 
@@ -25,7 +25,7 @@ class AddFunctionRelatorioGetQtdeEtapaDisciplinaDispensadaMatricula extends Migr
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION relatorio.get_qtde_etapa_disciplina_dispensada_matricula(integer, integer);'
+            'DROP FUNCTION relatorio.get_qtde_modulo(integer);'
         );
     }
 }
