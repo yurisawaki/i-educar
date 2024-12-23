@@ -61,6 +61,13 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom([
                 database_path('migrations/addressing'),
+                database_path('migrations/audit'),
+                database_path('migrations/educacenso'),
+                database_path('migrations/exporter'),
+                database_path('migrations/misc'),
+                database_path('migrations/remove'),
+                database_path('migrations/report'),
+                database_path('migrations/table'),
             ]);
             $this->loadLegacyMigrations();
         }
