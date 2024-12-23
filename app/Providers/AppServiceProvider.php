@@ -62,6 +62,7 @@ class AppServiceProvider extends ServiceProvider
             $this->loadMigrationsFrom([
                 database_path('migrations/addressing'),
                 database_path('migrations/audit'),
+                database_path('migrations/educacenso'),
                 database_path('migrations/exporter'),
                 database_path('migrations/report'),
             ]);
