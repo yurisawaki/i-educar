@@ -595,7 +595,7 @@ class ProcessamentoApiController extends Core_Controller_Page_EditController
                         $ativo = 1,
                         $this->getFaltaGlobalizada($defaultValue = 'null'),
                         $dadosMatricula['instituicao_id'],
-                        $origem = '', //TODO
+                        $origem = 1,
                         $this->getRequest()->extra_curricular,
                         $matriculaId,
                         $this->getPercentualFrequencia(),
@@ -636,7 +636,7 @@ class ProcessamentoApiController extends Core_Controller_Page_EditController
                         $ativo = 1,
                         $this->getFaltaGlobalizada($defaultValue = 'null'),
                         $dadosMatricula['instituicao_id'],
-                        $origem = '', //TODO
+                        $origem = 1,
                         $this->getRequest()->extra_curricular,
                         $matriculaId,
                         $this->getPercentualFrequencia(),
