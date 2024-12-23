@@ -17,7 +17,7 @@ class CreatePublicExporterDisabilitiesView extends Migration
         $this->dropView('public.exporter_disabilities');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_disabilities-2020-04-01.sql'
+            database_path('sqls/views/public.exporter_disabilities-2020-04-01.sql')
         );
     }
 

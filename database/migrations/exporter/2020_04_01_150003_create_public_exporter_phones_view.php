@@ -17,7 +17,7 @@ class CreatePublicExporterPhonesView extends Migration
         $this->dropView('public.exporter_phones');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_phones-2020-04-01.sql'
+            database_path('sqls/views/public.exporter_phones-2020-04-01.sql')
         );
     }
 
