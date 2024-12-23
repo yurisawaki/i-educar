@@ -177,11 +177,6 @@ return new class extends clsCadastro
             );
         }
 
-        if (is_numeric(value: $this->ref_cod_curso)) {
-            $obj_curso = new clsPmieducarCurso(cod_curso: $this->ref_cod_curso);
-            $det_curso = $obj_curso->detalhe();
-        }
-
         $this->acao_enviar = 'formUtils.submit()';
     }
 
