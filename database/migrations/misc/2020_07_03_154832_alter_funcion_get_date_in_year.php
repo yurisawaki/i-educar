@@ -14,7 +14,7 @@ class AlterFuncionGetDateInYear extends Migration
      */
     public function up()
     {
-        $this->executeSqlFile(__DIR__ . '/../sqls/functions/pmieducar.get_date_in_year-2020-07-03.sql');
+        $this->executeSqlFile(database_path('sqls/functions/pmieducar.get_date_in_year-2020-07-03.sql'));
     }
 
     /**
@@ -24,6 +24,6 @@ class AlterFuncionGetDateInYear extends Migration
      */
     public function down()
     {
-        $this->executeSqlFile(__DIR__ . '/../sqls/functions/pmieducar.get_date_in_year.sql');
+        $this->executeSqlFile(database_path('sqls/functions/pmieducar.get_date_in_year.sql'));
     }
 }
