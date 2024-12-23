@@ -62,7 +62,7 @@ class AppServiceProvider extends ServiceProvider
             $this->loadMigrationsFrom([
                 database_path('migrations/addressing'),
                 database_path('migrations/audit'),
-                database_path('migrations/function'),
+                database_path('migrations/report'),
             ]);
             $this->loadLegacyMigrations();
         }
