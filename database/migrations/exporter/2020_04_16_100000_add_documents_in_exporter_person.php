@@ -19,15 +19,15 @@ class AddDocumentsInExporterPerson extends Migration
         $this->dropView('public.exporter_person');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_person-2020-04-16.sql'
+            database_path('sqls/views/public.exporter_person-2020-04-16.sql')
         );
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_student-2020-04-03.sql'
+            database_path('sqls/views/public.exporter_student-2020-04-03.sql')
         );
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_teacher-2020-04-07.sql'
+            database_path('sqls/views/public.exporter_teacher-2020-04-07.sql')
         );
     }
 
@@ -43,15 +43,15 @@ class AddDocumentsInExporterPerson extends Migration
         $this->dropView('public.exporter_person');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_person-2020-04-01.sql'
+            database_path('sqls/views/public.exporter_person-2020-04-01.sql')
         );
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_student-2020-04-03.sql'
+            database_path('sqls/views/public.exporter_student-2020-04-03.sql')
         );
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_teacher-2020-04-07.sql'
+            database_path('sqls/views/public.exporter_teacher-2020-04-07.sql')
         );
     }
 }

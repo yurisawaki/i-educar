@@ -3,7 +3,7 @@
 use App\Support\Database\MigrationUtils;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeExporterStudentRemoveSchoolStage extends Migration
+class AlterSocialAssistanceView extends Migration
 {
     use MigrationUtils;
 
@@ -18,11 +18,11 @@ class ChangeExporterStudentRemoveSchoolStage extends Migration
         $this->dropView('public.exporter_student');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_student-2020-05-14.sql'
+            database_path('sqls/views/public.exporter_student-2020-05-05.sql')
         );
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_social_assistance-2020-05-07.sql'
+            database_path('sqls/views/public.exporter_social_assistance-2020-05-05.sql')
         );
     }
 
@@ -37,11 +37,11 @@ class ChangeExporterStudentRemoveSchoolStage extends Migration
         $this->dropView('public.exporter_student');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_student-2020-05-05.sql'
+            database_path('sqls/views/public.exporter_student-2020-04-22.sql')
         );
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_social_assistance-2020-05-07.sql'
+            database_path('sqls/views/public.exporter_social_assistance-2020-04-24.sql')
         );
     }
 }

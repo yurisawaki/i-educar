@@ -3,7 +3,7 @@
 use App\Support\Database\MigrationUtils;
 use Illuminate\Database\Migrations\Migration;
 
-class SocialAssistanceViewRemoveCourseStage extends Migration
+class CreateExporterSocialAssistanceView extends Migration
 {
     use MigrationUtils;
 
@@ -17,7 +17,7 @@ class SocialAssistanceViewRemoveCourseStage extends Migration
         $this->dropView('public.exporter_social_assistance');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_social_assistance-2020-05-07.sql'
+            database_path('sqls/views/public.exporter_social_assistance-2020-04-24.sql')
         );
     }
 
@@ -29,9 +29,5 @@ class SocialAssistanceViewRemoveCourseStage extends Migration
     public function down()
     {
         $this->dropView('public.exporter_social_assistance');
-
-        $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_social_assistance-2020-05-05.sql'
-        );
     }
 }

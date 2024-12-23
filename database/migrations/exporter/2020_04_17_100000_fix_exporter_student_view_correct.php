@@ -3,7 +3,7 @@
 use App\Support\Database\MigrationUtils;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterExportStudentView extends Migration
+class FixExporterStudentViewCorrect extends Migration
 {
     use MigrationUtils;
 
@@ -17,7 +17,7 @@ class AlterExportStudentView extends Migration
         $this->dropView('public.exporter_student');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_student-2020-04-03.sql'
+            database_path('sqls/views/public.exporter_student-2020-04-17.sql')
         );
     }
 
@@ -29,5 +29,9 @@ class AlterExportStudentView extends Migration
     public function down()
     {
         $this->dropView('public.exporter_student');
+
+        $this->executeSqlFile(
+            database_path('sqls/views/public.exporter_student-2020-04-03.sql')
+        );
     }
 }

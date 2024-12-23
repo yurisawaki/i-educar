@@ -17,7 +17,7 @@ class AddFieldsInExporterStudent extends Migration
         $this->dropView('public.exporter_student');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_student-2020-04-22.sql'
+            database_path('sqls/views/public.exporter_student-2020-04-22.sql')
         );
     }
 
@@ -31,7 +31,7 @@ class AddFieldsInExporterStudent extends Migration
         $this->dropView('public.exporter_student');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_student-2020-04-17.sql'
+            database_path('sqls/views/public.exporter_student-2020-04-17.sql')
         );
     }
 }
