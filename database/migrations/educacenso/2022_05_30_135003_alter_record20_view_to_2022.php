@@ -17,7 +17,7 @@ return new class() extends Migration
         $this->dropView('public.educacenso_record20');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.educacenso_record20-2022-06-17.sql'
+            database_path('sqls/views/public.educacenso_record20-2022-05-19.sql')
         );
     }
 
@@ -31,7 +31,7 @@ return new class() extends Migration
         $this->dropView('public.educacenso_record20');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.educacenso_record20-2022-05-19.sql'
+            database_path('sqls/views/public.educacenso_record20-2020-04-13.sql')
         );
     }
 };

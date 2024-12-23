@@ -18,11 +18,11 @@ class AddDataCancelInViewExporterStudent extends Migration
         $this->dropView('public.exporter_student');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_student-2021-07-19.sql'
+            database_path('sqls/views/public.exporter_student-2021-07-19.sql')
         );
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_social_assistance-2020-05-07.sql'
+            database_path('sqls/views/public.exporter_social_assistance-2020-05-07.sql')
         );
     }
 
@@ -37,11 +37,11 @@ class AddDataCancelInViewExporterStudent extends Migration
         $this->dropView('public.exporter_student');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_student-2021-04-19.sql'
+            database_path('sqls/views/public.exporter_student-2021-04-19.sql')
         );
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_social_assistance-2020-05-07.sql'
+            database_path('sqls/views/public.exporter_social_assistance-2020-05-07.sql')
         );
     }
 }
