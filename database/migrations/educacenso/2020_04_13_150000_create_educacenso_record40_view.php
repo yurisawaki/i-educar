@@ -3,7 +3,7 @@
 use App\Support\Database\MigrationUtils;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEducacensoRecord20View extends Migration
+class CreateEducacensoRecord40View extends Migration
 {
     use MigrationUtils;
 
@@ -14,10 +14,10 @@ class CreateEducacensoRecord20View extends Migration
      */
     public function up()
     {
-        $this->dropView('public.educacenso_record20');
+        $this->dropView('public.educacenso_record40');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.educacenso_record20-2020-04-13.sql'
+            database_path('sqls/views/public.educacenso_record40-2020-04-13.sql')
         );
     }
 
@@ -28,6 +28,6 @@ class CreateEducacensoRecord20View extends Migration
      */
     public function down()
     {
-        $this->dropView('public.educacenso_record20');
+        $this->dropView('public.educacenso_record40');
     }
 }

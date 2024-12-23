@@ -13,7 +13,7 @@ class UpdateDuplicateCollegeEducacenso extends Migration
     public function up()
     {
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/educacenso/2020_instituicoes_ensino.sql')
+            file_get_contents(database_path('sqls/educacenso/2020_instituicoes_ensino.sql'))
         );
     }
 

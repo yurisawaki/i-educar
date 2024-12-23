@@ -17,7 +17,7 @@ class CreateEducacensoRecord50View extends Migration
         $this->dropView('public.educacenso_record50');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.educacenso_record50-2020-04-13.sql'
+            database_path('sqls/views/public.educacenso_record50-2020-04-13.sql')
         );
     }
 
