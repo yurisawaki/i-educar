@@ -51,6 +51,9 @@ class UtilServiceTest extends TestCase
     public function testFormat()
     {
         $this->assertEquals('0,0', Util::format(null));
+        $this->assertEquals('0,0', Util::format(0));
+        $this->assertEquals('0,0', Util::format('0'));
+        $this->assertEquals('0,0', Util::format(''));
         $this->assertEquals('0,5', Util::format(0.5));
         $this->assertEquals('1,50', Util::format(1.5, 2));
         $this->assertEquals('1,5', Util::format(1.52, 1));
@@ -59,6 +62,11 @@ class UtilServiceTest extends TestCase
         $this->assertEquals('1,59', Util::format(1.599, 2));
         $this->assertEquals('1,5', Util::format('1,59', 1));
         $this->assertEquals('1,0', Util::format(1, 1));
+        $this->assertEquals('1,0', Util::format('1', 1));
+        $this->assertEquals('A', Util::format('A'));
+        $this->assertEquals('A,B', Util::format('A,B'));
+        $this->assertEquals('A.B', Util::format('A.B'));
+        $this->assertEquals('1,5', Util::format(' 1,59', 1)); //Existe notas com espaços extras antes
     }
 
     public function testFloat()
