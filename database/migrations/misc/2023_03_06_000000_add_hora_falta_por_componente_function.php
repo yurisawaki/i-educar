@@ -12,7 +12,7 @@ return new class() extends Migration
         );
 
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/modules.hora_falta_por_componente.sql')
+            file_get_contents(database_path('sqls/functions/modules.hora_falta_por_componente.sql'))
         );
     }
 

@@ -13,11 +13,11 @@ return new class() extends Migration
     public function up()
     {
         DB::unprepared(
-            'DROP FUNCTION IF EXISTS modules.frequencia_da_matricula(matricula integer, etapa character varying);'
+            'DROP FUNCTION IF EXISTS modules.hora_falta_por_componente(cod_matricula_id integer, cod_disciplina_id integer);'
         );
 
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/modules.frequencia_da_matricula_2023-03-07.sql')
+            file_get_contents(database_path('sqls/functions/modules.hora_falta_por_componente_2023-03-15.sql'))
         );
     }
 
@@ -29,11 +29,11 @@ return new class() extends Migration
     public function down()
     {
         DB::unprepared(
-            'DROP FUNCTION IF EXISTS modules.frequencia_da_matricula(matricula integer, etapa character varying);'
+            'DROP FUNCTION IF EXISTS modules.hora_falta_por_componente(cod_matricula_id integer, cod_disciplina_id integer);'
         );
 
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/modules.frequencia_da_matricula.sql')
+            file_get_contents(database_path('sqls/functions/modules.hora_falta_por_componente.sql'))
         );
     }
 };

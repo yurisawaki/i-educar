@@ -65,6 +65,7 @@ class AppServiceProvider extends ServiceProvider
                 database_path('migrations/educacenso'),
                 database_path('migrations/exporter'),
                 database_path('migrations/misc'),
+                database_path('migrations/remove'),
                 database_path('migrations/report'),
                 database_path('migrations/table'),
             ]);

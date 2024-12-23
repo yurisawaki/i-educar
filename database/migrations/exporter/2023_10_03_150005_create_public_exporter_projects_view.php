@@ -17,7 +17,7 @@ return new class extends Migration
         $this->dropView('public.exporter_projects');
 
         $this->executeSqlFile(
-            __DIR__ . '/../sqls/views/public.exporter_projects-2023-10-03.sql'
+            database_path('sqls/views/public.exporter_projects-2023-10-03.sql')
         );
     }
 

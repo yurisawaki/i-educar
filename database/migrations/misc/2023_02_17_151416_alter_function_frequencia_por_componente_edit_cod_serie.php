@@ -17,7 +17,7 @@ return new class() extends Migration
         );
 
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/modules.frequencia_por_componente_2023-03-03.sql')
+            file_get_contents(database_path('sqls/functions/modules.frequencia_por_componente_2023-02-17.sql'))
         );
     }
 
@@ -33,7 +33,7 @@ return new class() extends Migration
         );
 
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/modules.frequencia_por_componente_2023-02-17.sql')
+            file_get_contents(database_path('sqls/functions/modules.frequencia_por_componente_2023-02-13.sql'))
         );
     }
 };
