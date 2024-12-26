@@ -119,4 +119,24 @@ class Util
 
         return $postcode;
     }
+
+    public static function disciplineSituation($disciplineSituation, $registrationSituation): ?string
+    {
+        $final = [
+            'Transferido',
+            'Reclassificado',
+            'Abandono',
+            'Remanejado',
+        ];
+
+        if (in_array($registrationSituation, $final)) {
+            return $registrationSituation;
+        }
+
+        if (in_array($disciplineSituation, $final)) {
+            return $disciplineSituation;
+        }
+
+        return $disciplineSituation;
+    }
 }
