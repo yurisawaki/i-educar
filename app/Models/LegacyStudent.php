@@ -291,4 +291,12 @@ class LegacyStudent extends LegacyModel
     {
         return $this->hasOne(LegacyStudentMedicalRecord::class, 'ref_cod_aluno');
     }
+
+    /**
+     * @return HasMany<LegacyStudentMedicalRecord, $this>
+     */
+    public function historicalHeightWeight(): HasMany
+    {
+        return $this->hasMany(LegacyStudentHistoricalHeightWeight::class, 'ref_cod_aluno');
+    }
 }
