@@ -116,7 +116,7 @@ class LegacyIndividual extends Model
     }
 
     /**
-     * @return BelongsToMany<LegacyDeficiency, $this>
+     * @return BelongsToMany<LegacyRace, $this>
      */
     public function races(): BelongsToMany
     {
