@@ -35,7 +35,7 @@ class SituacaoFuncionamentoTest extends TestCase
 
     private function getFakeRegistro()
     {
-        $registro = new Registro00();
+        $registro = new Registro00;
         $registro->inicioAnoLetivo = 'Data Fake';
         $registro->fimAnoLetivo = 'Data Fake';
         $registro->unidadeVinculada = 'Unidade Fake';

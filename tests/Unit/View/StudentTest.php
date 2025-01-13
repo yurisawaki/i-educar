@@ -62,14 +62,14 @@ class StudentTest extends ViewTestCase
 
     public function testGetGuardianTypeDescriptionAttribute(): void
     {
-        $expected = (new GuardianType())->getDescriptiveValues()[(int) $this->model->guardian_type];
+        $expected = (new GuardianType)->getDescriptiveValues()[(int) $this->model->guardian_type];
         $this->assertNotNull($this->model->guardian_type_description);
         $this->assertEquals($expected, $this->model->guardian_type_description);
     }
 
     public function testGetTransportationProviderDescriptionAttribute(): void
     {
-        $expected = (new TransportationProvider())->getDescriptiveValues()[(int) $this->model->transportation_provider];
+        $expected = (new TransportationProvider)->getDescriptiveValues()[(int) $this->model->transportation_provider];
 
         $this->assertNotNull($this->model->transportation_provider_description);
         $this->assertEquals($expected, $this->model->transportation_provider_description);

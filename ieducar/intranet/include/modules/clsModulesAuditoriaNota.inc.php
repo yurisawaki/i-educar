@@ -52,7 +52,7 @@ class clsModulesAuditoriaNota
 
     public function cadastra()
     {
-        $db = new clsBanco();
+        $db = new clsBanco;
         $this->_schema = 'modules.';
         $this->_tabela = "{$this->_schema}auditoria";
         $separador = '';
@@ -148,14 +148,14 @@ class clsModulesAuditoriaNota
 
     private function getNomeComponenteCurricular($componenteCurricularId)
     {
-        $mapper = new ComponenteCurricular_Model_ComponenteDataMapper();
+        $mapper = new ComponenteCurricular_Model_ComponenteDataMapper;
 
         return $mapper->find($componenteCurricularId)->nome;
     }
 
     private function getInfosMatricula($notaAlunoId)
     {
-        $mapper = new Avaliacao_Model_NotaAlunoDataMapper();
+        $mapper = new Avaliacao_Model_NotaAlunoDataMapper;
         $matriculaId = $mapper->find($notaAlunoId)->matricula;
 
         $objMatricula = new clsPmieducarMatricula($matriculaId);

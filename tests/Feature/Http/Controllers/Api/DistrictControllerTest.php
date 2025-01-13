@@ -137,19 +137,19 @@ class DistrictControllerTest extends ResourceTestCase
 
     private function createDistrictIntoBrasil(): District
     {
-        $country = (new CountryFactory())->create(['id' => Country::BRASIL]);
-        $state = (new StateFactory())->create(['country_id' => $country]);
-        $city = (new CityFactory())->create(['state_id' => $state]);
+        $country = (new CountryFactory)->create(['id' => Country::BRASIL]);
+        $state = (new StateFactory)->create(['country_id' => $country]);
+        $city = (new CityFactory)->create(['state_id' => $state]);
 
-        return (new DistrictFactory())->createOne(['city_id' => $city]);
+        return (new DistrictFactory)->createOne(['city_id' => $city]);
     }
 
     private function makeDistrictIntoBrasil(): District
     {
-        $country = (new CountryFactory())->create(['id' => Country::BRASIL]);
-        $state = (new StateFactory())->create(['country_id' => $country]);
-        $city = (new CityFactory())->create(['state_id' => $state]);
+        $country = (new CountryFactory)->create(['id' => Country::BRASIL]);
+        $state = (new StateFactory)->create(['country_id' => $country]);
+        $city = (new CityFactory)->create(['state_id' => $state]);
 
-        return (new DistrictFactory())->makeOne(['city_id' => $city]);
+        return (new DistrictFactory)->makeOne(['city_id' => $city]);
     }
 }

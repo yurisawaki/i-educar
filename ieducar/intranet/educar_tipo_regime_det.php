@@ -56,7 +56,7 @@ return new class extends clsDetalhe
         $this->url_cancelar = 'educar_tipo_regime_lst.php';
 
         //** Verificacao de permissao para cadastro
-        $obj_permissao = new clsPermissoes();
+        $obj_permissao = new clsPermissoes;
 
         if ($obj_permissao->permissao_cadastra(568, $this->pessoa_logada, 3)) {
             $this->url_novo = 'educar_tipo_regime_cad.php';

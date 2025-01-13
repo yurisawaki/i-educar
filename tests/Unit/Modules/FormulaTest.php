@@ -16,7 +16,7 @@ class FormulaTest extends UnitBaseTest
 
     protected function setUp(): void
     {
-        $this->_entity = new FormulaMedia_Model_Formula();
+        $this->_entity = new FormulaMedia_Model_Formula;
     }
 
     public function testSubstituiCorretamenteAsTokens()

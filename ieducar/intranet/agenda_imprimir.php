@@ -101,7 +101,7 @@ return new class extends clsCadastro
         $compromissos = [];
 
         //busca nome da agenda para titulo do relatorio
-        $dba = new clsBanco();
+        $dba = new clsBanco;
         $nm_agenda = $dba->CampoUnico(consulta: " SELECT nm_agenda FROM agenda WHERE cod_agenda = {$this->cod_agenda} ");
 
         //verifica tipo de impressao
@@ -117,7 +117,7 @@ return new class extends clsCadastro
             $this->mensagem = 'A data inicial não pode ser maior que a data final.';
         }
 
-        $db = new clsBanco();
+        $db = new clsBanco;
         $db->Consulta(consulta: "SELECT cod_agenda_compromisso, versao FROM agenda_compromisso WHERE ativo = 1 AND ref_cod_agenda = {$this->cod_agenda} AND $where data_fim IS NOT NULL ORDER BY data_inicio ASC ");
 
         while ($db->ProximoRegistro()) {

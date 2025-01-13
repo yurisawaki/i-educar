@@ -29,7 +29,7 @@ class DiarioApiController extends ApiCoreController
     public function __construct()
     {
         parent::__construct();
-        $this->removeHtmlTagsService = new RemoveHtmlTagsStringService();
+        $this->removeHtmlTagsService = new RemoveHtmlTagsStringService;
     }
 
     protected function validatesCanChangeDiarioForAno()
@@ -286,7 +286,7 @@ class DiarioApiController extends ApiCoreController
             return true;
         }
 
-        $service = new ReleasePeriodService();
+        $service = new ReleasePeriodService;
         if ($service->canPostNow(
             $this->getRequest()->escola_id,
             $this->getRequest()->turma_id,
@@ -1274,7 +1274,7 @@ class DiarioApiController extends ApiCoreController
             throw new Exception('Não foi possível obter a área de conhecimento pois não foi recebido o id do componente curricular.');
         }
 
-        $mapper = new ComponenteCurricular_Model_ComponenteDataMapper();
+        $mapper = new ComponenteCurricular_Model_ComponenteDataMapper;
 
         $where = ['id' => $componenteCurricularId];
 
@@ -1284,7 +1284,7 @@ class DiarioApiController extends ApiCoreController
             return $mapper->findAll(['area_conhecimento'], $where);
         });
 
-        $areaConhecimento = new stdClass();
+        $areaConhecimento = new stdClass;
         $areaConhecimento->id = $area[0]->area_conhecimento->id;
         $areaConhecimento->nome = $area[0]->area_conhecimento->nome;
         $areaConhecimento->secao = $area[0]->area_conhecimento->secao;
@@ -1792,7 +1792,7 @@ class DiarioApiController extends ApiCoreController
     {
         $user = Auth::id();
         $processoAp = $this->_processoAp;
-        $obj_permissao = new clsPermissoes();
+        $obj_permissao = new clsPermissoes;
 
         return $obj_permissao->permissao_cadastra($processoAp, $user, 7);
     }
@@ -1847,7 +1847,7 @@ class DiarioApiController extends ApiCoreController
 
     public function canPostSituacaoAndNota()
     {
-        $acesso = new clsPermissoes();
+        $acesso = new clsPermissoes;
 
         return $acesso->permissao_cadastra(630, $this->pessoa_logada, 7, null, true);
     }

@@ -53,7 +53,7 @@ return new class extends clsDetalhe
         }
 
         //** Verificacao de permissao para cadastro ou edicao
-        $obj_permissao = new clsPermissoes();
+        $obj_permissao = new clsPermissoes;
 
         if ($obj_permissao->permissao_cadastra(558, $this->pessoa_logada, 7)) {
             $this->url_novo = 'educar_tipo_ensino_cad.php';

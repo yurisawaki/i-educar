@@ -6,7 +6,7 @@ class ParecerDescritivoAlunoTest extends UnitBaseTest
 
     protected function setUp(): void
     {
-        $this->_entity = new Avaliacao_Model_ParecerDescritivoAluno();
+        $this->_entity = new Avaliacao_Model_ParecerDescritivoAluno;
     }
 
     public function testEntityValidators()

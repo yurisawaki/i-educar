@@ -58,7 +58,7 @@ class LegacyRegistrationTest extends EloquentTestCase
         $this->assertEquals($this->model->aprovado == App_Model_MatriculaSituacao::TRANSFERIDO, $this->model->isTransferred);
         $this->assertEquals($this->model->aprovado == App_Model_MatriculaSituacao::ABANDONO, $this->model->isAbandoned);
         $this->assertEquals($this->model->ativo === 0, $this->model->isCanceled);
-        $this->assertEquals((new RegistrationStatus())->getDescriptiveValues()[(int) $this->model->aprovado], $this->model->statusDescription);
+        $this->assertEquals((new RegistrationStatus)->getDescriptiveValues()[(int) $this->model->aprovado], $this->model->statusDescription);
     }
 
     public function testScopeActive(): void

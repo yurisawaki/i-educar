@@ -6,7 +6,7 @@ class CoreExt_Controller_RequestTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->_request = new CoreExt_Controller_Request();
+        $this->_request = new CoreExt_Controller_Request;
     }
 
     public function testOpcaoDeConfiguracaoNaoExistenteLancaExcecao()

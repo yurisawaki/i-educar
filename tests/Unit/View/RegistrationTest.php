@@ -23,7 +23,7 @@ class RegistrationTest extends ViewTestCase
 
     public function testStatusDescription(): void
     {
-        $expected = (new RegistrationStatus())->getDescriptiveValues()[(int) $this->model->status];
+        $expected = (new RegistrationStatus)->getDescriptiveValues()[(int) $this->model->status];
         $this->assertEquals($expected, $this->model->status_description);
     }
 

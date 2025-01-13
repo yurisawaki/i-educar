@@ -14,7 +14,7 @@ class PessoaFjTest extends TestCase
         );
         $id = $pdo->lastInsertId('cadastro.seq_pessoa');
 
-        $pessoaFj = new \clsPessoaFj();
+        $pessoaFj = new \clsPessoaFj;
         $pessoaFj->idpes = $id;
         $pessoa = $pessoaFj->detalhe();
 

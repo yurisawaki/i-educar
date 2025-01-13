@@ -6,7 +6,7 @@ class NotaComponenteTest extends UnitBaseTest
 
     protected function setUp(): void
     {
-        $this->_entity = new Avaliacao_Model_NotaComponente();
+        $this->_entity = new Avaliacao_Model_NotaComponente;
     }
 
     public function testEntityValidators()

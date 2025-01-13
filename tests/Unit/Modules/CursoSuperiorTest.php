@@ -6,7 +6,7 @@ class Educacenso_Model_CursoSuperiorTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->_entity = new Educacenso_Model_CursoSuperior();
+        $this->_entity = new Educacenso_Model_CursoSuperior;
     }
 
     public function testInstanciaDeAreaRetornaOValorDeNomeEmContextoDeImpressao()

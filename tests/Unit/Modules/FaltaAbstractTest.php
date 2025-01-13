@@ -6,7 +6,7 @@ class FaltaAbstractTest extends UnitBaseTest
 
     protected function setUp(): void
     {
-        $this->_entity = new Avaliacao_Model_FaltaAbstractStub();
+        $this->_entity = new Avaliacao_Model_FaltaAbstractStub;
     }
 
     public function testEntityValidators()

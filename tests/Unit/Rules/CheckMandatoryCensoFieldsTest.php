@@ -9,9 +9,9 @@ class CheckMandatoryCensoFieldsTest extends TestCase
 {
     public function testCampoEstruturaCurricularValidaPreenchimentoTipodeAtendimento()
     {
-        $mandatoryFields = new CheckMandatoryCensoFields();
+        $mandatoryFields = new CheckMandatoryCensoFields;
 
-        $param = new \stdClass();
+        $param = new \stdClass;
         $param->tipo_atendimento = '0';
         $param->estrutura_curricular = null;
 

@@ -118,11 +118,11 @@ class CountryControllerTest extends ResourceTestCase
 
     private function createCountryIntoBrasil(): Country
     {
-        return (new CountryFactory())->create(['id' => Country::BRASIL]);
+        return (new CountryFactory)->create(['id' => Country::BRASIL]);
     }
 
     private function makeCountryIntoBrasil(): Country
     {
-        return (new CountryFactory())->make(['id' => Country::BRASIL]);
+        return (new CountryFactory)->make(['id' => Country::BRASIL]);
     }
 }

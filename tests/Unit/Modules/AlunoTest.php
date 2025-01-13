@@ -6,7 +6,7 @@ class Educacenso_Model_AlunoTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->_entity = new Educacenso_Model_Aluno();
+        $this->_entity = new Educacenso_Model_Aluno;
     }
 
     public function testEntityValidators()

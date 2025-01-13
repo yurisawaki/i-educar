@@ -18,7 +18,7 @@ class IncompatibleChangeToMultiGradesTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->rule = new IncompatibleChangeToMultiGrades();
+        $this->rule = new IncompatibleChangeToMultiGrades;
     }
 
     /**

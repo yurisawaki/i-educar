@@ -11,7 +11,7 @@ class ClsBancoTest extends TestCase
             'hasChild' => true,
         ];
 
-        $db = new clsBanco();
+        $db = new clsBanco;
 
         $formatted = $db->formatValues($data);
         $this->assertSame('t', $formatted['hasChild']);
@@ -24,14 +24,14 @@ class ClsBancoTest extends TestCase
 
     public function testOpcaoDeLancamentoDeExcecaoEFalsePorPadrao()
     {
-        $db = new clsBanco();
+        $db = new clsBanco;
 
         $this->assertFalse($db->getThrowException());
     }
 
     public function testConfiguracaoDeOpcaoDeLancamentoDeExcecao()
     {
-        $db = new clsBanco();
+        $db = new clsBanco;
         $db->setThrowException(true);
 
         $this->assertTrue($db->getThrowException());
@@ -39,7 +39,7 @@ class ClsBancoTest extends TestCase
 
     public function testFetchTipoArrayDeResultadosDeUmaQuery()
     {
-        $db = new clsBanco();
+        $db = new clsBanco;
         $db->Consulta('SELECT spcname FROM pg_tablespace');
 
         $row = $db->ProximoRegistro();

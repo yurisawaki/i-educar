@@ -184,7 +184,7 @@ abstract class CoreExt_DataMapper
         $columns = [];
 
         if (count($data) == 0) {
-            $tempEntity = new $this->_entityClass();
+            $tempEntity = new $this->_entityClass;
             $data = $tempEntity->toDataArray();
         }
 

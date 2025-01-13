@@ -6,7 +6,7 @@ class Educacenso_Model_IesTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->_entity = new Educacenso_Model_Ies();
+        $this->_entity = new Educacenso_Model_Ies;
     }
 
     public function testEntityValidators()

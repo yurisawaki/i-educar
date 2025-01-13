@@ -6,7 +6,7 @@ class CoreExt_ValidateTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->_validator = new CoreExt_ValidateStub();
+        $this->_validator = new CoreExt_ValidateStub;
     }
 
     public function testOpcaoDeConfiguracaoNaoExistenteLancaExcecao()

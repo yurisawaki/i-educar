@@ -6,7 +6,7 @@ class CoreExt_Controller_AbstractTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->_controller = new CoreExt_Controller_AbstractStub();
+        $this->_controller = new CoreExt_Controller_AbstractStub;
     }
 
     public function testControllerInstanciaDispatcherStandardPorPadrao()

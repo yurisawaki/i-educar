@@ -680,7 +680,7 @@ class DiarioController extends ApiCoreController
 
     public function removeHtmlTags(string $text = ''): string
     {
-        return (new RemoveHtmlTagsStringService())->execute($text);
+        return (new RemoveHtmlTagsStringService)->execute($text);
     }
 
     public function Gerar()

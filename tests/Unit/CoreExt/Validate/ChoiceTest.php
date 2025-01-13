@@ -11,7 +11,7 @@ class CoreExt_Validate_ChoiceTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->_validator = new CoreExt_Validate_Choice();
+        $this->_validator = new CoreExt_Validate_Choice;
     }
 
     public function testValidaSeNenhumaOpcaoPadraoForInformada()

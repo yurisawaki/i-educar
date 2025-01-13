@@ -15,7 +15,7 @@ class BreadCrumbTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->breadCrumbObject = new Breadcrumb();
+        $this->breadCrumbObject = new Breadcrumb;
     }
 
     public function testTitleWithoutParent()

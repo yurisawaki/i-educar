@@ -636,7 +636,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
      */
     private function montaObjetoSituacao()
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->situacao = App_Model_MatriculaSituacao::EM_ANDAMENTO;
         $situacao->aprovado = true;
         $situacao->andamento = false;
@@ -933,7 +933,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
      */
     public function getSituacaoNotas($calcularSituacaoAluno = false)
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->situacao = 0;
         $situacao->componentesCurriculares = [];
 
@@ -998,7 +998,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
             }
 
             foreach ($mediasComponentes as $id => $mediaComponente) {
-                $situacao->componentesCurriculares[$id] = new stdClass();
+                $situacao->componentesCurriculares[$id] = new stdClass;
                 $situacao->componentesCurriculares[$id]->situacao = $situacaoGeral;
             }
 
@@ -1060,7 +1060,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
             $lastStage = $this->getLastStage($matriculaId, $turmaId, $id);
 
             if (empty($situacao->componentesCurriculares[$id])) {
-                $situacao->componentesCurriculares[$id] = new \stdClass();
+                $situacao->componentesCurriculares[$id] = new \stdClass;
             }
 
             if ($this->getRegraAvaliacaoTipoProgressao() == RegraAvaliacao_Model_TipoProgressao::CONTINUADA) {
@@ -1111,7 +1111,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
                 if ($this->exibeSituacao($id)) {
                     $qtdComponenteReprovado++;
                 }
-                $situacao->componentesCurriculares[$id]->situacao = $this->getRegraAvaliacaoAprovarPelaFrequenciaAposExame() ? App_Model_MatriculaSituacao::APROVADO_APOS_EXAME :App_Model_MatriculaSituacao::REPROVADO;
+                $situacao->componentesCurriculares[$id]->situacao = $this->getRegraAvaliacaoAprovarPelaFrequenciaAposExame() ? App_Model_MatriculaSituacao::APROVADO_APOS_EXAME : App_Model_MatriculaSituacao::REPROVADO;
             } elseif (
                 (string) $etapa == 'Rc' &&
                 $media >= $this->getRegraAvaliacaoMediaRecuperacao()
@@ -1201,7 +1201,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
      */
     public function getSituacaoFaltas($ignorarSeriesCiclo = false)
     {
-        $presenca = new stdClass();
+        $presenca = new stdClass;
         $presenca->totalFaltas = 0;
         $presenca->horasFaltas = 0;
         $presenca->porcentagemFalta = 0;
@@ -1292,7 +1292,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
                 $etapa = $componenteEtapa->etapa;
 
                 // Usa stdClass como interface de acesso
-                $faltasComponentes[$id] = new stdClass();
+                $faltasComponentes[$id] = new stdClass;
                 $faltasComponentes[$id]->situacao = App_Model_MatriculaSituacao::EM_ANDAMENTO;
                 $faltasComponentes[$id]->horasFaltas = null;
                 $faltasComponentes[$id]->porcentagemFalta = null;
@@ -1528,7 +1528,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
      */
     public function getSituacaoComponentesCurriculares()
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->situacao = App_Model_MatriculaSituacao::APROVADO;
         $situacao->componentesCurriculares = [];
 
@@ -1590,7 +1590,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
      */
     protected function _createNotaAluno()
     {
-        $notaAluno = new Avaliacao_Model_NotaAluno();
+        $notaAluno = new Avaliacao_Model_NotaAluno;
         $notaAluno->matricula = $this->getOption('matricula');
 
         return $this->getNotaAlunoDataMapper()->save($notaAluno);
@@ -1696,7 +1696,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
      */
     protected function _createFaltaAluno()
     {
-        $faltaAluno = new Avaliacao_Model_FaltaAluno();
+        $faltaAluno = new Avaliacao_Model_FaltaAluno;
         $faltaAluno->matricula = $this->getOption('matricula');
         $faltaAluno->tipoFalta = $this->getRegraAvaliacaoTipoPresenca();
 
@@ -1802,7 +1802,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
      */
     protected function _createParecerDescritivoAluno()
     {
-        $parecerDescritivoAluno = new Avaliacao_Model_ParecerDescritivoAluno();
+        $parecerDescritivoAluno = new Avaliacao_Model_ParecerDescritivoAluno;
         $parecerDescritivoAluno->matricula = $this->getOption('matricula');
         $parecerDescritivoAluno->parecerDescritivo = $this->getRegraAvaliacaoTipoParecerDescritivo();
 
@@ -3382,7 +3382,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
             return $score;
         }
 
-        $service = new StageScoreCalculationService();
+        $service = new StageScoreCalculationService;
 
         if ($evaluationRule->isAverageBetweenScoreAndRemedialCalculation()) {
             return $service->calculateAverageBetweenScoreAndRemedial($score, $remedial);

@@ -18,7 +18,7 @@ class MappedAttributesTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->abstract = new class() extends Model
+        $this->abstract = new class extends Model
         {
             use MappedAttributes;
 
@@ -73,7 +73,7 @@ class MappedAttributesTest extends TestCase
      */
     public function testGetTranslateMappedAttributeMethod()
     {
-        $model = new $this->abstract();
+        $model = new $this->abstract;
 
         $this->assertEquals('id', $model->getTranslateMappedAttribute('cod'));
         $this->assertEquals('name', $model->getTranslateMappedAttribute('nome'));

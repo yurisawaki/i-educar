@@ -79,7 +79,7 @@ return new class extends clsDetalhe
 
         //Vinculo
         if ($this->ref_cod_funcionario_vinculo) {
-            $funcionarioVinculo = new clsPortalFuncionario();
+            $funcionarioVinculo = new clsPortalFuncionario;
             $funcionarioVinculo = $funcionarioVinculo->getNomeVinculo($registro['ref_cod_funcionario_vinculo']);
 
             $this->addDetalhe(['Vinculo', "{$funcionarioVinculo}"]);
@@ -93,7 +93,7 @@ return new class extends clsDetalhe
             $this->addDetalhe(['Data de saída', Portabilis_Date_Utils::pgSQLToBr($this->data_saida)]);
         }
 
-        $obj_permissoes = new clsPermissoes();
+        $obj_permissoes = new clsPermissoes;
         if ($obj_permissoes->permissao_cadastra(635, $this->pessoa_logada, 7)) {
             $this->url_novo = "educar_servidor_alocacao_cad.php?ref_cod_servidor={$this->ref_cod_servidor}&ref_cod_instituicao={$this->ref_cod_instituicao}";
             $this->url_editar = "educar_servidor_alocacao_cad.php?cod_servidor_alocacao={$this->cod_servidor_alocacao}";

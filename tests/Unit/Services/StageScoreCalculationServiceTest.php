@@ -19,7 +19,7 @@ class StageScoreCalculationServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = new StageScoreCalculationService();
+        $this->service = new StageScoreCalculationService;
     }
 
     /**

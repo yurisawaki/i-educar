@@ -17,7 +17,7 @@ class Core_ViewTest extends TestCase
     {
         parent::setUp();
 
-        $this->_pageController = new Core_Controller_Page_AbstractStub();
+        $this->_pageController = new Core_Controller_Page_AbstractStub;
         $this->_pageController->setOptions(['processoAp' => 1, 'titulo' => 'foo']);
         $this->_view = new Core_ViewStub($this->_pageController);
     }

@@ -45,7 +45,7 @@ return new class extends clsDetalhe
         }
 
         //** Verificacao de permissao para cadastro
-        $obj_permissao = new clsPermissoes();
+        $obj_permissao = new clsPermissoes;
 
         if ($obj_permissao->permissao_cadastra(int_processo_ap: 579, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 3)) {
             $this->url_novo = 'educar_religiao_cad.php';

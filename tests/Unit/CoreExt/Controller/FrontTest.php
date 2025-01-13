@@ -33,7 +33,7 @@ class CoreExt_Controller_FrontTest extends PHPUnit\Framework\TestCase
 
     public function testRequestCustomizadoERegistradoEmController()
     {
-        $request = new CoreExt_Controller_Request();
+        $request = new CoreExt_Controller_Request;
         $this->_frontController->setRequest($request);
         $this->assertSame($request, $this->_frontController->getRequest());
     }

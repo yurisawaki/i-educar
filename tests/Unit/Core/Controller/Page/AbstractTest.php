@@ -10,7 +10,7 @@ class Core_Controller_Page_AbstractTest extends TestCase
     {
         parent::setUp();
 
-        $this->_pageController = new Core_Controller_Page_AbstractStub();
+        $this->_pageController = new Core_Controller_Page_AbstractStub;
     }
 
     public function testOpcaoDeConfiguracaoNaoExistenteLancaExcecao()
@@ -30,7 +30,7 @@ class Core_Controller_Page_AbstractTest extends TestCase
         $this->_pageController->setDataMapper('CoreExt_EntityDataMapperStub');
         $this->assertInstanceOf('CoreExt_DataMapper', $this->_pageController->getDataMapper(), 'Falhou na asserção a partir de configuração via "setDataMapper()" com nome de classe "CoreExt_DataMapper".');
 
-        $this->_pageController->setDataMapper(new CoreExt_EntityDataMapperStub());
+        $this->_pageController->setDataMapper(new CoreExt_EntityDataMapperStub);
         $this->assertInstanceOf('CoreExt_DataMapper', $this->_pageController->getDataMapper(), 'Falhou na asserção a partir de configuração via "setDataMapper()" com objeto "CoreExt_DataMapper".');
     }
 
@@ -54,7 +54,7 @@ class Core_Controller_Page_AbstractTest extends TestCase
 
     public function testAtribuicaoDeInstanciaEntity()
     {
-        $this->_pageController->setEntity(new CoreExt_EntityStub());
+        $this->_pageController->setEntity(new CoreExt_EntityStub);
         $this->assertInstanceOf('CoreExt_Entity', $this->_pageController->getEntity());
     }
 

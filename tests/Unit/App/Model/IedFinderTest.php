@@ -39,7 +39,7 @@ class App_Model_IedFinderTest extends UnitBaseTest
             ->method('findAll')
             ->will($this->returnValue($tabelaValores));
 
-        $tabelaDataMapper = new TabelaArredondamento_Model_TabelaDataMapper();
+        $tabelaDataMapper = new TabelaArredondamento_Model_TabelaDataMapper;
         $tabelaDataMapper->setTabelaValorDataMapper($mapperMock);
 
         $tabela = new TabelaArredondamento_Model_Tabela(['nome' => 'Numéricas']);

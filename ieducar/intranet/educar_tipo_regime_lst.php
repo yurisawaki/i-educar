@@ -36,7 +36,7 @@ return new class extends clsListagem
             $this->$var = ($val === '') ? null : $val;
         }
 
-        $obj_permissao = new clsPermissoes();
+        $obj_permissao = new clsPermissoes;
         $nivel_usuario = $obj_permissao->nivel_acesso($this->pessoa_logada);
 
         switch ($nivel_usuario) {
