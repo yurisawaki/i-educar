@@ -62,7 +62,7 @@ class ValueTurmaMaisEducacaoTest extends TestCase
      */
     private function getValueObject()
     {
-        $valueObject = new ValueTurmaMaisEducacao();
+        $valueObject = new ValueTurmaMaisEducacao;
         $valueObject->setDependenciaAdministrativa(DependenciaAdministrativaEscola::MUNICIPAL);
         $valueObject->setTipoAtendimento(TipoAtendimentoTurma::ATIVIDADE_COMPLEMENTAR);
         $valueObject->setModalidade(1);

@@ -25,13 +25,13 @@ class PersonTest extends ViewTestCase
 
     public function testTypeDescription(): void
     {
-        $expected = (new PersonType())->getDescriptiveValues()[(int) $this->model->type];
+        $expected = (new PersonType)->getDescriptiveValues()[(int) $this->model->type];
         $this->assertEquals($expected, $this->model->typeDescription);
     }
 
     public function testRegistryOriginDescription(): void
     {
-        $expected = (new RegistryOrigin())->getDescriptiveValues()[(int) $this->model->registry_origin];
+        $expected = (new RegistryOrigin)->getDescriptiveValues()[(int) $this->model->registry_origin];
         $this->assertEquals($expected, $this->model->registryOriginDescription);
     }
 }

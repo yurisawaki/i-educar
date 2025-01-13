@@ -376,7 +376,7 @@ class FileExportService
 
     private function notifyUser(): void
     {
-        (new NotificationService())->createByUser(
+        (new NotificationService)->createByUser(
             userId: $this->fileExport->user_id,
             text: $this->getMessage(),
             link: $this->getDestinyStorage()->url($this->destinyZipFilePath),

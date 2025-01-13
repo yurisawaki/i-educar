@@ -12,7 +12,7 @@ class RemoveHtmlTagsServiceTest extends TestCase
      */
     public function testRemoveHtmlTag(string $text, string $pattern)
     {
-        $parecer = (new RemoveHtmlTagsStringService())->execute($text);
+        $parecer = (new RemoveHtmlTagsStringService)->execute($text);
         self::assertTrue(preg_match($pattern, $parecer) === 0);
     }
 

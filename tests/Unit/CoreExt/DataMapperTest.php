@@ -19,7 +19,7 @@ class CoreExt_DataMapperTest extends UnitBaseTest
     public function testDbAdapterLancaExcecaoQuandoNaoEDoTipoEsperado()
     {
         $this->expectException(\TypeError::class);
-        $db = new stdClass();
+        $db = new stdClass;
         $mapper = new CoreExt_EntityDataMapperStub($db);
     }
 
@@ -242,7 +242,7 @@ class CoreExt_DataMapperTest extends UnitBaseTest
             ->method('Tupla')
             ->will($this->returnValue([]));
 
-        $entity = new CoreExt_EntityStub();
+        $entity = new CoreExt_EntityStub;
         $entity->nome = 'Fernando Nascimento';
         $entity->estadoCivil = 'casado';
         $entity->markOld();
@@ -264,7 +264,7 @@ class CoreExt_DataMapperTest extends UnitBaseTest
             ->method('Tupla')
             ->will($this->returnValue([]));
 
-        $entity = new CoreExt_EntityCompoundStub();
+        $entity = new CoreExt_EntityCompoundStub;
         $entity->pessoa = 1;
         $entity->curso = 1;
         $entity->confirmado = false;
@@ -277,7 +277,7 @@ class CoreExt_DataMapperTest extends UnitBaseTest
 
     public function testInsereNovoRegistroComChaveCompostaComUmaNulaLancaExcecao()
     {
-        $entity = new CoreExt_EntityCompoundStub();
+        $entity = new CoreExt_EntityCompoundStub;
         $entity->pessoa = 1;
         $entity->confirmado = false;
         $entity->markOld();
@@ -305,7 +305,7 @@ class CoreExt_DataMapperTest extends UnitBaseTest
             ->method('Tupla')
             ->will($this->returnValue([]));
 
-        $entity = new CoreExt_EntityStub();
+        $entity = new CoreExt_EntityStub;
         $entity->id = 1;
         $entity->nome = 'Fernando Nascimento';
         $entity->estadoCivil = 'casado';
@@ -326,7 +326,7 @@ class CoreExt_DataMapperTest extends UnitBaseTest
             ->method('Tupla')
             ->will($this->returnValue([]));
 
-        $entity = new CoreExt_EntityCompoundStub();
+        $entity = new CoreExt_EntityCompoundStub;
         $entity->pessoa = 1;
         $entity->curso = 1;
         $entity->confirmado = true;
@@ -347,7 +347,7 @@ class CoreExt_DataMapperTest extends UnitBaseTest
             ->method('Tupla')
             ->will($this->returnValue([]));
 
-        $entity = new CoreExt_EntityStub();
+        $entity = new CoreExt_EntityStub;
         $mapper = new CoreExt_EntityDataMapperStub($this->_db);
 
         $this->assertTrue($mapper->delete($entity));
@@ -359,7 +359,7 @@ class CoreExt_DataMapperTest extends UnitBaseTest
             ->method('Consulta')
             ->will($this->returnValue(true));
 
-        $entity = new CoreExt_EntityStub();
+        $entity = new CoreExt_EntityStub;
         $mapper = new CoreExt_EntityDataMapperStub($this->_db);
 
         $this->assertTrue($mapper->delete($entity));

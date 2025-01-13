@@ -11,7 +11,7 @@ class CoreExt_Validate_ChoiceMultipleTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->_validator = new CoreExt_Validate_ChoiceMultiple();
+        $this->_validator = new CoreExt_Validate_ChoiceMultiple;
     }
 
     public function testEscolhaMultiplaValida()

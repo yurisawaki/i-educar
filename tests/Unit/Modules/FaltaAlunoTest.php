@@ -6,7 +6,7 @@ class FaltaAlunoTest extends UnitBaseTest
 
     protected function setUp(): void
     {
-        $this->_entity = new Avaliacao_Model_FaltaAluno();
+        $this->_entity = new Avaliacao_Model_FaltaAluno;
     }
 
     public function testEntityValidators()

@@ -12,7 +12,7 @@ class LegacyAttributeTest extends TestCase
 {
     public function testeBuilderCustom(): void
     {
-        $class = new class() extends Model
+        $class = new class extends Model
         {
             use HasBuilder;
 
@@ -24,7 +24,7 @@ class LegacyAttributeTest extends TestCase
 
     public function testeBuilderDefault(): void
     {
-        $class = new class() extends Model
+        $class = new class extends Model
         {
             use HasBuilder;
         };

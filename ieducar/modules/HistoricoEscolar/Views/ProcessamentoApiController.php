@@ -476,7 +476,7 @@ class ProcessamentoApiController extends Core_Controller_Page_EditController
 
     protected function deleteHistoricoDisplinas($alunoId, $historicoSequencial)
     {
-        $historicoDisciplinas = new clsPmieducarHistoricoDisciplinas();
+        $historicoDisciplinas = new clsPmieducarHistoricoDisciplinas;
         $historicoDisciplinas->excluirTodos($alunoId, $historicoSequencial);
     }
 
@@ -853,7 +853,7 @@ class ProcessamentoApiController extends Core_Controller_Page_EditController
                 $tipo_base = ComponenteCurricular_Model_TipoBase::DEFAULT;
                 $ordenamento = $i;
 
-                $componenteCurricular = (new ComponenteCurricular_Model_ComponenteDataMapper())->findByName($disciplina['nome']);
+                $componenteCurricular = (new ComponenteCurricular_Model_ComponenteDataMapper)->findByName($disciplina['nome']);
 
                 if ($componenteCurricular) {
                     $ordenamento = $componenteCurricular->ordenamento;
@@ -917,7 +917,7 @@ class ProcessamentoApiController extends Core_Controller_Page_EditController
         $params = ['params' => $matriculaId, 'return_only' => 'first-line'];
         $idsSerieCurso = Portabilis_Utils_Database::fetchPreparedQuery($sql, $params);
 
-        $matriculaTurma = new clsPmieducarMatriculaTurma();
+        $matriculaTurma = new clsPmieducarMatriculaTurma;
         $matriculaTurma = $matriculaTurma->lista(
             $matriculaId,
             null,
@@ -1028,7 +1028,7 @@ class ProcessamentoApiController extends Core_Controller_Page_EditController
         $matriculas = [];
 
         if ($this->canGetMatriculas()) {
-            $alunos = new clsPmieducarMatriculaTurma();
+            $alunos = new clsPmieducarMatriculaTurma;
             $alunos->setOrderby('ref_cod_curso, ref_ref_cod_serie, ref_cod_turma, sequencial_fechamento, nome');
 
             $alunos = $alunos->lista(

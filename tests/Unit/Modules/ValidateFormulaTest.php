@@ -5,21 +5,21 @@ class ValidateFormulaTest extends UnitBaseTest
     public function testFormulaValida()
     {
         $formula = 'Se / Et';
-        $validator = new FormulaMedia_Validate_Formula();
+        $validator = new FormulaMedia_Validate_Formula;
         $this->assertTrue($validator->isValid($formula));
     }
 
     public function testFormulaValidaUsandoAliasDeMultiplicacao()
     {
         $formula = 'Se x 0.99 / Et';
-        $validator = new FormulaMedia_Validate_Formula();
+        $validator = new FormulaMedia_Validate_Formula;
         $this->assertTrue($validator->isValid($formula));
     }
 
     public function testFormulaValidaComNumericos()
     {
         $formula = 'Se * 0.5 / Et';
-        $validator = new FormulaMedia_Validate_Formula();
+        $validator = new FormulaMedia_Validate_Formula;
         $this->assertTrue($validator->isValid($formula));
     }
 
@@ -27,7 +27,7 @@ class ValidateFormulaTest extends UnitBaseTest
     {
         $this->expectException(\Exception::class);
         $formula = 'Rc * 0.4 + Se * 0.6';
-        $validator = new FormulaMedia_Validate_Formula();
+        $validator = new FormulaMedia_Validate_Formula;
         $this->assertTrue($validator->isValid($formula));
     }
 

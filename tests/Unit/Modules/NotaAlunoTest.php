@@ -6,7 +6,7 @@ class NotaAlunoTest extends UnitBaseTest
 
     protected function setUp(): void
     {
-        $this->_entity = new Avaliacao_Model_NotaAluno();
+        $this->_entity = new Avaliacao_Model_NotaAluno;
     }
 
     public function testEntityValidators()

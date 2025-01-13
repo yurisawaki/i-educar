@@ -124,15 +124,15 @@ class StateControllerTest extends ResourceTestCase
 
     private function createStateIntoBrasil(): State
     {
-        $country = (new CountryFactory())->create(['id' => Country::BRASIL]);
+        $country = (new CountryFactory)->create(['id' => Country::BRASIL]);
 
-        return (new StateFactory())->create(['country_id' => $country]);
+        return (new StateFactory)->create(['country_id' => $country]);
     }
 
     private function makeStateIntoBrasil(): State
     {
-        $country = (new CountryFactory())->create(['id' => Country::BRASIL]);
+        $country = (new CountryFactory)->create(['id' => Country::BRASIL]);
 
-        return (new StateFactory())->make(['country_id' => $country]);
+        return (new StateFactory)->make(['country_id' => $country]);
     }
 }

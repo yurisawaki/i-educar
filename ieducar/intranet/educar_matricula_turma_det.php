@@ -46,7 +46,7 @@ return new class extends clsDetalhe
             $this->simpleRedirect(url: 'educar_matricula_lst.php');
         }
 
-        $obj_mat_turma = new clsPmieducarMatriculaTurma();
+        $obj_mat_turma = new clsPmieducarMatriculaTurma;
         $det_mat_turma = $obj_mat_turma->lista(
             int_ref_cod_matricula: $this->ref_cod_matricula,
             int_ativo: 1
@@ -62,11 +62,11 @@ return new class extends clsDetalhe
             $this->sequencial = $det_mat_turma['sequencial'];
         }
 
-        $tmp_obj = new clsPmieducarTurma();
+        $tmp_obj = new clsPmieducarTurma;
         $lst_obj = $tmp_obj->lista(int_cod_turma: $this->ref_cod_turma);
         $registro = array_shift(array: $lst_obj);
 
-        $db = new clsBanco();
+        $db = new clsBanco;
 
         $ano = $db->CampoUnico(consulta: "select ano from pmieducar.matricula where cod_matricula = $this->ref_cod_matricula");
         $sql = "select count(cod_matricula) as qtd_matriculas from pmieducar.matricula, pmieducar.matricula_turma, pmieducar.aluno where aluno.cod_aluno = matricula.ref_cod_aluno and ano = {$ano} and aluno.ativo = 1 and matricula.ativo = 1 and matricula_turma.ativo = matricula.ativo and matricula.dependencia = 'f' and cod_matricula = ref_cod_matricula and ref_cod_turma = $this->ref_cod_turma";
@@ -105,11 +105,11 @@ return new class extends clsDetalhe
         $registro['ref_ref_cod_serie'] = $det_ser['nm_serie'];
 
         // Matrícula
-        $obj_ref_cod_matricula = new clsPmieducarMatricula();
+        $obj_ref_cod_matricula = new clsPmieducarMatricula;
         $objMatricula = $obj_ref_cod_matricula->lista(int_cod_matricula: $this->ref_cod_matricula);
         $detalhe_aluno = array_shift(array: $objMatricula);
 
-        $obj_aluno = new clsPmieducarAluno();
+        $obj_aluno = new clsPmieducarAluno;
 
         $det_aluno = $obj_aluno->lista(
             int_cod_aluno: $detalhe_aluno['ref_cod_aluno'],
@@ -142,7 +142,7 @@ return new class extends clsDetalhe
         }
 
         //(enturmações) turma atual
-        $objEnturmacoes = new clsPmieducarMatriculaTurma();
+        $objEnturmacoes = new clsPmieducarMatriculaTurma;
         $enturmacoes = $objEnturmacoes->lista(int_ref_cod_matricula: $this->ref_cod_matricula, int_ativo: 1);
 
         $this->possuiEnturmacao = !empty($enturmacoes);
@@ -290,7 +290,7 @@ return new class extends clsDetalhe
 
         echo $script;
 
-        $canCreate = new clsPermissoes();
+        $canCreate = new clsPermissoes;
         $canCreate = $canCreate->permissao_cadastra(int_processo_ap: 578, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 7);
         $this->data_enturmacao = $enturmacoes[0]['data_enturmacao'];
 
@@ -327,7 +327,7 @@ return new class extends clsDetalhe
 
     protected function getEscolaSerie($escolaId, $serieId)
     {
-        $escolaSerie = new clsPmieducarEscolaSerie();
+        $escolaSerie = new clsPmieducarEscolaSerie;
         $escolaSerie->ref_cod_escola = $escolaId;
         $escolaSerie->ref_cod_serie = $serieId;
 

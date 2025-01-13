@@ -87,7 +87,7 @@ class SchoolManagerTest extends TestCase
     private function getFakeValueObject()
     {
         $faker = Factory::create();
-        $valueObject = new SchoolManagerValueObject();
+        $valueObject = new SchoolManagerValueObject;
         $valueObject->individualId = $faker->randomNumber(1);
         $valueObject->roleId = $faker->randomNumber(1);
         $valueObject->accessCriteriaId = $faker->randomNumber(1);

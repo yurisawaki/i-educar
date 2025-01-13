@@ -38,7 +38,7 @@ return new class extends clsListagem
 
         $get_escola = false;
         include 'include/pmieducar/educar_campo_lista.php';
-        $obj_permissao = new clsPermissoes();
+        $obj_permissao = new clsPermissoes;
         $nivel_usuario = $obj_permissao->nivel_acesso($this->pessoa_logada);
 
         switch ($nivel_usuario) {

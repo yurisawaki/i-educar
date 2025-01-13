@@ -49,7 +49,7 @@ abstract class ViewTestCase extends TestCase
     {
         $model = $this->getViewModelName();
 
-        return new $model();
+        return new $model;
     }
 
     /**

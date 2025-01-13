@@ -211,7 +211,7 @@ class LegacyBuilder extends Builder
     public function whereFilter(string $filters): self
     {
         $filters = array_filter(explode('|', $filters));
-        $groupRelations = new Collection();
+        $groupRelations = new Collection;
         foreach ($filters as $filter) {
             //relacionamentos
             if (str_contains($filter, '.')) {

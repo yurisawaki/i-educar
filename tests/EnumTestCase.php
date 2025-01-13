@@ -11,7 +11,7 @@ abstract class EnumTestCase extends TestCase
         parent::setUp();
 
         $model = $this->getEnumName();
-        $this->enum = new $model();
+        $this->enum = new $model;
     }
 
     abstract public function getDescriptiveValues(): array;

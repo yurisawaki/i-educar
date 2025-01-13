@@ -8,7 +8,7 @@ class Avaliacao_Service_UtilityTest extends Avaliacao_Service_TestCommon
 
         $this->expectException('CoreExt_Exception_InvalidArgumentException');
         $this->expectExceptionMessage('O parâmetro $nota ("") não é um valor numérico.');
-        $service->arredondaNota(new Avaliacao_Model_NotaComponente());
+        $service->arredondaNota(new Avaliacao_Model_NotaComponente);
     }
 
     public function testArredondaNotaNumerica()
@@ -60,7 +60,7 @@ class Avaliacao_Service_UtilityTest extends Avaliacao_Service_TestCommon
             ->method('findAll')
             ->will($this->returnValue($tabelaValores));
 
-        $tabelaDataMapper = new TabelaArredondamento_Model_TabelaDataMapper();
+        $tabelaDataMapper = new TabelaArredondamento_Model_TabelaDataMapper;
         $tabelaDataMapper->setTabelaValorDataMapper($mock);
 
         $tabela = new TabelaArredondamento_Model_Tabela([

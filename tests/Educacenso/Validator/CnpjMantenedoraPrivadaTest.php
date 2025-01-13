@@ -51,6 +51,6 @@ class CnpjMantenedoraPrivadaTest extends TestCase
 
     private function getFakeRegistro()
     {
-        return new Registro00();
+        return new Registro00;
     }
 }

@@ -138,17 +138,17 @@ class CityControllerTest extends ResourceTestCase
 
     private function createCityIntoBrasil(): City
     {
-        $country = (new CountryFactory())->create(['id' => Country::BRASIL]);
-        $state = (new StateFactory())->create(['country_id' => $country]);
+        $country = (new CountryFactory)->create(['id' => Country::BRASIL]);
+        $state = (new StateFactory)->create(['country_id' => $country]);
 
-        return (new CityFactory())->createOne(['state_id' => $state]);
+        return (new CityFactory)->createOne(['state_id' => $state]);
     }
 
     private function makeCityIntoBrasil(): City
     {
-        $country = (new CountryFactory())->create(['id' => Country::BRASIL]);
-        $state = (new StateFactory())->create(['country_id' => $country]);
+        $country = (new CountryFactory)->create(['id' => Country::BRASIL]);
+        $state = (new StateFactory)->create(['country_id' => $country]);
 
-        return (new CityFactory())->makeOne(['state_id' => $state]);
+        return (new CityFactory)->makeOne(['state_id' => $state]);
     }
 }

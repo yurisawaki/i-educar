@@ -35,7 +35,7 @@ class DependenciaAdminstrativaTest extends TestCase
 
     private function getFakeRegistro()
     {
-        $registro = new Registro00();
+        $registro = new Registro00;
         $registro->mantenedoraEscolaPrivada = 'Mantenedora Fake';
         $registro->mantenedoraEmpresa = 'Empresa Fake';
         $registro->cnpjEscolaPrivada = 'Cpnj Fake';

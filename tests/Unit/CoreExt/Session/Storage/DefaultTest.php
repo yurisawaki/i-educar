@@ -11,7 +11,7 @@ class CoreExt_Session_Storage_DefaultTest extends TestCase
     {
         parent::setUp();
 
-        $this->_storage = new CoreExt_Session_Storage_Default();
+        $this->_storage = new CoreExt_Session_Storage_Default;
     }
 
     public function testInstanciaESubclasseDeCountable()

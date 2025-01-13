@@ -17,7 +17,7 @@ class Avaliacao_Service_PromocaoAlunoTest extends Avaliacao_Service_TestCommon
 
     public function testPromoverAlunoLancaExcecaoCasoSituacaoEstejaEmAndamento()
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->aprovado = true;
         $situacao->andamento = true;
         $situacao->recuperacao = false;
@@ -56,7 +56,7 @@ class Avaliacao_Service_PromocaoAlunoTest extends Avaliacao_Service_TestCommon
 
     public function testPromoverAlunoAutomaticamenteProgressaoContinuada()
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->aprovado = true;
         $situacao->andamento = false;
         $situacao->recuperacao = false;
@@ -95,7 +95,7 @@ class Avaliacao_Service_PromocaoAlunoTest extends Avaliacao_Service_TestCommon
 
     public function testPromoverAlunoAutomaticamenteProgressaoNaoContinuadaAutoMediaPresenca()
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->aprovado = true;
         $situacao->andamento = false;
         $situacao->recuperacao = false;
@@ -137,7 +137,7 @@ class Avaliacao_Service_PromocaoAlunoTest extends Avaliacao_Service_TestCommon
 
     public function testReprovarAlunoAutomaticamenteProgressaoNaoContinuadaAutoMediaPresenca()
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->aprovado = true;
         $situacao->andamento = false;
         $situacao->recuperacao = false;
@@ -176,7 +176,7 @@ class Avaliacao_Service_PromocaoAlunoTest extends Avaliacao_Service_TestCommon
 
     public function testPromoverAlunoAutomaticamenteProgressaoNaoContinuadaAutoMedia()
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->aprovado = true;
         $situacao->andamento = false;
         $situacao->recuperacao = false;
@@ -219,7 +219,7 @@ class Avaliacao_Service_PromocaoAlunoTest extends Avaliacao_Service_TestCommon
 
     public function testPromoverAlunoManualmenteProgressaoNaoContinuada()
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->aprovado = false; // Reprovado por nota
         $situacao->andamento = false;
         $situacao->recuperacao = false;
@@ -260,7 +260,7 @@ class Avaliacao_Service_PromocaoAlunoTest extends Avaliacao_Service_TestCommon
 
     public function testReprovarAlunoManualmenteProgressaoNaoContinuada()
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->aprovado = false; // Reprovado por nota
         $situacao->andamento = false;
         $situacao->recuperacao = false;
@@ -301,7 +301,7 @@ class Avaliacao_Service_PromocaoAlunoTest extends Avaliacao_Service_TestCommon
 
     public function testSaveBoletim()
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->aprovado = true;
         $situacao->andamento = false;
         $situacao->recuperacao = false;
@@ -343,7 +343,7 @@ class Avaliacao_Service_PromocaoAlunoTest extends Avaliacao_Service_TestCommon
 
     public function testIntegracaoMatriculaPromoverAluno()
     {
-        $situacao = new stdClass();
+        $situacao = new stdClass;
         $situacao->aprovado = true;
         $situacao->andamento = false;
         $situacao->recuperacao = false;

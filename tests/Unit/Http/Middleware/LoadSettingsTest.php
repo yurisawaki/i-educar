@@ -27,7 +27,7 @@ class LoadSettingsTest extends TestCase
 
         $request = Request::create('/intranet/index.php');
 
-        $middleware = new LoadSettings();
+        $middleware = new LoadSettings;
 
         $middleware->handle($request, function () {});
 

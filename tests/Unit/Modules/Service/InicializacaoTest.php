@@ -5,7 +5,7 @@ class Avaliacao_Service_InicializacaoTest extends Avaliacao_Service_TestCommon
     public function testInstanciaLancaExcecaoCasoCodigoDeMatriculaNaoSejaInformado()
     {
         $this->expectException(\CoreExt_Service_Exception::class);
-        new Avaliacao_Service_Boletim();
+        new Avaliacao_Service_Boletim;
     }
 
     public function testInstanciaLancaExcecaoComOpcaoNaoAceitaPelaClasse()

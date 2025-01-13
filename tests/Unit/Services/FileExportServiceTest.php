@@ -38,7 +38,7 @@ class FileExportServiceTest extends TestCase
         $this->export = FileExportFactory::new()->create();
         $count = DB::table('relatorio.situacao_matricula')->count();
         if ($count === 0) {
-            $seed = new DefaultRelatorioSituacaoMatriculaTableSeeder();
+            $seed = new DefaultRelatorioSituacaoMatriculaTableSeeder;
             $seed->run();
         }
         $institution = LegacyInstitutionFactory::new()->create();

@@ -27,8 +27,8 @@ class Util
     public static function formatWorkload(?float $workload): string
     {
         if ($workload !== null) {
-            $hours = (int)$workload;
-            $minutes = (int)round(($workload - $hours) * 60);
+            $hours = (int) $workload;
+            $minutes = (int) round(($workload - $hours) * 60);
             if ($minutes === 60) {
                 $hours++;
                 $minutes = 0;

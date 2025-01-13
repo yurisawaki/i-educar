@@ -85,7 +85,7 @@ class Avaliacao_Service_FaltaComponenteSituacaoTest extends Avaliacao_Service_Fa
 
         $componentePorcentagemPresenca = 100 - $componentePorcentagemFalta;
 
-        $expected->componentesCurriculares[2] = new stdClass();
+        $expected->componentesCurriculares[2] = new stdClass;
         $expected->componentesCurriculares[2]->situacao = App_Model_MatriculaSituacao::APROVADO;
         $expected->componentesCurriculares[2]->horasFaltas = $componenteHoraFalta;
         $expected->componentesCurriculares[2]->porcentagemFalta = $componentePorcentagemFalta;
@@ -206,7 +206,7 @@ class Avaliacao_Service_FaltaComponenteSituacaoTest extends Avaliacao_Service_Fa
 
         $componentePorcentagemPresenca = 100 - $componentePorcentagemFalta;
 
-        $expected->componentesCurriculares[2] = new stdClass();
+        $expected->componentesCurriculares[2] = new stdClass;
         $expected->componentesCurriculares[2]->situacao = App_Model_MatriculaSituacao::APROVADO;
         $expected->componentesCurriculares[2]->horasFaltas = $componenteHoraFalta;
         $expected->componentesCurriculares[2]->porcentagemFalta = $componentePorcentagemFalta;
@@ -223,7 +223,7 @@ class Avaliacao_Service_FaltaComponenteSituacaoTest extends Avaliacao_Service_Fa
 
         $componentePorcentagemPresenca = 100 - $componentePorcentagemFalta;
 
-        $expected->componentesCurriculares[3] = new stdClass();
+        $expected->componentesCurriculares[3] = new stdClass;
         $expected->componentesCurriculares[3]->situacao = App_Model_MatriculaSituacao::APROVADO;
         $expected->componentesCurriculares[3]->horasFaltas = $componenteHoraFalta;
         $expected->componentesCurriculares[3]->porcentagemFalta = $componentePorcentagemFalta;
@@ -240,7 +240,7 @@ class Avaliacao_Service_FaltaComponenteSituacaoTest extends Avaliacao_Service_Fa
 
         $componentePorcentagemPresenca = 100 - $componentePorcentagemFalta;
 
-        $expected->componentesCurriculares[4] = new stdClass();
+        $expected->componentesCurriculares[4] = new stdClass;
         $expected->componentesCurriculares[4]->situacao = App_Model_MatriculaSituacao::APROVADO;
         $expected->componentesCurriculares[4]->horasFaltas = $componenteHoraFalta;
         $expected->componentesCurriculares[4]->porcentagemFalta = $componentePorcentagemFalta;
@@ -366,7 +366,7 @@ class Avaliacao_Service_FaltaComponenteSituacaoTest extends Avaliacao_Service_Fa
 
         $componentePorcentagemPresenca = 100 - $componentePorcentagemFalta;
 
-        $expected->componentesCurriculares[2] = new stdClass();
+        $expected->componentesCurriculares[2] = new stdClass;
         $expected->componentesCurriculares[2]->situacao = App_Model_MatriculaSituacao::REPROVADO;
         $expected->componentesCurriculares[2]->horasFaltas = $componenteHoraFalta;
         $expected->componentesCurriculares[2]->porcentagemFalta = $componentePorcentagemFalta;
@@ -383,7 +383,7 @@ class Avaliacao_Service_FaltaComponenteSituacaoTest extends Avaliacao_Service_Fa
 
         $componentePorcentagemPresenca = 100 - $componentePorcentagemFalta;
 
-        $expected->componentesCurriculares[3] = new stdClass();
+        $expected->componentesCurriculares[3] = new stdClass;
         $expected->componentesCurriculares[3]->situacao = App_Model_MatriculaSituacao::APROVADO;
         $expected->componentesCurriculares[3]->horasFaltas = $componenteHoraFalta;
         $expected->componentesCurriculares[3]->porcentagemFalta = $componentePorcentagemFalta;
@@ -400,7 +400,7 @@ class Avaliacao_Service_FaltaComponenteSituacaoTest extends Avaliacao_Service_Fa
 
         $componentePorcentagemPresenca = 100 - $componentePorcentagemFalta;
 
-        $expected->componentesCurriculares[4] = new stdClass();
+        $expected->componentesCurriculares[4] = new stdClass;
         $expected->componentesCurriculares[4]->situacao = App_Model_MatriculaSituacao::REPROVADO;
         $expected->componentesCurriculares[4]->horasFaltas = $componenteHoraFalta;
         $expected->componentesCurriculares[4]->porcentagemFalta = $componentePorcentagemFalta;
