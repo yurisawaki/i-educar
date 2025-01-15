@@ -47,6 +47,14 @@ class SchoolNotice extends Model
     }
 
     /**
+     * @return BelongsTo<Employee, $this>
+     */
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class, 'user_id');
+    }
+
+    /**
      * @return BelongsTo<LegacySchool, $this>
      */
     public function school(): BelongsTo
