@@ -67,8 +67,18 @@ return new class extends clsListagem
         // Paginador
         $this->limite = 20;
 
+        $usuarioEscolar = null;
+        if (App_Model_IedFinder::usuarioNivelBibliotecaEscolar(codUsuario: $this->pessoa_logada)) {
+            $usuarioEscolar = $this->pessoa_logada;
+        }
+
         $query = SchoolNotice::query()
             ->with(['institution', 'school'])
+            ->when($usuarioEscolar, function ($query, $usuarioEscolar) {
+                $query->whereHas('school.schoolUsers', function ($q) use ($usuarioEscolar) {
+                    $q->where('ref_cod_usuario', $usuarioEscolar);
+                });
+            })
             ->orderByDesc('created_at');
 
         if (is_string(value: $this->titulo_busca)) {
@@ -76,7 +86,7 @@ return new class extends clsListagem
         }
 
         if (is_numeric(value: $this->ref_cod_instituicao)) {
-            $query->where(column: 'institution_id', operator: $this->institution_id);
+            $query->where(column: 'institution_id', operator: $this->ref_cod_instituicao);
         }
 
         if (is_numeric(value: $this->ref_cod_escola)) {
