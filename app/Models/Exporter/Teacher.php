@@ -70,6 +70,7 @@ class Teacher extends Model
                 'high_school_type' => 'Tipo de ensino médio cursado',
                 'employee_postgraduates_complete' => 'Pós-Graduações concluídas',
                 'continuing_education_course' => 'Outros cursos de formação continuada',
+                'complementacao_pedagogica' => 'Formação/Complementação pedagógica',
                 'employee_graduation_complete' => 'Curso(s) superior(es) concluído(s)',
                 'allocations.funcao_exercida' => 'Função exercida',
                 'allocations.tipo_vinculo' => 'Tipo de vínculo',
