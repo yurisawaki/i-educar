@@ -1569,7 +1569,7 @@ class App_Model_IedFinder extends CoreExt_Entity
         return $stages;
     }
 
-    //Retorna a quantidade de etapas resgatadas na function getEtapasComponente
+    // Retorna a quantidade de etapas resgatadas na function getEtapasComponente
     public static function getQtdeEtapasComponente($turma, $componente)
     {
         $resultado = self::getEtapasComponente($turma, $componente);
@@ -1581,7 +1581,7 @@ class App_Model_IedFinder extends CoreExt_Entity
         return null;
     }
 
-    //Retorna a ultima etapa resgatada na function getEtapasComponente
+    // Retorna a ultima etapa resgatada na function getEtapasComponente
     public static function getUltimaEtapaComponente($turma, $componente)
     {
         $resultado = self::getEtapasComponente($turma, $componente);
