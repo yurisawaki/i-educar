@@ -22,6 +22,8 @@ class SalasAtividades
 
     public const ESTUDIO_GRAVACAO_EDICAO = 9;
 
+    public const AREA_HORTA = 10;
+
     public static function getDescriptiveValues()
     {
         return [
@@ -34,6 +36,7 @@ class SalasAtividades
             self::REPOUSO_ALUNO => 'Sala de repouso para aluno(a)',
             self::EDUCACAO_PROFISSIONAL => 'Salas de oficinas da educação profissional',
             self::ESTUDIO_GRAVACAO_EDICAO => 'Estúdio de gravação e edição',
+            self::AREA_HORTA => 'Horta',
         ];
     }
 }
