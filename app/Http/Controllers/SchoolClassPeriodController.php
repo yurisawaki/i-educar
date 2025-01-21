@@ -6,11 +6,21 @@ use App\Http\Requests\SchoolClassPeriodRequest;
 use App\Models\LegacySchoolClass;
 use App\Models\LegacySchoolClassStage;
 use App\Process;
+use Carbon\Carbon;
 use iEducar\Support\Exceptions\Exception;
 use Illuminate\Support\Facades\DB;
 
 class SchoolClassPeriodController extends Controller
 {
+    function getDate($date, $format)
+    {
+        try {
+            return Carbon::createFromFormat($format, $date);
+        } catch (Exception) {
+            return null;
+        }
+    }
+
     public function update(SchoolClassPeriodRequest $request)
     {
         $schoolClasses = LegacySchoolClass::query()
@@ -31,10 +41,12 @@ class SchoolClassPeriodController extends Controller
         foreach ($request->get('etapas') as $stage => $data) {
             try {
                 DB::beginTransaction();
+                $startDate = $data['data_inicio'] ?? null;
+                $endDate = $data['data_fim'] ?? null;
 
                 $updateData = array_filter([
-                    'data_inicio' => $data['data_inicio'] ?? null,
-                    'data_fim' => $data['data_fim'] ?? null,
+                    'data_inicio' => $startDate ? $this->getDate($startDate, 'd/m/Y') : null,
+                    'data_fim' => $endDate ? $this->getDate($endDate, 'd/m/Y') : null,
                     'dias_letivos' => $data['dias_letivos'] ?? null,
                 ]);
 
