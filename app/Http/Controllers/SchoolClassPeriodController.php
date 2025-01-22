@@ -23,24 +23,28 @@ class SchoolClassPeriodController extends Controller
 
     public function update(SchoolClassPeriodRequest $request)
     {
+        $stageDates = $request->get('etapas');
+
         $schoolClasses = LegacySchoolClass::query()
             ->whereInstitution($request->get('ref_cod_instituicao'))
             ->whereYearEq($request->get('ano'))
-            ->when($request->get('escola'), function ($q, $schools) {
-                $q->whereIn('ref_ref_cod_escola', $schools);
+            ->when($request->get('escola'), fn ($q, $schools) =>  $q->whereIn('ref_ref_cod_escola', $schools))
+            ->when($request->get('curso'), fn ($q, $courses) => $q->whereIn('ref_cod_curso', $courses))
+            ->whereHas('schoolClassStages', function ($q) use($request){
+                $q->when($request->get('ref_cod_modulo'), function ($q, $stageType) {
+                    return $q->where('ref_cod_modulo', $stageType);
+                });
             })
-            ->when($request->get('curso'), function ($q, $courses) {
-                $q->whereIn('ref_cod_curso', $courses);
-            })
+            ->whereHas('course', fn ($q) => $q->whereStandardCalendar(0))
             ->pluck('cod_turma');
 
         if ($schoolClasses->count() === 0) {
             return redirect()->route('school-class-period.edit')->withInput()->with('error', 'Nenhuma turma encontrada com os filtros selecionados');
         }
 
-        foreach ($request->get('etapas') as $stage => $data) {
+        DB::beginTransaction();
+        foreach ($stageDates as $stage => $data) {
             try {
-                DB::beginTransaction();
                 $startDate = $data['data_inicio'] ?? null;
                 $endDate = $data['data_fim'] ?? null;
 
@@ -54,15 +58,15 @@ class SchoolClassPeriodController extends Controller
                     LegacySchoolClassStage::whereIn('ref_cod_turma', $schoolClasses)
                         ->where('sequencial', $stage)
                         ->update($updateData);
-
-                    DB::commit();
-                    session()->flash('success', "Atualização em lote efetuada com sucesso em {$schoolClasses->count()} turmas.");
                 }
             } catch (Exception) {
                 DB::rollBack();
                 session()->flash('error', 'Atualização em lote não realizada.');
             }
         }
+
+        DB::commit();
+        session()->flash('success', "Atualização em lote efetuada com sucesso em {$schoolClasses->count()} turmas.");
 
         return redirect()->route('schoolclass-period.edit');
     }

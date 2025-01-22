@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 
@@ -17,12 +18,32 @@ class SchoolClassPeriodRequest extends FormRequest
 
     public function rules()
     {
+        $year = $this->get('ano');
+
         return [
             'ref_cod_instituicao' => ['required', 'integer'],
             'escola' => ['nullable', 'array'],
             'curso' => ['nullable', 'array'],
-            'etapas.*.data_inicio' => ['nullable','date_format:d/m/Y'],
-            'etapas.*.data_fim' => ['nullable', 'date_format:d/m/Y', 'after_or_equal:etapas.*.data_inicio'],
+            'ano' => ['required', 'integer', 'digits:4', 'min:1900'],
+            'etapas.*.data_inicio' => [
+                'nullable',
+                'date_format:d/m/Y',
+                function ($attribute, $value, $fail) use ($year) {
+                    if ($value && Carbon::createFromFormat('d/m/Y', $value)->year != $year) {
+                        $fail("O ano da data de início deve ser {$year}.");
+                    }
+                },
+            ],
+            'etapas.*.data_fim' => [
+                'nullable',
+                'date_format:d/m/Y',
+                'after_or_equal:etapas.*.data_inicio',
+                function ($attribute, $value, $fail) use ($year) {
+                    if ($value && Carbon::createFromFormat('d/m/Y', $value)->year != $year) {
+                        $fail("O ano da data de término deve ser {$year}.");
+                    }
+                },
+            ],
             'etapas.*.dias_letivos' => ['nullable', 'integer', 'min:1', 'max:366'],
         ];
     }

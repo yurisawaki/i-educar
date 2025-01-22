@@ -49,6 +49,19 @@
                     </select>
                 </td>
             </tr>
+            <tr>
+                <td class="formmdtd" valign="top">
+                    <label for="cursos" class="form">Tipo de Etapa</label>
+                </td>
+                <td class="formmdtd" valign="top">
+                    <select class="geral" name="ref_cod_modulo" id="ref_cod_eref_cod_moduloscola" style="width: 308px;">
+                        <option value="">Selecione as opções</option>
+                        @foreach(App_Model_IedFinder::getStageTypes() as $id => $name)
+                            <option value="{{$id}}">{{ Str::upper($name) }}</option>
+                        @endforeach
+                    </select>
+                </td>
+            </tr>
 
             <tr id="tr_turma_modulo">
                 <td colspan="2" class="formmdtd" style="text-align: center; vertical-align: top;">
