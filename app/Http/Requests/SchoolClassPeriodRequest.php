@@ -77,6 +77,8 @@ class SchoolClassPeriodRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $etapas = $this->input('etapas', []);
+
+            // Verificar se todas as etapas estão vazias
             $allEmpty = collect($etapas)->every(function ($etapa) {
                 return empty($etapa['data_inicio']) &&
                     empty($etapa['data_fim']) &&
@@ -84,7 +86,30 @@ class SchoolClassPeriodRequest extends FormRequest
             });
 
             if ($allEmpty) {
-                $validator->errors()->add('etapas', 'Nenhuma informação a ser atualizado nas etapas');
+                $validator->errors()->add('etapas', 'Nenhuma informação a ser atualizada nas etapas');
+                return;
+            }
+
+            // Validar se a data final de uma etapa é menor que a data inicial da próxima etapa
+            for ($i = 0; $i < count($etapas) - 1; $i++) {
+                $currentEndDate = $etapas[$i]['data_fim'] ?? null;
+                $nextStartDate = $etapas[$i + 1]['data_inicio'] ?? null;
+
+                if ($currentEndDate && $nextStartDate) {
+                    $currentEndDateParsed = Carbon::createFromFormat('d/m/Y', $currentEndDate);
+                    $nextStartDateParsed = Carbon::createFromFormat('d/m/Y', $nextStartDate);
+
+                    if ($currentEndDateParsed->greaterThanOrEqualTo($nextStartDateParsed)) {
+                        $validator->errors()->add(
+                            "etapas.{$i}.data_fim",
+                            sprintf(
+                                'A data final da etapa %d deve ser menor que a data inicial da etapa %d',
+                                $i + 1,
+                                $i + 2
+                            )
+                        );
+                    }
+                }
             }
         });
     }
