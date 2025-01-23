@@ -103,7 +103,7 @@ class SchoolClassPeriodRequest extends FormRequest
                         $validator->errors()->add(
                             "etapas.{$i}.data_fim",
                             sprintf(
-                                'A data inicial da etapa %d deve ser maior que a data inicial da etapa %d',
+                                'A data inicial da etapa %d deve ser maior que a data final da etapa %d',
                                 $i + 1,
                                 $i
                             )
