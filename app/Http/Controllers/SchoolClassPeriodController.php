@@ -39,7 +39,7 @@ class SchoolClassPeriodController extends Controller
             ->pluck('cod_turma');
 
         if ($schoolClasses->count() === 0) {
-            return redirect()->route('school-class-period.edit')->withInput()->with('error', 'Nenhuma turma encontrada com os filtros selecionados');
+            return redirect()->route('schoolclass-period.edit')->withInput()->with('error', 'Nenhuma turma encontrada com os filtros selecionados');
         }
 
         DB::beginTransaction();
