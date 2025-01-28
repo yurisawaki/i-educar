@@ -107,8 +107,8 @@ class EditController extends Core_Controller_Page_EditController
             'help' => 'Alunos que não atingirem a média mínima no exame final, ainda serão aprovados caso tenha frequência mínima',
         ],
         'reprovarAutomaticamenteAposDependencias' => [
-            'label' => 'Reprovar alunos automaticamente após determinado número de disciplinas "Em exame".',
-            'help' => 'Alunos são reprovados automaticamente após ultrapassar o número de disciplinas "Em exame" informado.',
+            'label' => 'Quantidade de disciplinas "Em exame" para reprovação automática',
+            'help' => 'Alunos serão reprovados automaticamente ao atingirem o número de disciplinas "Em exame" informado. Preencha com 0 caso não utilize.',
         ],
         'regraDiferenciada' => [
             'label' => 'Regra inclusiva',
