@@ -1151,7 +1151,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
 
         if (
             $this->hasReprovarAutomaticamenteAposDependencias() &&
-            $componentesEmExame > $this->getQtdeReprovarAutomaticamenteAposDependencias()
+            $componentesEmExame >= $this->getQtdeReprovarAutomaticamenteAposDependencias()
         ) {
             $situacaoGeral = App_Model_MatriculaSituacao::REPROVADO;
         }
