@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Ankurk91\Eloquent\HasBelongsToOne;
 use Ankurk91\Eloquent\Relations\BelongsToOne;
+use App\Events\StudentCreated;
 use App\Models\Builders\LegacyStudentBuilder;
 use App\Traits\HasLegacyDates;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -41,6 +42,10 @@ class LegacyStudent extends LegacyModel
     protected $table = 'pmieducar.aluno';
 
     protected $primaryKey = 'cod_aluno';
+
+    protected $dispatchesEvents = [
+        'created' => StudentCreated::class,
+    ];
 
     protected $fillable = [
         'ref_idpes',
@@ -282,5 +287,21 @@ class LegacyStudent extends LegacyModel
     {
         // @phpstan-ignore-next-line
         return $this->hasOne(LegacyRegistration::class, 'ref_cod_aluno')->transfer();
+    }
+
+    /**
+     * @return HasOne<LegacyStudentMedicalRecord, $this>
+     */
+    public function medicalRecord(): HasOne
+    {
+        return $this->hasOne(LegacyStudentMedicalRecord::class, 'ref_cod_aluno');
+    }
+
+    /**
+     * @return HasMany<LegacyStudentMedicalRecord, $this>
+     */
+    public function historicalHeightWeight(): HasMany
+    {
+        return $this->hasMany(LegacyStudentHistoricalHeightWeight::class, 'ref_cod_aluno');
     }
 }

@@ -80,7 +80,7 @@ class RegraAvaliacao_Model_RegraDataMapper extends CoreExt_DataMapper
     public function getFormulaDataMapper()
     {
         if (is_null($this->_formulaDataMapper)) {
-            $this->setFormulaDataMapper(new FormulaMedia_Model_FormulaDataMapper());
+            $this->setFormulaDataMapper(new FormulaMedia_Model_FormulaDataMapper);
         }
 
         return $this->_formulaDataMapper;
@@ -108,7 +108,7 @@ class RegraAvaliacao_Model_RegraDataMapper extends CoreExt_DataMapper
     {
         if (is_null($this->_tabelaDataMapper)) {
             $this->setTabelaDataMapper(
-                new TabelaArredondamento_Model_TabelaDataMapper()
+                new TabelaArredondamento_Model_TabelaDataMapper
             );
         }
 
@@ -193,7 +193,7 @@ class RegraAvaliacao_Model_RegraDataMapper extends CoreExt_DataMapper
     {
         if (is_null($this->_regraRecuperacaoDataMapper)) {
             $this->setRegraRecuperacaoDataMapper(
-                new RegraAvaliacao_Model_RegraRecuperacaoDataMapper()
+                new RegraAvaliacao_Model_RegraRecuperacaoDataMapper
             );
         }
 
