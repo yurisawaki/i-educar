@@ -62,4 +62,4 @@ from pmieducar.ano_letivo_modulo
          join pmieducar.escola on escola.cod_escola = ano_letivo_modulo.ref_ref_cod_escola
          join pmieducar.modulo on modulo.cod_modulo = ano_letivo_modulo.ref_cod_modulo
 where true
-and escola.ativo = 1
+  and escola.ativo = 1
