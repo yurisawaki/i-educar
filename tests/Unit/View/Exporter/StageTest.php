@@ -46,6 +46,7 @@ class StageTest extends ViewTestCase
                 'stage_number' => 'Etapa',
                 'stage_start_date' => 'Data início',
                 'stage_end_date' => 'Data fim',
+                'stage_days' => 'Dias letivos',
                 'stage_type' => 'Padrão/Turma',
                 'posted_data' => 'Possui lançamentos',
             ],
