@@ -224,6 +224,7 @@ return new class extends clsCadastro
                 $this->hasStudentsPartials = $service->hasStudentsPartials($this->cod_turma);
 
                 if ($this->hasStudentsPartials) {
+                    $this->codigo_inep_educacenso = $obj_turma->getInepTurno(Period::FULLTIME);
                     $this->codigo_inep_matutino = $obj_turma->getInepTurno(Period::MORNING);
                     $this->codigo_inep_vespertino = $obj_turma->getInepTurno(Period::AFTERNOON);
                 }
