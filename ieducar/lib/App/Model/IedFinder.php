@@ -7,6 +7,7 @@ use App\Models\LegacyRegistration;
 use App\Models\LegacySchool;
 use App\Models\LegacySchoolClass;
 use App\Models\LegacySchoolClassStage;
+use App\Models\LegacyStageType;
 use App\Models\LegacyUserType;
 use iEducar\Modules\AcademicYear\Exceptions\DisciplineNotLinkedToRegistrationException;
 use iEducar\Modules\Enrollments\Exceptions\StudentNotEnrolledInSchoolClass;
@@ -89,6 +90,24 @@ class App_Model_IedFinder extends CoreExt_Entity
         }
 
         return $escolas;
+    }
+
+    /**
+     * Retorna todos os tipos de etapas
+     *
+     * @return array
+     */
+    public static function getStageTypes()
+    {
+        return LegacyStageType::query()
+            ->where('ativo', 1)
+            ->orderBy('nm_tipo')
+            ->get()
+            ->mapWithKeys(function ($stage) {
+                return [
+                    $stage->cod_modulo => sprintf('%s - %d etapa(s)', $stage->nm_tipo, $stage->num_etapas),
+                ];
+            });
     }
 
     /**
