@@ -86,6 +86,7 @@ class LegacySchool extends LegacyModel
         'qtd_revisor_braile',
         'acao_area_ambiental',
         'acoes_area_ambiental',
+        'característica_escolar'
     ];
 
     protected function id(): Attribute
