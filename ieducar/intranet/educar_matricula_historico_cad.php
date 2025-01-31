@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\LegacyEnrollment;
+use App\Models\RegistrationStatus;
 use App\Process;
 
 return new class extends clsCadastro
@@ -61,19 +62,7 @@ return new class extends clsCadastro
         $this->campoRotulo(nome: 'nm_pessoa', campo: 'Nome do Aluno', valor: $enturmacao['nome']);
         $this->campoRotulo(nome: 'sequencial', campo: 'Sequencial', valor: $enturmacao['sequencial']);
 
-        $situacao = match ((int) $matricula['aprovado']) {
-            1 => 'Aprovado',
-            2 => 'Reprovado',
-            3 => 'Cursando',
-            4 => 'Transferido',
-            5 => 'Reclassificado',
-            6 => 'Abandono',
-            7 => 'Em Exame',
-            12 => 'Aprovado com dependência',
-            13 => 'Aprovado pelo conselho',
-            14 => 'Reprovado por faltas',
-            default => '',
-        };
+        $situacao = RegistrationStatus::getRegistrationAndEnrollmentStatus()[$matricula['aprovado']] ?? '';
 
         $required = false;
 
@@ -90,7 +79,7 @@ return new class extends clsCadastro
             'transferido' => 'Transferido',
             'remanejado' => 'Remanejado',
             'reclassificado' => 'Reclassificado',
-            'abandono' => 'Abandono',
+            'abandono' => 'Deixou de Frequentar',
             'falecido' => 'Falecido',
         ];
 

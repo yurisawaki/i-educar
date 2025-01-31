@@ -76,7 +76,7 @@ return new class extends clsCadastro
 
         $this->url_cancelar = "educar_matricula_det.php?cod_matricula={$this->ref_cod_matricula}";
 
-        $this->breadcrumb(currentPage: 'Registro do abandono de matrícula', breadcrumbs: [
+        $this->breadcrumb(currentPage: 'Registro de aluno que deixou de frequentar', breadcrumbs: [
             url(path: 'intranet/educar_index.php') => 'Escola',
         ]);
 
@@ -103,11 +103,11 @@ return new class extends clsCadastro
             ->orderBy(column: 'nome', direction: 'ASC')
             ->pluck(column: 'nome', key: 'cod_abandono_tipo');
 
-        $options = ['label' => 'Motivo do abandono', 'resources' => $selectOptions, 'value' => ''];
+        $options = ['label' => 'Motivo - deixou de frequentar', 'resources' => $selectOptions, 'value' => ''];
 
         $this->inputsHelper()->select(attrName: 'abandono_tipo', inputOptions: $options);
 
-        $this->inputsHelper()->date(attrName: 'data_cancel', inputOptions: ['label' => 'Data do abandono', 'placeholder' => 'dd/mm/yyyy', 'value' => date(format: 'd/m/Y')]);
+        $this->inputsHelper()->date(attrName: 'data_cancel', inputOptions: ['label' => 'Data do deixou de frequentar', 'placeholder' => 'dd/mm/yyyy', 'value' => date(format: 'd/m/Y')]);
         // text
         $this->campoMemo(nome: 'observacao', campo: 'Observação', valor: $this->observacao, colunas: 60, linhas: 5);
     }
@@ -131,13 +131,13 @@ return new class extends clsCadastro
 
         if (is_null(value: $det_matricula['data_matricula'])) {
             if (substr(string: $det_matricula['data_cadastro'], offset: 0, length: 10) > $obj_matricula->data_cancel) {
-                $this->mensagem = 'Data de abandono não pode ser inferior a data da matrícula.<br>';
+                $this->mensagem = 'Data do deixou de frequentar não pode ser inferior a data da matrícula.<br>';
 
                 return false;
             }
         } else {
             if (substr(string: $det_matricula['data_matricula'], offset: 0, length: 10) > $obj_matricula->data_cancel) {
-                $this->mensagem = 'Data de abandono não pode ser inferior a data da matrícula.<br>';
+                $this->mensagem = 'Data do deixou de frequentar não pode ser inferior a data da matrícula.<br>';
 
                 return false;
             }
@@ -179,7 +179,7 @@ return new class extends clsCadastro
                         'data_fim' => Carbon::createFromFormat('d/m/Y', $this->data_cancel),
                     ]);
 
-                $this->mensagem .= 'Abandono realizado com sucesso.<br>';
+                $this->mensagem .= 'Situação deixou de frequentar cadastrada com sucesso.<br>';
                 $this->simpleRedirect(url: "educar_matricula_det.php?cod_matricula={$this->ref_cod_matricula}");
             }
 
@@ -187,7 +187,7 @@ return new class extends clsCadastro
 
             return false;
         }
-        $this->mensagem = 'Abandono não pode ser realizado.<br>';
+        $this->mensagem = 'Deixou de Frequentar não pode ser realizado.<br>';
 
         return false;
     }
