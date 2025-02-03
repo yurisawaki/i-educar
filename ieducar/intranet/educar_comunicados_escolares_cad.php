@@ -76,6 +76,10 @@ return new class extends clsCadastro
         $this->campoTexto(nome: 'local', campo: 'Local', valor: $this->local, tamanhovisivel: 30, tamanhomaximo: 255, obrigatorio: true);
         $this->inputsHelper()->date(attrName: 'data', inputOptions: ['label' => 'Data', 'placeholder' => 'dd/mm/yyyy', 'value' => $this->date]);
         $this->campoHora(nome: 'hora', campo: 'Hora', valor: $this->hora, obrigatorio: true);
+
+        Portabilis_View_Helper_Application::loadJavascript(viewInstance: $this, files: [
+            '/vendor/legacy/Cadastro/Assets/Javascripts/ComunicadosEscolares.js',
+        ]);
     }
 
     public function Novo()
