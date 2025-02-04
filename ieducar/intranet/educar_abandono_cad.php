@@ -179,7 +179,7 @@ return new class extends clsCadastro
                         'data_fim' => Carbon::createFromFormat('d/m/Y', $this->data_cancel),
                     ]);
 
-                $this->mensagem .= 'Situação deixou de frequentar cadastrada com sucesso.<br>';
+                $this->mensagem = 'Situação deixou de frequentar cadastrada com sucesso.<br>';
                 $this->simpleRedirect(url: "educar_matricula_det.php?cod_matricula={$this->ref_cod_matricula}");
             }
 
