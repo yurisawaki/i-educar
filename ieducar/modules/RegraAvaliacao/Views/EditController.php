@@ -106,6 +106,10 @@ class EditController extends Core_Controller_Page_EditController
             'label' => 'Aprovar alunos pela frequencia após exame',
             'help' => 'Alunos que não atingirem a média mínima no exame final, ainda serão aprovados caso tenha frequência mínima',
         ],
+        'reprovarAutomaticamenteAposDependencias' => [
+            'label' => 'Quantidade de disciplinas "Em exame" para reprovação automática',
+            'help' => 'Alunos serão reprovados automaticamente ao atingirem o número de disciplinas "Em exame" informado. Preencha com 0 caso não utilize.',
+        ],
         'regraDiferenciada' => [
             'label' => 'Regra inclusiva',
             'help' => 'Regra de avaliação inclusiva para alunos com deficiência',
@@ -729,6 +733,16 @@ class EditController extends Core_Controller_Page_EditController
             false,
             false,
             $this->_getHelp('aprovarPelaFrequenciaAposExame')
+        );
+
+        $this->campoNumero(
+            'reprovarAutomaticamenteAposDependencias',
+            $this->_getLabel('reprovarAutomaticamenteAposDependencias'),
+            $this->getEntity()->reprovarAutomaticamenteAposDependencias,
+            3,
+            3,
+            true,
+            $this->_getHelp('reprovarAutomaticamenteAposDependencias')
         );
 
         $regras = $this->getDataMapper()->findAll(

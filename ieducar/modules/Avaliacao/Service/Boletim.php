@@ -1049,6 +1049,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
         $media = 0;
         $turmaId = $this->getOption('ref_cod_turma');
         $codigosAglutinados = $this->codigoDisciplinasAglutinadas();
+        $componentesEmExame = 0;
 
         foreach ($mediasComponentes as $id => $mediaComponente) {
             $mediaComponente = $mediaComponente[0];
@@ -1092,6 +1093,7 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
             if ($etapa == $lastStage && $media < $this->getRegraAvaliacaoMedia() && $this->hasRegraAvaliacaoFormulaRecuperacao() && $permiteSituacaoEmExame) {
                 // lets make some changes here >:)
                 $situacao->componentesCurriculares[$id]->situacao = App_Model_MatriculaSituacao::EM_EXAME;
+                $componentesEmExame++;
 
                 if ($this->hasRegraAvaliacaoReprovacaoAutomatica()) {
                     $previsaoRecuperacao = $this->preverNotaRecuperacao($id);
@@ -1145,6 +1147,13 @@ class Avaliacao_Service_Boletim implements CoreExt_Configurable
             && $this->hasRegraAvaliacaoAprovaMediaDisciplina()
             && ($somaMedias / $qtdComponentes) >= $this->getRegraAvaliacaoMediaRecuperacao()) {
             $situacaoGeral = App_Model_MatriculaSituacao::APROVADO;
+        }
+
+        if (
+            $this->hasReprovarAutomaticamenteAposDependencias() &&
+            $componentesEmExame >= $this->getQtdeReprovarAutomaticamenteAposDependencias()
+        ) {
+            $situacaoGeral = App_Model_MatriculaSituacao::REPROVADO;
         }
 
         // Situação geral
