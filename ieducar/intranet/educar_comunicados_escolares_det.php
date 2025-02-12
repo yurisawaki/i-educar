@@ -19,7 +19,7 @@ return new class extends clsDetalhe
 
         $registro = SchoolNotice::query()
             ->with('institution', 'school', 'user')
-            ->findOrFail(request()->integer('id'));
+            ->find(request()->integer('id'));
 
         if (!$registro) {
             $this->simpleRedirect(url: 'educar_comunicados_escolares_lst.php');
