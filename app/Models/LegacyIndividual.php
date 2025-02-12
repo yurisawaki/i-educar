@@ -272,22 +272,6 @@ class LegacyIndividual extends Model
         });
     }
 
-    protected function isMandatoryEducationAge(): Attribute
-    {
-        return Attribute::make(
-            get: function () {
-                $birthdate = $this->data_nasc;
-                if ($birthdate) {
-                    $age = $birthdate->diffInYears(now());
-
-                    return $age >= 4 && $age <= 17;
-                }
-
-                return false;
-            }
-        );
-    }
-
     public static function findByCpf(string|int $cpf): ?Model
     {
         $cpf = preg_replace('/\D/', '', (string) $cpf);
