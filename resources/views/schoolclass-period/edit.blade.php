@@ -68,12 +68,12 @@
                     <table id="turma_modulo" class="tabela-adicao" cellpadding="2" cellspacing="0" style="margin: 10px 0;">
                         <thead>
                         <tr class="formdktd" style="font-weight: bold; text-align: center;">
-                            <td colspan="3">Etapas (Somente atualização)</td>
+                            <th colspan="3" style="text-align: left">Etapas (Somente atualização)</th>
                         </tr>
                         <tr class="formmdtd" style="font-weight: bold; text-align: center;">
-                            <td>Data inicial</td>
-                            <td>Data final</td>
-                            <td>Dias Letivos</td>
+                            <th style="text-align: left">Data inicial</th>
+                            <th style="text-align: left">Data final</th>
+                            <th style="text-align: left">Dias Letivos</th>
                         </tr>
                         </thead>
                         <tbody>

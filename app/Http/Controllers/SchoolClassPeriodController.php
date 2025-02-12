@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class SchoolClassPeriodController extends Controller
 {
-    function getDate($date, $format)
+    private function getDate($date, $format)
     {
         try {
             return Carbon::createFromFormat($format, $date);

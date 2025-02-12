@@ -55,7 +55,7 @@ return new class extends clsListagem
         $get_escola = true;
 
         // Filtros de Foreign Keys
-        include 'include/pmieducar/educar_campo_lista.php';
+        include_once 'include/pmieducar/educar_campo_lista.php';
 
         if ($this->ref_cod_escola_) {
             $this->ref_cod_escola = $this->ref_cod_escola_;
