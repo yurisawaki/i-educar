@@ -351,7 +351,7 @@ return new class extends clsCadastro
 
     public $espaco_escolar_tamanho;
 
-    public $característica_escolar;
+    public $caracteristica_escolar;
 
     public $inputsRecursos = [
         'qtd_secretario_escolar' => 'Secretário(a) escolar',
@@ -686,12 +686,12 @@ return new class extends clsCadastro
             $this->campoTexto(nome: 'sigla', campo: 'Sigla', valor: $this->sigla, tamanhovisivel: 30, tamanhomaximo: 255, obrigatorio: true);
             $options = [
                 'label' => 'Característica Escolar',
-                'value' => $this->característica_escolar,
+                'value' => $this->caracteristica_escolar,
                 'resources' => SchoolCharacteristic::getDescriptiveValues()->prepend('Selecione', ''),
                 'required' => false,
             ];
 
-            $this->inputsHelper()->select(attrName: 'característica_escolar', inputOptions: $options);
+            $this->inputsHelper()->select(attrName: 'caracteristica_escolar', inputOptions: $options);
             $nivel = $obj_permissoes->nivel_acesso($this->pessoa_logada);
 
             if ($nivel === 1) {
@@ -1924,7 +1924,7 @@ return new class extends clsCadastro
         $obj->poder_publico_parceria_convenio = $this->poder_publico_parceria_convenio;
         $obj->formas_contratacao_parceria_escola_secretaria_estadual = $this->formas_contratacao_parceria_escola_secretaria_estadual;
         $obj->formas_contratacao_parceria_escola_secretaria_municipal = $this->formas_contratacao_parceria_escola_secretaria_municipal;
-        $obj->característica_escolar = $this->característica_escolar;
+        $obj->caracteristica_escolar = $this->caracteristica_escolar;
 
         foreach ($this->inputsRecursos as $key => $value) {
             $obj->{$key} = $this->{$key};
