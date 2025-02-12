@@ -7,7 +7,7 @@
 
 @section('content')
     <form id="formcadastro" action="" method="post">
-        <table class="tablecadastro" width="100%" role="presentation" cellpadding="2" cellspacing="0">
+        <table class="tablecadastro" width="100%" role="presentation">
             <tbody>
             <tr>
                 <td class="formdktd" colspan="2" height="24"><b>Atualizar etapas da turma em lote</b></td>
@@ -65,15 +65,15 @@
 
             <tr id="tr_turma_modulo">
                 <td colspan="2" class="formmdtd" style="text-align: center; vertical-align: top;">
-                    <table id="turma_modulo" class="tabela-adicao" cellpadding="2" cellspacing="0" style="margin: 10px 0;">
+                    <table id="turma_modulo" class="tabela-adicao" style="margin: 10px 0;">
                         <thead>
                         <tr class="formdktd" style="font-weight: bold; text-align: center;">
-                            <td colspan="3">Etapas (Somente atualização)</td>
+                            <th id="th-etapas" colspan="3" style="text-align: left">Etapas (Somente atualização)</th>
                         </tr>
                         <tr class="formmdtd" style="font-weight: bold; text-align: center;">
-                            <td>Data inicial</td>
-                            <td>Data final</td>
-                            <td>Dias Letivos</td>
+                            <th id="th-data-inicial" style="text-align: left">Data inicial</th>
+                            <th id="th-data-final" style="text-align: left">Data final</th>
+                            <th id="th-dias-letivos" style="text-align: left">Dias Letivos</th>
                         </tr>
                         </thead>
                         <tbody>
