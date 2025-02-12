@@ -7,6 +7,7 @@ use App\Models\LegacyRegistration;
 use App\Models\LegacySchool;
 use App\Models\LegacySchoolClass;
 use App\Models\LegacySchoolClassStage;
+use App\Models\LegacyStageType;
 use App\Models\LegacyUserType;
 use iEducar\Modules\AcademicYear\Exceptions\DisciplineNotLinkedToRegistrationException;
 use iEducar\Modules\Enrollments\Exceptions\StudentNotEnrolledInSchoolClass;
@@ -89,6 +90,24 @@ class App_Model_IedFinder extends CoreExt_Entity
         }
 
         return $escolas;
+    }
+
+    /**
+     * Retorna todos os tipos de etapas
+     *
+     * @return array
+     */
+    public static function getStageTypes()
+    {
+        return LegacyStageType::query()
+            ->where('ativo', 1)
+            ->orderBy('nm_tipo')
+            ->get()
+            ->mapWithKeys(function ($stage) {
+                return [
+                    $stage->cod_modulo => sprintf('%s - %d etapa(s)', $stage->nm_tipo, $stage->num_etapas),
+                ];
+            });
     }
 
     /**
@@ -526,7 +545,7 @@ class App_Model_IedFinder extends CoreExt_Entity
         $componentes = [];
 
         foreach ($disciplinas as $disciplina) {
-            $componente = new stdClass();
+            $componente = new stdClass;
 
             $componente->id = $disciplina['ref_cod_disciplina'];
             $componente->cargaHoraria = $disciplina['carga_horaria'];
@@ -563,7 +582,7 @@ class App_Model_IedFinder extends CoreExt_Entity
         $ano = null
     ) {
         if (is_null($mapper)) {
-            $mapper = new ComponenteCurricular_Model_TurmaDataMapper();
+            $mapper = new ComponenteCurricular_Model_TurmaDataMapper;
         }
 
         $where = ['turma' => $turma];
@@ -603,7 +622,7 @@ class App_Model_IedFinder extends CoreExt_Entity
 
         $componentes = [];
         foreach ($componentesTurma as $componenteTurma) {
-            $componente = new stdClass();
+            $componente = new stdClass;
 
             $componente->id = $componenteTurma->get('componenteCurricular');
             $componente->cargaHoraria = $componenteTurma->cargaHoraria;
@@ -868,7 +887,7 @@ class App_Model_IedFinder extends CoreExt_Entity
         $possuiDeficiencia = self::verificaSePossuiDeficiencia($matricula['ref_cod_aluno']);
 
         if (is_null($mapper)) {
-            $mapper = new RegraAvaliacao_Model_RegraDataMapper();
+            $mapper = new RegraAvaliacao_Model_RegraDataMapper;
         }
 
         if (dbBool($matricula['escola_utiliza_regra_diferenciada']) && is_numeric($matricula['serie_regra_avaliacao_diferenciada_id'])) {
@@ -908,7 +927,7 @@ class App_Model_IedFinder extends CoreExt_Entity
         $escola = self::getEscola($turma['ref_ref_cod_escola']);
 
         if (is_null($mapper)) {
-            $mapper = new RegraAvaliacao_Model_RegraDataMapper();
+            $mapper = new RegraAvaliacao_Model_RegraDataMapper;
         }
 
         if (dbBool($escola['utiliza_regra_diferenciada']) && is_numeric($serie['regra_avaliacao_diferenciada_id'])) {
@@ -1569,7 +1588,7 @@ class App_Model_IedFinder extends CoreExt_Entity
         return $stages;
     }
 
-    //Retorna a quantidade de etapas resgatadas na function getEtapasComponente
+    // Retorna a quantidade de etapas resgatadas na function getEtapasComponente
     public static function getQtdeEtapasComponente($turma, $componente)
     {
         $resultado = self::getEtapasComponente($turma, $componente);
@@ -1581,7 +1600,7 @@ class App_Model_IedFinder extends CoreExt_Entity
         return null;
     }
 
-    //Retorna a ultima etapa resgatada na function getEtapasComponente
+    // Retorna a ultima etapa resgatada na function getEtapasComponente
     public static function getUltimaEtapaComponente($turma, $componente)
     {
         $resultado = self::getEtapasComponente($turma, $componente);
@@ -1680,7 +1699,7 @@ class App_Model_IedFinder extends CoreExt_Entity
 
     public static function usuarioNivelBibliotecaEscolar($codUsuario)
     {
-        $permissao = new clsPermissoes();
+        $permissao = new clsPermissoes;
         $nivel = $permissao->nivel_acesso($codUsuario);
 
         if ($nivel == App_Model_NivelTipoUsuario::ESCOLA ||
