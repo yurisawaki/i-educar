@@ -42,6 +42,8 @@ return new class extends clsCadastro
 
     public $abandono_tipo;
 
+    public $deixou_de_frequentar_idade_obrigatoria;
+
     public $ref_cod_matricula;
 
     public $transferencia_tipo;
@@ -107,7 +109,21 @@ return new class extends clsCadastro
 
         $this->inputsHelper()->select(attrName: 'abandono_tipo', inputOptions: $options);
 
-        $this->inputsHelper()->date(attrName: 'data_cancel', inputOptions: ['label' => 'Data do deixou de frequentar', 'placeholder' => 'dd/mm/yyyy', 'value' => date(format: 'd/m/Y')]);
+        $selectOptions = [
+            1 => 'Sim, aluno está em idade obrigatória',
+            0 => 'Não, aluno fora da idade obrigatória'
+        ];
+
+        $options = [
+            'label' => 'Aluno em idade obrigatória?',
+            'label_hint' => 'Lei de Diretrizes e Bases da Educação Nacional 12.796, Art. 4º:<br> são considerados alunos em idades obrigatória dos 4 aos 17 anos de idade.',
+            'required' => true,
+            'resources' => $selectOptions,
+            'value' => ''];
+
+        $this->inputsHelper()->select(attrName: 'deixou_de_frequentar_idade_obrigatoria', inputOptions: $options);
+
+        $this->inputsHelper()->date(attrName: 'data_cancel', inputOptions: ['label' => 'Data em que deixou de frequentar', 'placeholder' => 'dd/mm/yyyy', 'value' => date(format: 'd/m/Y')]);
         // text
         $this->campoMemo(nome: 'observacao', campo: 'Observação', valor: $this->observacao, colunas: 60, linhas: 5);
     }
@@ -144,7 +160,7 @@ return new class extends clsCadastro
         }
 
         if ($obj_matricula->edita()) {
-            if ($obj_matricula->cadastraObs(obs: $this->observacao, tipoAbandono: $this->abandono_tipo)) {
+            if ($obj_matricula->cadastraObs(obs: $this->observacao, tipoAbandono: $this->abandono_tipo, deixouDeFrequentarIdadeObrigatoria: $this->deixou_de_frequentar_idade_obrigatoria)) {
                 $enturmacoes = new clsPmieducarMatriculaTurma;
                 $enturmacoes = $enturmacoes->lista(int_ref_cod_matricula: $this->ref_cod_matricula, int_ativo: 1);
 

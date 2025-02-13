@@ -521,7 +521,8 @@ class MatriculaController extends ApiCoreController
             $sql = 'UPDATE pmieducar.matricula
               SET aprovado = $1,
                   ref_cod_abandono_tipo = $2,
-                  data_exclusao = NULL
+                  data_exclusao = NULL,
+                  deixou_de_frequentar_idade_obrigatoria = NULL
               WHERE cod_matricula = $3';
             $this->fetchPreparedQuery($sql, [$situacaoAndamento, $tipoSemAbandono, $matriculaId]);
 
