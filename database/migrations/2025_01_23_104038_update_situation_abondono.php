@@ -15,7 +15,7 @@ return new class extends Migration {
             file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_situacao_historico_abreviado_2025-01-23.sql')
         );
         DB::unprepared(
-            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_situacao_componente_2028-01-23.sql')
+            file_get_contents(__DIR__ . '/../sqls/functions/relatorio.get_situacao_componente_2025-01-23.sql')
         );
 
         $this->createView('relatorio.view_situacao_relatorios', '2025-01-23');

@@ -2,6 +2,7 @@
 
 use App\Models\Country;
 use App\Models\LegacyInstitution;
+use App\Models\RegistrationStatus;
 use App\Models\State;
 use iEducar\Modules\Enrollments\Model\EnrollmentStatusFilter;
 
@@ -241,9 +242,9 @@ return new class extends clsCadastro
         $opcoes = collect(EnrollmentStatusFilter::getDescriptiveValues())
             ->prepend('Selecione', '')
             ->except([
-                9,  //Exceto Transferidos/Deixou de Frequentar'
-                10, //Todas
-                15  // Falecido
+                EnrollmentStatusFilter::EXCEPT_TRANSFERRED_OR_ABANDONMENT,  //Exceto Transferidos/Deixou de Frequentar'
+                EnrollmentStatusFilter::ALL, //Todas
+                RegistrationStatus::DECEASED  // Falecido
             ]);
 
         $this->campoLista(nome: 'aprovado', campo: 'Situação', valor: $opcoes, default: $this->aprovado);

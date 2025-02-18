@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\RegistrationStatus;
+use iEducar\Modules\Enrollments\Model\EnrollmentStatusFilter;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 use App\Menu;
@@ -31,11 +33,11 @@ return new class extends Migration
     {
         //situações
         DB::table('relatorio.situacao_matricula')
-            ->where('cod_situacao', 6)
+            ->where('cod_situacao', RegistrationStatus::ABANDONED)
             ->update(['descricao' => 'Abandono']);
 
         DB::table('relatorio.situacao_matricula')
-            ->where('cod_situacao', 9)
+            ->where('cod_situacao', EnrollmentStatusFilter::EXCEPT_TRANSFERRED_OR_ABANDONMENT)
             ->update(['descricao' => 'Exceto Transferidos/Abandono']);
 
         //menus

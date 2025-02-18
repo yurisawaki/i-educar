@@ -32,7 +32,7 @@ SELECT matricula.cod_matricula,
            WHEN matricula.aprovado = 3 THEN 'Cur'::character varying
            WHEN matricula.aprovado = 4 THEN 'Trs'::character varying
            WHEN matricula.aprovado = 5 THEN 'Recl'::character varying
-           WHEN matricula.aprovado = 6 THEN 'Aba'::character varying
+           WHEN matricula.aprovado = 6 THEN 'DeFr'::character varying
            WHEN matricula.aprovado = 14 THEN 'RpFt'::character varying
            WHEN matricula.aprovado = 15 THEN 'Fal'::character varying
            ELSE 'Recl'::character varying
