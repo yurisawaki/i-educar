@@ -57,7 +57,7 @@ return new class extends clsCadastro
 
         if ($obj_matricula->edita()) {
             echo "<script>
-                alert('Abandono realizado com sucesso');
+                alert('Situação deixou de frequentar cadastrada com sucesso');
                 window.location='educar_matricula_det.php?cod_matricula={$this->cod_matricula}';
                 </script>";
         }
@@ -78,7 +78,7 @@ return new class extends clsCadastro
 
     public function Formular()
     {
-        $this->title = 'Abandono Matrícula';
+        $this->title = 'Deixou de Frequentar Matrícula';
         $this->processoAp = '578';
     }
 };

@@ -1251,7 +1251,7 @@ class clsPmieducarMatricula extends Model
      *
      * @author lucassch
      */
-    public function cadastraObs($obs, $tipoAbandono)
+    public function cadastraObs($obs, $tipoAbandono, $deixouDeFrequentarIdadeObrigatoria)
     {
         if (is_numeric($this->cod_matricula)) {
             if (trim($obs) == '') {
@@ -1264,7 +1264,8 @@ class clsPmieducarMatricula extends Model
             $consulta = "UPDATE {$this->_tabela}
                             SET aprovado = 6,
                                 observacao = '$obs',
-                                ref_cod_abandono_tipo = '$tipoAbandono'
+                                ref_cod_abandono_tipo = '$tipoAbandono',
+                                deixou_de_frequentar_idade_obrigatoria = '$deixouDeFrequentarIdadeObrigatoria'
                           WHERE cod_matricula = $this->cod_matricula";
 
             $db->Consulta($consulta);

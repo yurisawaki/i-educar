@@ -10,7 +10,7 @@ BEGIN
                            WHEN cod_situacao = 3 THEN 'Cursando'
                            WHEN cod_situacao = 4 THEN 'Transferido'
                            WHEN cod_situacao = 5 THEN 'Reclassificado'
-                           WHEN cod_situacao = 6 THEN 'Deixou de Frequentar'
+                           WHEN cod_situacao = 6 THEN 'Abandono'
                            WHEN cod_situacao = 7 THEN 'Em exame'
                            WHEN cod_situacao = 8 THEN 'Aprovado após exame'
                            WHEN cod_situacao = 9 THEN 'Retido por falta'

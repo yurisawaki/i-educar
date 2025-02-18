@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\RegistrationStatus;
+
 return new class extends clsListagem
 {
     /**
@@ -155,21 +157,7 @@ return new class extends clsListagem
 
                 $nomesTurmas = implode(separator: '<br />', array: $nomesTurmas);
 
-                $situacao = $registro['aprovado'];
-
-                if ($situacao == 1) {
-                    $situacao = 'Aprovado';
-                } elseif ($situacao == 2) {
-                    $situacao = 'Reprovado';
-                } elseif ($situacao == 3) {
-                    $situacao = 'Cursando';
-                } elseif ($situacao == 4) {
-                    $situacao = 'Transferido';
-                } elseif ($situacao == 5) {
-                    $situacao = 'Reclassificado';
-                } elseif ($situacao == 6) {
-                    $situacao = 'Abandono';
-                }
+                $situacao = RegistrationStatus::getRegistrationStatus()[$registro['aprovado']];
 
                 $lista_busca = [];
 
