@@ -92,7 +92,11 @@ class SchoolClassController extends Controller
             }
 
             if ($codigoInepEducacenso) {
-                $schoolClassInepService->store($codTurma, $codigoInepEducacenso);
+                $turnoId = null;
+                if ($request->integer('turma_turno_id') === Period::FULLTIME) {
+                    $turnoId = Period::FULLTIME;
+                }
+                $schoolClassInepService->store($codTurma, $codigoInepEducacenso, $turnoId);
             } else {
                 $schoolClassInepService->delete($codTurma);
             }
