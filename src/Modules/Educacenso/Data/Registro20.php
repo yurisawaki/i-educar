@@ -2,7 +2,9 @@
 
 namespace iEducar\Modules\Educacenso\Data;
 
+use App\Services\SchoolClass\SchoolClassService;
 use iEducar\Modules\Educacenso\Formatters;
+use iEducar\Modules\SchoolClass\Period;
 use Portabilis_Utils_Database;
 
 class Registro20 extends AbstractRegistro
@@ -25,7 +27,10 @@ class Registro20 extends AbstractRegistro
         $models = [];
         foreach ($data as $record) {
             $record = $this->processData($record);
-            $models[] = $this->hydrateModel($record);
+            $recordCopies = $this->copyByPeriod($record);
+            foreach ($recordCopies as $recordCopy) {
+                $models[] = $this->hydrateModel($recordCopy);
+            }
         }
 
         return $models;
@@ -132,7 +137,7 @@ class Registro20 extends AbstractRegistro
             $canExportComponente ? $this->getCensoValueForDiscipline(32, $componentesEducacenso, $record->disciplinasEducacensoComDocentes) : '', // 73 32. Estágio Curricular Supervisionado
             $canExportComponente ? $this->getCensoValueForDiscipline(33, $componentesEducacenso, $record->disciplinasEducacensoComDocentes) : '', // 74 33. Projeto de vida
             $canExportComponente ? $this->getCensoValueForDiscipline(99, $componentesEducacenso, $record->disciplinasEducacensoComDocentes) : '', // 75 99. Outras áreas do conhecimento
-            $record->classeComLinguaBrasileiraSinais == 1 ? 1 : 0, // 76 Classe com ensino desenvolvido com a Língua Brasileira de Sinais – Libras como primeira língua e a língua portuguesa de forma escrita
+            $record->classeComLinguaBrasileiraSinais == 1 ? 1 : 0, // 76 Classe bilíngue de surdos tendo a Libras (Língua Brasileira de Sinais) como língua de instrução, ensino, comunicação e interação e a língua portuguesa escrita como segunda língua
         ];
     }
 
@@ -183,5 +188,43 @@ class Registro20 extends AbstractRegistro
         $data->disciplinasEducacensoComDocentes = Portabilis_Utils_Database::pgArrayToArray($data->disciplinasEducacensoComDocentes);
 
         return $data;
+    }
+
+    private function copyByPeriod($record)
+    {
+        if ($record->turmaTurnoId !== Period::FULLTIME) {
+            return [$record];
+        }
+
+        $service = new SchoolClassService;
+
+        $periodsNames = (new Period)->getDescriptiveValues();
+        $studentPeriods = $service->getStudentsPeriods($record->codTurma);
+
+        $hasPeriods = $studentPeriods->isNotEmpty() && ($studentPeriods->count() > 1 || !$studentPeriods->contains(Period::FULLTIME));
+
+        if ($hasPeriods) {
+            return $studentPeriods->map(function ($periodId) use ($record, $periodsNames) {
+                $newRecord = clone $record;
+                $periodName = $periodsNames[$periodId];
+
+                $newRecord->codTurma .= '-' . $periodId;
+                $newRecord->nomeTurma .= ' - ' . $periodName;
+
+                if ($periodId === Period::MORNING) {
+                    $newRecord->horaInicial = $record->horaInicialMatutino;
+                    $newRecord->horaFinal = $record->horaFinalMatutino;
+                    $newRecord->turmaTurnoId = Period::MORNING;
+                } elseif ($periodId === Period::AFTERNOON) {
+                    $newRecord->horaInicial = $record->horaInicialVespertino;
+                    $newRecord->horaFinal = $record->horaFinalVespertino;
+                    $newRecord->turmaTurnoId = Period::AFTERNOON;
+                }
+
+                return $newRecord;
+            })->toArray();
+        }
+
+        return [$record];
     }
 }

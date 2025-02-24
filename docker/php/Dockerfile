@@ -1,4 +1,10 @@
-FROM php:8.2-fpm-alpine
+ARG PHP_VERSION=8
+ARG COMPOSER_VERSION=latest
+
+FROM composer:${COMPOSER_VERSION} AS composer
+FROM php:${PHP_VERSION}-fpm-alpine
+
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 LABEL maintainer="Portabilis <contato@portabilis.com.br>"
 
@@ -20,7 +26,7 @@ RUN apk add --update \
     libzip-dev  \
     linux-headers \
     openjdk8  \
-    postgresql14-client \
+    postgresql16-client \
     postgresql-dev \
     ttf-dejavu \
     unzip \
@@ -45,11 +51,20 @@ RUN docker-php-ext-install  \
     pdo \
     pdo_pgsql \
     pgsql \
-    zip
+    zip \
+    ftp
+
+RUN docker-php-ext-enable  \
+     bcmath \
+     gd \
+     pcntl \
+     pdo \
+     pdo_pgsql \
+     pgsql \
+     zip \
+     ftp
 
 # https://github.com/docker-library/php/issues/436#issuecomment-303171390
 RUN apk del .phpize_deps
 
 RUN ln -s /var/www/ieducar/artisan /usr/local/bin/artisan
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

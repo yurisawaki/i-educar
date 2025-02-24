@@ -109,7 +109,7 @@ return new class extends clsCadastro
             $url = 'educar_aluno_det.php?cod_aluno=' . $this->ref_cod_aluno;
         }
 
-        $obj_permissoes = new clsPermissoes();
+        $obj_permissoes = new clsPermissoes;
         $obj_permissoes->permissao_cadastra(int_processo_ap: 578, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 7, str_pagina_redirecionar: $url);
 
         if (is_numeric(value: $this->cod_matricula)) {
@@ -138,7 +138,7 @@ return new class extends clsCadastro
         $this->campoOculto(nome: 'ref_cod_aluno', valor: $this->ref_cod_aluno);
 
         if ($this->ref_cod_aluno) {
-            $obj_aluno = new clsPmieducarAluno();
+            $obj_aluno = new clsPmieducarAluno;
 
             $lst_aluno = $obj_aluno->lista(
                 int_cod_aluno: $this->ref_cod_aluno,
@@ -203,7 +203,7 @@ return new class extends clsCadastro
 
     private function getMaximoAlunosNaTurma($turma)
     {
-        return (int) (new clsBanco())->CampoUnico(consulta: "
+        return (int) (new clsBanco)->CampoUnico(consulta: "
             select max_aluno
             from pmieducar.turma
             where cod_turma = $turma
@@ -352,11 +352,11 @@ return new class extends clsCadastro
             return false;
         }
 
-        $db = new clsBanco();
+        $db = new clsBanco;
         $somente_do_bairro = $db->CampoUnico(consulta: "SELECT matricula_apenas_bairro_escola FROM pmieducar.instituicao where cod_instituicao = {$this->ref_cod_instituicao}");
 
         if ($somente_do_bairro) {
-            $db = new clsBanco();
+            $db = new clsBanco;
             $bairro_escola = $db->CampoUnico(consulta: "
                 SELECT neighborhood
                 FROM addresses a
@@ -366,7 +366,7 @@ return new class extends clsCadastro
                 WHERE e.cod_escola = {$this->ref_cod_escola}
             ");
 
-            $db = new clsBanco();
+            $db = new clsBanco;
             $bairro_aluno = $db->CampoUnico(consulta: "
                 SELECT neighborhood
                 FROM addresses a
@@ -386,7 +386,7 @@ return new class extends clsCadastro
         $this->url_cancelar = 'educar_aluno_det.php?cod_aluno=' . $this->ref_cod_aluno;
         $this->nome_url_cancelar = 'Cancelar';
 
-        $obj_permissoes = new clsPermissoes();
+        $obj_permissoes = new clsPermissoes;
 
         $obj_permissoes->permissao_cadastra(
             int_processo_ap: 578,
@@ -395,11 +395,11 @@ return new class extends clsCadastro
             str_pagina_redirecionar: 'educar_aluno_det.php?cod_aluno=' . $this->ref_cod_aluno
         );
 
-        //novas regras matricula aluno
+        // novas regras matricula aluno
         $this->ano = $_POST['ano'];
         $anoLetivoEmAndamentoEscola = LegacySchoolAcademicYear::query()->whereSchool($this->ref_cod_escola)->whereYearEq($this->ano)->inProgress()->active()->exists();
 
-        $objEscolaSerie = new clsPmieducarEscolaSerie();
+        $objEscolaSerie = new clsPmieducarEscolaSerie;
         $dadosEscolaSerie = $objEscolaSerie->lista(int_ref_cod_escola: $this->ref_cod_escola, int_ref_cod_serie: $this->ref_cod_serie);
 
         if (!$this->existeVagasDisponiveis() && $dadosEscolaSerie[0]['bloquear_enturmacao_sem_vagas']) {
@@ -525,7 +525,7 @@ return new class extends clsCadastro
                         }
                     </script>';
 
-                    //Permite que o usuário possa salvar a matrícula na próxima tentativa
+                    // Permite que o usuário possa salvar a matrícula na próxima tentativa
                     $reload = 1;
 
                     Session::put(key: 'reload_faixa_etaria', value: $reload);
@@ -536,7 +536,7 @@ return new class extends clsCadastro
                 }
             }
 
-            $objAluno = new clsPmieducarAluno();
+            $objAluno = new clsPmieducarAluno;
             $alunoInep = $objAluno->verificaInep(cod_aluno: $this->ref_cod_aluno);
             $objSerie = new clsPmieducarSerie(cod_serie: $this->ref_cod_serie);
             $serieDet = $objSerie->detalhe();
@@ -570,7 +570,7 @@ return new class extends clsCadastro
                 );
             }
 
-            $obj_matricula_aluno = new clsPmieducarMatricula();
+            $obj_matricula_aluno = new clsPmieducarMatricula;
 
             $obj_matricula_aluno->lista(ref_cod_aluno: $this->ref_cod_aluno);
 
@@ -745,7 +745,7 @@ return new class extends clsCadastro
 
         $matriculasDependencia = count(value: $matriculasDependencia);
 
-        $db = new clsBanco();
+        $db = new clsBanco;
         $matriculasDependenciaPermitida = $db->CampoUnico(consulta: "SELECT regra_avaliacao.qtd_matriculas_dependencia
                                                              FROM pmieducar.serie
                                                        INNER JOIN modules.regra_avaliacao_serie_ano AS rasa ON (rasa.serie_id = serie.cod_serie AND rasa.ano_letivo = {$this->ano})
@@ -836,7 +836,7 @@ return new class extends clsCadastro
     {
         $result = true;
 
-        $enturmacoes = new clsPmieducarMatriculaTurma();
+        $enturmacoes = new clsPmieducarMatriculaTurma;
         $enturmacoes = $enturmacoes->lista(
             int_ref_cod_matricula: $matriculaId,
             int_ativo: 1
@@ -871,7 +871,7 @@ return new class extends clsCadastro
 
     public function Excluir()
     {
-        $obj_permissoes = new clsPermissoes();
+        $obj_permissoes = new clsPermissoes;
 
         $obj_permissoes->permissao_excluir(
             int_processo_ap: 627,
@@ -899,7 +899,7 @@ return new class extends clsCadastro
             $det_sequencia = array_shift(array: $lst_sequencia);
             $ref_serie_origem = $det_sequencia['ref_serie_origem'];
 
-            $obj_matricula = new clsPmieducarMatricula();
+            $obj_matricula = new clsPmieducarMatricula;
 
             $lst_matricula = $obj_matricula->lista(
                 int_ref_ref_cod_serie: $ref_serie_origem,
@@ -963,7 +963,7 @@ return new class extends clsCadastro
 
     protected function removerFlagUltimaMatricula($alunoId)
     {
-        $matriculas = new clsPmieducarMatricula();
+        $matriculas = new clsPmieducarMatricula;
 
         $matriculas = $matriculas->lista(
             ref_cod_aluno: $this->ref_cod_aluno,
@@ -994,7 +994,7 @@ return new class extends clsCadastro
 
     public function enturmacaoMatricula($matriculaId, $turmaDestinoId)
     {
-        $enturmacaoExists = new clsPmieducarMatriculaTurma();
+        $enturmacaoExists = new clsPmieducarMatriculaTurma;
 
         $enturmacaoExists = $enturmacaoExists->lista(
             int_ref_cod_matricula: $matriculaId,
@@ -1045,7 +1045,7 @@ return new class extends clsCadastro
 
     public function _getQtdMatriculaTurma()
     {
-        $obj_mt = new clsPmieducarMatriculaTurma();
+        $obj_mt = new clsPmieducarMatriculaTurma;
         $lst_mt = $obj_mt->enturmacoesSemDependencia(turmaId: $this->ref_cod_turma);
 
         return $lst_mt[0];
@@ -1061,7 +1061,7 @@ return new class extends clsCadastro
 
     public function _getMaxAlunoTurno()
     {
-        $obj_t = new clsPmieducarTurma();
+        $obj_t = new clsPmieducarTurma;
         $det_t = $obj_t->detalhe();
 
         $lista_t = $obj_t->lista(
@@ -1101,7 +1101,7 @@ return new class extends clsCadastro
     {
         $obj_t = new clsPmieducarTurma(cod_turma: $this->ref_cod_turma);
         $det_t = $obj_t->detalhe();
-        $obj_mt = new clsPmieducarMatriculaTurma();
+        $obj_mt = new clsPmieducarMatriculaTurma;
 
         $obj_mt->lista(
             int_ativo: 1,
@@ -1119,7 +1119,7 @@ return new class extends clsCadastro
     private function availableTimeService()
     {
         if (empty($this->availableTimeService)) {
-            $this->availableTimeService = new AvailableTimeService();
+            $this->availableTimeService = new AvailableTimeService;
         }
 
         $this->availableTimeService->onlySchoolClassesInformedOnCensus();

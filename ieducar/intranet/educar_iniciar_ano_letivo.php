@@ -14,7 +14,7 @@ return new class extends clsCadastro
 
     public function Inicializar()
     {
-        $obj_permissoes = new clsPermissoes();
+        $obj_permissoes = new clsPermissoes;
         $obj_permissoes->permissao_cadastra(int_processo_ap: 561, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 7, str_pagina_redirecionar: 'educar_escola_lst.php');
 
         if (!$_POST) {
@@ -89,7 +89,7 @@ return new class extends clsCadastro
         /**
          * VERIFICA se nï¿½o existem matriculas em andamento
          */
-        $obj_matriculas = new clsPmieducarMatricula();
+        $obj_matriculas = new clsPmieducarMatricula;
         $existe_matricula_andamento_com_curso = $obj_matriculas->lista(
             int_ref_ref_cod_escola: $this->ref_cod_escola,
             int_aprovado: 3,

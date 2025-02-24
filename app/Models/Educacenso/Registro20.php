@@ -216,6 +216,8 @@ class Registro20 implements RegistroEducacenso
 
     public $outrasUnidadesCurricularesObrigatorias;
 
+    public $turmaTurnoId;
+
     /**
      * @return bool
      */
@@ -283,7 +285,7 @@ class Registro20 implements RegistroEducacenso
 
                 break;
             case ModalidadeCurso::EDUCACAO_ESPECIAL:
-                return "{$tiposMediacao[App_Model_TipoMediacaoDidaticoPedagogico::PRESENCIAL]}";
+                return "{$tiposMediacao[App_Model_TipoMediacaoDidaticoPedagogico::PRESENCIAL]} ou {$tiposMediacao[App_Model_TipoMediacaoDidaticoPedagogico::SEMIPRESENCIAL]}";
 
                 break;
             case ModalidadeCurso::EJA:
@@ -291,7 +293,7 @@ class Registro20 implements RegistroEducacenso
 
                 break;
             case ModalidadeCurso::EDUCACAO_PROFISSIONAL:
-                return "{$tiposMediacao[App_Model_TipoMediacaoDidaticoPedagogico::PRESENCIAL]} ou {$tiposMediacao[App_Model_TipoMediacaoDidaticoPedagogico::EDUCACAO_A_DISTANCIA]}";
+                return "{$tiposMediacao[App_Model_TipoMediacaoDidaticoPedagogico::PRESENCIAL]}, {$tiposMediacao[App_Model_TipoMediacaoDidaticoPedagogico::SEMIPRESENCIAL]} ou {$tiposMediacao[App_Model_TipoMediacaoDidaticoPedagogico::EDUCACAO_A_DISTANCIA]}";
 
                 break;
         }
@@ -424,7 +426,12 @@ class Registro20 implements RegistroEducacenso
     public function componentes()
     {
         if (!isset($this->componentes)) {
-            $this->componentes = LegacySchoolClass::find($this->codTurma)->getDisciplines();
+            $idTurma = $this->codTurma;
+            if (str_contains($idTurma, '-')) {
+                $idTurma = explode('-', $idTurma)[0];
+            }
+
+            $this->componentes = LegacySchoolClass::find($idTurma)->getDisciplines();
         }
 
         return $this->componentes;
