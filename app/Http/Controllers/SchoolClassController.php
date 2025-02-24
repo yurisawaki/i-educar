@@ -100,7 +100,9 @@ class SchoolClassController extends Controller
                         DB::rollBack();
 
                         return response()->json([
-                            'msg' => 'Não é possível alterar o turno da turma com enturmações parciais.',
+                            'msg' => 'Esta turma possui turno integral e contém os códigos INEP dos turnos parciais
+                            informados. Para atender as regras de importação do censo, não é possível
+                            alterar o turno da turma.',
                         ], 422);
                     }
                 }
