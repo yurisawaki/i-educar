@@ -95,6 +95,14 @@ class SchoolClassController extends Controller
                 $turnoId = null;
                 if ($request->integer('turma_turno_id') === Period::FULLTIME) {
                     $turnoId = Period::FULLTIME;
+                } else {
+                    if ($schoolClassService->hasStudentsPartials($codTurma)) {
+                        DB::rollBack();
+
+                        return response()->json([
+                            'msg' => 'Não é possível alterar o turno da turma com enturmações parciais.',
+                        ], 422);
+                    }
                 }
                 $schoolClassInepService->store($codTurma, $codigoInepEducacenso, $turnoId);
             } else {
