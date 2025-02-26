@@ -417,6 +417,9 @@ return new class extends clsDetalhe
             }
 
             if ($this->permissaoAbandono() && $registro['aprovado'] == App_Model_MatriculaSituacao::ABANDONO && $this->permissaoAbandono()) {
+                $this->array_botao[] = 'Turno';
+                $this->array_botao_url_script[] = 'showAlertTurnoDeixouFrequentar()';
+
                 $this->array_botao[] = 'Desfazer deixou de frequentar';
                 $this->array_botao_url_script[] = "deleteAbandono({$registro['cod_matricula']})";
             }
