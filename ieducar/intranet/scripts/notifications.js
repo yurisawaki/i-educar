@@ -36,6 +36,7 @@ $j(document).click(function() {
 });
 
 function openBoxNotification() {
+  getNotifications();
   $j('.dropdown-content-notifications').css('display','block');
 }
 
