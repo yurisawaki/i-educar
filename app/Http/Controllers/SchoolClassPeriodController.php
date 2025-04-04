@@ -28,9 +28,9 @@ class SchoolClassPeriodController extends Controller
         $schoolClasses = LegacySchoolClass::query()
             ->whereInstitution($request->get('ref_cod_instituicao'))
             ->whereYearEq($request->get('ano'))
-            ->when($request->get('escola'), fn ($q, $schools) =>  $q->whereIn('ref_ref_cod_escola', $schools))
+            ->when($request->get('escola'), fn ($q, $schools) => $q->whereIn('ref_ref_cod_escola', $schools))
             ->when($request->get('curso'), fn ($q, $courses) => $q->whereIn('ref_cod_curso', $courses))
-            ->whereHas('schoolClassStages', function ($q) use($request){
+            ->whereHas('schoolClassStages', function ($q) use ($request) {
                 $q->when($request->get('ref_cod_modulo'), function ($q, $stageType) {
                     return $q->where('ref_cod_modulo', $stageType);
                 });

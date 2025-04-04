@@ -11,8 +11,8 @@ class SchoolClassPeriodRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'escola' => $this->has('escola') ? Arr::flatten($this->get('escola')): null,
-            'curso' => $this->has('curso') ? Arr::flatten($this->get('curso')) : null
+            'escola' => $this->has('escola') ? Arr::flatten($this->get('escola')) : null,
+            'curso' => $this->has('curso') ? Arr::flatten($this->get('curso')) : null,
         ]);
     }
 
@@ -87,6 +87,7 @@ class SchoolClassPeriodRequest extends FormRequest
 
             if ($allEmpty) {
                 $validator->errors()->add('etapas', 'Nenhuma informação a ser atualizada nas etapas');
+
                 return;
             }
 
