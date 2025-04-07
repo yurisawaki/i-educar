@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 
-class SchoolClassPeriodRequest extends FormRequest
+class StageRequest extends FormRequest
 {
     protected function prepareForValidation()
     {
@@ -22,6 +22,7 @@ class SchoolClassPeriodRequest extends FormRequest
 
         return [
             'ref_cod_instituicao' => ['required', 'integer'],
+            'tipo' => ['required', 'in:schoolclass,school'],
             'escola' => ['nullable', 'array'],
             'curso' => ['nullable', 'array'],
             'ano' => ['required', 'integer', 'digits:4', 'min:1900'],
@@ -51,6 +52,7 @@ class SchoolClassPeriodRequest extends FormRequest
     public function attributes()
     {
         return [
+            'tipo' => 'Tipo',
             'ref_cod_instituicao' => 'Instituição',
             'escola' => 'Escola',
             'curso' => 'Curso',
