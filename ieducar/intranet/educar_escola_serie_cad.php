@@ -844,6 +844,7 @@ return new class extends clsCadastro
                         $schoolClass = LegacyGrade::find($this->ref_cod_serie)->schoolClass()
                             ->where('ref_ref_cod_escola', $this->ref_cod_escola)
                             ->where('ano', $ano)
+                            ->active()
                             ->pluck('cod_turma');
 
                         if ($iDiarioService && $schoolClass->count() && $iDiarioService->getClassroomsActivityByDiscipline(classroomId: $schoolClass->toArray(), disciplineId: $update['ref_cod_disciplina'])) {
