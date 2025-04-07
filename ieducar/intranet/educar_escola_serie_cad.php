@@ -788,6 +788,7 @@ return new class extends clsCadastro
             $service = new CheckPostedDataService;
             $schoolClass = LegacyGrade::find($this->ref_cod_serie)->schoolClass()
                 ->where('ref_ref_cod_escola', $this->ref_cod_escola)
+                ->active()
                 ->pluck('cod_turma');
 
             foreach ($analise['remover'] as $componenteId) {
