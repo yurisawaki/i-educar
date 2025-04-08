@@ -2,14 +2,22 @@
 
 namespace App\Http\Requests;
 
+use App\Models\LegacyStageType;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 
 class StageRequest extends FormRequest
 {
+
+    private $stagesCount;
+
     protected function prepareForValidation()
     {
+        $this->stagesCount = $this->get('ref_cod_modulo') ?
+            LegacyStageType::query()->where('cod_modulo', $this->get('ref_cod_modulo'))->value('num_etapas') :
+            null;
+
         $this->merge([
             'escola' => $this->has('escola') ? Arr::flatten($this->get('escola')) : null,
             'curso' => $this->has('curso') ? Arr::flatten($this->get('curso')) : null,
@@ -113,6 +121,11 @@ class StageRequest extends FormRequest
                         );
                     }
                 }
+            }
+
+            // Valida número máximo de etapas
+            if ($this->stagesCount !== null && count($etapas) > $this->stagesCount) {
+                $validator->errors()->add('etapas', "O número de etapas preenchidas não pode exceder {$this->stagesCount} conforme o filtro.");
             }
         });
     }

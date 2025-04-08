@@ -97,7 +97,7 @@
                     <select class="geral" name="ref_cod_modulo" id="ref_cod_eref_cod_moduloscola" style="width: 308px;">
                         <option value="">Selecione as opções</option>
                         @foreach(App_Model_IedFinder::getStageTypes() as $id => $name)
-                            <option value="{{$id}}">{{ Str::upper($name) }}</option>
+                            <option value="{{$id}}" @if(old('ref_cod_modulo', Request::get('ref_cod_modulo')) == $id) selected @endif>{{ Str::upper($name) }}</option>
                         @endforeach
                     </select>
                 </td>
