@@ -9,15 +9,8 @@ use Illuminate\Support\Arr;
 
 class StageRequest extends FormRequest
 {
-
-    private $stagesCount;
-
     protected function prepareForValidation()
     {
-        $this->stagesCount = $this->get('ref_cod_modulo') ?
-            LegacyStageType::query()->where('cod_modulo', $this->get('ref_cod_modulo'))->value('num_etapas') :
-            null;
-
         $this->merge([
             'escola' => $this->has('escola') ? Arr::flatten($this->get('escola')) : null,
             'curso' => $this->has('curso') ? Arr::flatten($this->get('curso')) : null,
@@ -123,9 +116,17 @@ class StageRequest extends FormRequest
                 }
             }
 
+            $filledStagesCount = collect($etapas)
+                ->filter(fn ($etapa) => !empty($etapa['data_inicio']) || !empty($etapa['data_fim']) || !empty($etapa['dias_letivos']))
+                ->count();
+
             // Valida número máximo de etapas
-            if ($this->stagesCount !== null && count($etapas) > $this->stagesCount) {
-                $validator->errors()->add('etapas', "O número de etapas preenchidas não pode exceder {$this->stagesCount} conforme o filtro.");
+            $stagesCount = $this->get('ref_cod_modulo') ?
+                LegacyStageType::query()->where('cod_modulo', $this->get('ref_cod_modulo'))->value('num_etapas') :
+                null;
+
+            if ($filledStagesCount > $stagesCount) {
+                $validator->errors()->add('etapas', "O número de etapas preenchidas não pode exceder {$stagesCount} conforme o filtro.");
             }
         });
     }
