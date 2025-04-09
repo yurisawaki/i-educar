@@ -122,6 +122,8 @@ class StageController extends Controller
 
     private function prepareUpdateData(array $data): array
     {
+        //Deve-se remove os campos vazios, com intuito de manter os valores no banco durante o update
+        //Transforma as datas no formato do banco
         return array_filter([
             'data_inicio' => $data['data_inicio'] ? Carbon::createFromFormat('d/m/Y', $data['data_inicio']) : null,
             'data_fim' => $data['data_fim'] ? Carbon::createFromFormat('d/m/Y', $data['data_fim']) : null,
