@@ -79,14 +79,12 @@ class StageRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $etapas = $this->input('etapas', []);
+            $etapas = collect($this->input('etapas', []));
 
             // Verificar se todas as etapas estão vazias
-            $allEmpty = collect($etapas)->every(function ($etapa) {
-                return empty($etapa['data_inicio']) &&
-                    empty($etapa['data_fim']) &&
-                    empty($etapa['dias_letivos']);
-            });
+            $allEmpty = $etapas->every(fn ($etapa) => empty($etapa['data_inicio']) &&
+                empty($etapa['data_fim']) &&
+                empty($etapa['dias_letivos']));
 
             if ($allEmpty) {
                 $validator->errors()->add('etapas', 'Nenhuma informação a ser atualizada nas etapas');
@@ -115,18 +113,17 @@ class StageRequest extends FormRequest
                     }
                 }
             }
+            if ($stage = $this->get('ref_cod_modulo')) {
+                $filledStagesCount = $etapas
+                    ->filter(fn ($etapa) => !empty($etapa['data_inicio']) || !empty($etapa['data_fim']) || !empty($etapa['dias_letivos']))
+                    ->count();
 
-            $filledStagesCount = collect($etapas)
-                ->filter(fn ($etapa) => !empty($etapa['data_inicio']) || !empty($etapa['data_fim']) || !empty($etapa['dias_letivos']))
-                ->count();
+                // Valida número máximo de etapas
+                $stagesCount = LegacyStageType::query()->where('cod_modulo', $stage)->value('num_etapas') ;
 
-            // Valida número máximo de etapas
-            $stagesCount = $this->get('ref_cod_modulo') ?
-                LegacyStageType::query()->where('cod_modulo', $this->get('ref_cod_modulo'))->value('num_etapas') :
-                null;
-
-            if ($filledStagesCount > $stagesCount) {
-                $validator->errors()->add('etapas', "O número de etapas preenchidas não pode exceder {$stagesCount} conforme o filtro.");
+                if ($filledStagesCount > $stagesCount) {
+                    $validator->errors()->add('etapas', "O número de etapas preenchidas não pode exceder {$stagesCount} conforme o filtro.");
+                }
             }
         });
     }
