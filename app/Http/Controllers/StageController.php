@@ -107,7 +107,7 @@ class StageController extends Controller
             $updateData = $this->prepareUpdateData($data);
             if (!empty($updateData)) {
                 LegacyAcademicYearStage::query()
-                    ->whereIn('escola_aano_letivo_id', $schoolAcademicYearsIds)
+                    ->whereIn('escola_ano_letivo_id', $schoolAcademicYearsIds)
                     ->where('sequencial', $stage)
                     ->update($updateData);
                 LegacySchoolAcademicYear::query()
