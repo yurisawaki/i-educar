@@ -1131,8 +1131,6 @@ class EditController extends Core_Controller_Page_EditController
 
     /**
      * Valida se a configuração de pontos é válida
-     *
-     * @return bool
      */
     private function isPontosValid(string $pontos): bool
     {

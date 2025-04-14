@@ -60,7 +60,7 @@ class LegacyEvaluationRule extends Model
         'tipo_nota',
         'tipo_progressao',
         'tipo_presenca',
-        'pontos'
+        'pontos',
     ];
 
     /**
