@@ -130,8 +130,8 @@ return new class extends clsDetalhe
             $this->addDetalhe(detalhe: ['Série', $registro['ref_ref_cod_serie']]);
         }
 
-        if ($registro['observacao']) {
-            $this->addDetalhe(detalhe: ['Observações', $registro['observacao']]);
+        if ($registro['observacoes']) {
+            $this->addDetalhe(detalhe: ['Observações', $registro['observacoes']]);
         }
 
         // Nome da turma
