@@ -153,7 +153,7 @@ class EditController extends Core_Controller_Page_EditController
         'pontos' => [
             'label' => 'Configuração de pontos',
             'help' => 'Preencha com os multiplicadores de cada etapa, separados por vírgula, seguindo a ordem correspondente.
-(Ex: 2, 3, 4) - Nesse caso, o sistema multiplicará a média da 1ª etapa por 2, da 2ª etapa por 3 e da 3ª etapa por 4.',
+(Ex: 2,3,4) - Nesse caso, o sistema multiplicará a média da 1ª etapa por 2, da 2ª etapa por 3 e da 3ª etapa por 4.',
         ],
         'recuperacaoDescricao' => [
             'label' => 'Descrição do exame:',
