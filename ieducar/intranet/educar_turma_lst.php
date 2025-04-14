@@ -171,6 +171,7 @@ return new class extends clsListagem
                 'grade:cod_serie,nm_serie',
                 'period:id,nome',
             ])
+            ->active()
             ->orderBy(column: 'nm_turma')
             ->paginate(perPage: $this->limite, columns: ['cod_turma', 'ano', 'nm_turma', 'ref_ref_cod_escola', 'turma_turno_id', 'ref_ref_cod_serie', 'ref_cod_curso', 'visivel', 'multiseriada'], pageName: 'pagina_' . $this->nome);
 
