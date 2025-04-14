@@ -150,6 +150,11 @@ class EditController extends Core_Controller_Page_EditController
             'label' => 'Disciplinas aglutinadas',
             'help' => 'Disciplinas aglutinadas terão as médias somadas para calcular a situação. Formato: Código separado por vírgula (Ex: 1,2)',
         ],
+        'pontos' => [
+            'label' => 'Configuração de pontos',
+            'help' => 'Preencha com os multiplicadores de cada etapa, separados por vírgula, seguindo a ordem correspondente.
+(Ex: 2, 3, 4) - Nesse caso, o sistema multiplicará a média da 1ª etapa por 2, da 2ª etapa por 3 e da 3ª etapa por 4.',
+        ],
         'recuperacaoDescricao' => [
             'label' => 'Descrição do exame:',
             'help' => 'Exemplo: Recuperação semestral I',
@@ -679,6 +684,18 @@ class EditController extends Core_Controller_Page_EditController
             $this->_getHelp('disciplinasAglutinadas')
         );
 
+        $this->campoTexto(
+            'pontos',
+            $this->_getLabel('pontos'),
+            $this->getEntity()->pontos,
+            5,
+            50,
+            false,
+            false,
+            false,
+            $this->_getHelp('pontos')
+        );
+
         $this->campoCheck(
             'reprovacaoAutomatica',
             $this->_getLabel('reprovacaoAutomatica'),
@@ -940,8 +957,15 @@ class EditController extends Core_Controller_Page_EditController
 
     protected function _save()
     {
+
         if (!$this->isPresenceTypeCompatible($this->getRequest()->tipoPresenca, $this->getRequest()->regraDiferenciada)) {
             $this->mensagem = 'A regra inclusiva selecionada possuí apuração de frequência incompatível, verifique a configuração e tente novamente.';
+
+            return false;
+        }
+
+        if (!$this->isPontosValid($this->getRequest()->pontos)) {
+            $this->mensagem = 'A configuração de pontos possuí valor inválido, verifique a configuração e tente novamente.';
 
             return false;
         }
@@ -1103,5 +1127,15 @@ class EditController extends Core_Controller_Page_EditController
         }
 
         return false;
+    }
+
+    /**
+     * Valida se a configuração de pontos é válida
+     *
+     * @return bool
+     */
+    private function isPontosValid(string $pontos): bool
+    {
+        return preg_match('/^(|\d+(,\d+)*)$/', $pontos) === 1;
     }
 }
