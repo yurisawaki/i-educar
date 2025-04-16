@@ -957,19 +957,6 @@ class EditController extends Core_Controller_Page_EditController
 
     protected function _save()
     {
-
-        if (!$this->isPresenceTypeCompatible($this->getRequest()->tipoPresenca, $this->getRequest()->regraDiferenciada)) {
-            $this->mensagem = 'A regra inclusiva selecionada possuí apuração de frequência incompatível, verifique a configuração e tente novamente.';
-
-            return false;
-        }
-
-        if (!$this->isPontosValid($this->getRequest()->pontos)) {
-            $this->mensagem = 'A configuração de pontos possuí valor inválido, verifique a configuração e tente novamente.';
-
-            return false;
-        }
-
         $data = [];
 
         if ($_POST['tipoNota'] == 3) {
@@ -983,7 +970,6 @@ class EditController extends Core_Controller_Page_EditController
                 $data[$key] = $val;
             }
         }
-
         // Verifica pela existência do field identity
         if (isset($this->getRequest()->id) && $this->getRequest()->id > 0 && !$this->getRequest()->copy) {
             $this->setEntity($this->getDataMapper()->find($this->getRequest()->id));
@@ -1029,6 +1015,18 @@ class EditController extends Core_Controller_Page_EditController
             $this->getEntity()->setOptions($data);
         } else {
             $this->setEntity($this->getDataMapper()->createNewEntityInstance($data));
+        }
+
+        if (!$this->isPresenceTypeCompatible($this->getRequest()->tipoPresenca, $this->getRequest()->regraDiferenciada)) {
+            $this->mensagem = 'A regra inclusiva selecionada possuí apuração de frequência incompatível, verifique a configuração e tente novamente.';
+
+            return false;
+        }
+
+        if (!$this->isPontosValid($this->getRequest()->pontos)) {
+            $this->mensagem = 'A configuração de pontos possuí valor inválido, verifique a configuração e tente novamente.';
+
+            return false;
         }
 
         // Processa os dados da requisição, apenas os valores para a tabela de valores.
