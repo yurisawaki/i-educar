@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\LegacyEnrollment;
+use App\Models\RegistrationStatus;
 use App\Process;
 
 return new class extends clsCadastro
@@ -46,6 +47,10 @@ return new class extends clsCadastro
         $enturmacao->sequencial = $this->sequencial;
         $enturmacao = $enturmacao->detalhe();
 
+        if (!$enturmacao) {
+            $this->simpleRedirect(url: "/enrollment-history/{$this->ref_cod_matricula}");
+        }
+
         $matricula = new clsPmieducarMatricula(cod_matricula: $this->ref_cod_matricula);
         $matricula = $matricula->detalhe();
 
@@ -61,19 +66,7 @@ return new class extends clsCadastro
         $this->campoRotulo(nome: 'nm_pessoa', campo: 'Nome do Aluno', valor: $enturmacao['nome']);
         $this->campoRotulo(nome: 'sequencial', campo: 'Sequencial', valor: $enturmacao['sequencial']);
 
-        $situacao = match ((int) $matricula['aprovado']) {
-            1 => 'Aprovado',
-            2 => 'Reprovado',
-            3 => 'Cursando',
-            4 => 'Transferido',
-            5 => 'Reclassificado',
-            6 => 'Abandono',
-            7 => 'Em Exame',
-            12 => 'Aprovado com dependência',
-            13 => 'Aprovado pelo conselho',
-            14 => 'Reprovado por faltas',
-            default => '',
-        };
+        $situacao = RegistrationStatus::getRegistrationAndEnrollmentStatus()[$matricula['aprovado']] ?? '';
 
         $required = false;
 
@@ -90,7 +83,7 @@ return new class extends clsCadastro
             'transferido' => 'Transferido',
             'remanejado' => 'Remanejado',
             'reclassificado' => 'Reclassificado',
-            'abandono' => 'Abandono',
+            'abandono' => 'Deixou de Frequentar',
             'falecido' => 'Falecido',
         ];
 
@@ -134,7 +127,7 @@ return new class extends clsCadastro
 
     public function Editar()
     {
-        $enturmacao = new clsPmieducarMatriculaTurma();
+        $enturmacao = new clsPmieducarMatriculaTurma;
         $enturmacao->ref_cod_matricula = $this->ref_cod_matricula;
         $enturmacao->ref_cod_turma = $this->ref_cod_turma;
         $enturmacao->sequencial = $this->sequencial;
@@ -221,7 +214,8 @@ return new class extends clsCadastro
         return false;
     }
 
-    private function enturmacaoRemanejadaMesmaTurma($sequencial) {
+    private function enturmacaoRemanejadaMesmaTurma($sequencial)
+    {
         return LegacyEnrollment::query()
             ->where('ref_cod_turma', $this->ref_cod_turma)
             ->where('ref_cod_matricula', $this->ref_cod_matricula)
@@ -239,7 +233,6 @@ return new class extends clsCadastro
             ->first();
 
         DB::beginTransaction();
-
 
         if ($enturmacao->remanejado_mesma_turma) {
             $proximaEnturmacao = $this->enturmacaoRemanejadaMesmaTurma($this->sequencial + 1);
