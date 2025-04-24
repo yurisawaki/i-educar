@@ -147,7 +147,7 @@ Copie os arquivos de configuração do Nginx:
 ```bash 
 cp /var/www/ieducar/docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 cp /var/www/ieducar/docker/nginx/upstream.conf /etc/nginx/conf.d/upstream.conf
-sed -i 's/php:9000/unix:\/run\/php\/php-fpm.sock/g' /etc/nginx/conf.d/upstream.conf
+sed -i 's/fpm:9000/unix:\/run\/php\/php-fpm.sock/g' /etc/nginx/conf.d/upstream.conf
 rm /etc/nginx/sites-enabled/default
 nginx -s reload
 ```
