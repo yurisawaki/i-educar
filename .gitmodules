@@ -1,0 +1,6 @@
+[submodule "i-educar-library-package"]
+	path = i-educar-library-package
+	url = git@github.com:portabilis/i-educar-library-package.git
+[submodule "i-educar-transport-package"]
+	path = i-educar-transport-package
+	url = git@github.com:portabilis/i-educar-transport-package.git
