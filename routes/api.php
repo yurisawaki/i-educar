@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\StageController;
 use App\Http\Controllers\Api\StateController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,7 +35,7 @@ Route::group(
     [
         'middleware' => 'auth:sanctum',
     ],
-    static fn () => Route::apiResources([
+    static fn() => Route::apiResources([
         'country' => CountryController::class,
         'state' => StateController::class,
         'district' => DistrictController::class,

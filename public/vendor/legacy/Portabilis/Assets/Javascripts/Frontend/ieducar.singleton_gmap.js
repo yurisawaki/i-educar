@@ -1,11 +1,11 @@
 var IeducarSingletonMap = function () {
   this.map = null;
-  this.lat          = $j('#latitude');
-  this.lng          = $j('#longitude');
-  this.street       = $j('#logradouro_logradouro');
-  this.street_str   = $j('#logradouro');
-  this.number       = $j('#numero');
-  this.city         = $j('#municipio_municipio');
+  this.lat = $j('#latitude');
+  this.lng = $j('#longitude');
+  this.street = $j('#logradouro_logradouro');
+  this.street_str = $j('#logradouro');
+  this.number = $j('#numero');
+  this.city = $j('#municipio_municipio');
 };
 
 IeducarSingletonMap.prototype.getAddress = function () {
@@ -18,15 +18,15 @@ IeducarSingletonMap.prototype.getAddress = function () {
   };
 
   var address = '',
-      addresses = [
-        this.street.val() || this.street_str.val(),
-        this.number.val(),
-        formatMunicipio(this.city.val()),
-        formatUF(this.city.val()),
-        'brasil'
-      ];
+    addresses = [
+      this.street.val() || this.street_str.val(),
+      this.number.val(),
+      formatMunicipio(this.city.val()),
+      formatUF(this.city.val()),
+      'brasil'
+    ];
 
-  $j.each(addresses, function(index, item) {
+  $j.each(addresses, function (index, item) {
     address += item + ' ';
   });
 
@@ -54,7 +54,7 @@ IeducarSingletonMap.prototype.addMarker = function (lat, lng) {
     lat: lat || this.lat.val(),
     lng: lng || this.lng.val(),
     draggable: true,
-    dragend: function(event) {
+    dragend: function (event) {
       that.lat.val(event.latLng.lat());
       that.lng.val(event.latLng.lng());
     }
@@ -71,7 +71,7 @@ IeducarSingletonMap.prototype.render = function () {
   } else if (!$j.isEmptyObject(address)) {
     GMaps.geocode({
       address: address,
-      callback: function(results, status) {
+      callback: function (results, status) {
         if (status == 'OK') {
           var latlng = results[0].geometry.location;
 
@@ -83,13 +83,13 @@ IeducarSingletonMap.prototype.render = function () {
     });
   } else {
     GMaps.geolocate({
-      success: function(position) {
-       that.map.setCenter(position.coords.latitude, position.coords.longitude);
-     }
+      success: function (position) {
+        that.map.setCenter(position.coords.latitude, position.coords.longitude);
+      }
     });
   }
 
-  GMaps.on('marker_added', this.map, function(marker) {
+  GMaps.on('marker_added', this.map, function (marker) {
     that.lat.val(marker.getPosition().lat());
     that.lng.val(marker.getPosition().lng());
   });
@@ -100,7 +100,7 @@ IeducarSingletonMap.prototype.reload = function () {
 
   GMaps.geocode({
     address: address,
-    callback: function(results, status) {
+    callback: function (results, status) {
       if (status == 'OK') {
         var latlng = results[0].geometry.location;
 

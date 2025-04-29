@@ -278,7 +278,8 @@ class clsCampos extends Core_Controller_Page_Abstract
             20,
             18,
             'nnn.nnn.nnn-nn ou nn.nnn.nnn/nnnn-nn',
-            $invisivel ? 'disabled' : '', $descricao,
+            $invisivel ? 'disabled' : '',
+            $descricao,
         ];
 
         if (!$this->__adicionando_tabela) {
@@ -378,6 +379,7 @@ class clsCampos extends Core_Controller_Page_Abstract
             $this->__campos_tabela[] = $arr_componente;
         }
     }
+
 
     public function campoHoraServidor($nome, $campo, $valor, $obrigatorio = false, $descricao = '', $acao = '', $limitaHora = true)
     {
@@ -1152,7 +1154,7 @@ class clsCampos extends Core_Controller_Page_Abstract
                         switch (strtolower($campo_[0])) {
                             case 'html':
                                 $retorno .= $componente;
-                                // no break
+                            // no break
                             case 'texto':
                                 $retorno .= $this->getCampoTexto("{$nome}[{$key2}]", "{$nome}[{$key2}]", $valor[$key], $campo_[4], $campo_[5], $evento, $campo_[10], '', $class, $campo_[7]);
                                 break;
@@ -1299,8 +1301,10 @@ class clsCampos extends Core_Controller_Page_Abstract
                 $classe = $md ? 'formmdtd' : 'formlttd';
 
                 if ($campo_tabela && false) {
-                    if ($componente[10] && ($componente[0] == 'textoDuploInv'
-                            || $componente[0] == 'textoInv')) {
+                    if (
+                        $componente[10] && ($componente[0] == 'textoDuploInv'
+                            || $componente[0] == 'textoInv')
+                    ) {
                         $name = " name='tr_{$componente[10]}'  ";
                     } else {
                         $name = '';
@@ -1318,8 +1322,10 @@ class clsCampos extends Core_Controller_Page_Abstract
 
                         $retorno .= "<tr><td colspan='2' class='$classe'><span class='form'><b>$componente[3]</b></span>{$explicacao}</td></tr>\n";
                     } else {
-                        if (!empty($componente[10]) && !empty($componente[0])
-                            && ($componente[0] == 'textoDuploInv' || $componente[0] == 'textoInv')) {
+                        if (
+                            !empty($componente[10]) && !empty($componente[0])
+                            && ($componente[0] == 'textoDuploInv' || $componente[0] == 'textoInv')
+                        ) {
                             $name = " name='tr_{$componente[10]}'  ";
                         } else {
                             $name = '';
@@ -1353,7 +1359,7 @@ class clsCampos extends Core_Controller_Page_Abstract
 
                     case 'rotuloDuplo':
                         $foiDuplo = true;
-                        // no break
+                    // no break
                     case 'rotulo':
                         if ($campo != '-:') {
                             $retorno .= $componente[3];

@@ -9,6 +9,12 @@ use App\Http\Middleware\AnnouncementMiddleware;
 use App\Process;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CoordenadaController;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
+
+
 
 Auth::routes(['register' => false]);
 
@@ -179,4 +185,33 @@ Route::group(['middleware' => ['ieducar.navigation', 'ieducar.footer', 'ieducar.
         ->name('enrollments.promotion');
 
     Route::fallback([WebController::class, 'fallback']);
+
+    Route::get('/googlemap', 'App\Http\Controllers\MapController@googlemap')->name('googlemap');
+
+    Route::post('/coordenadas', [CoordenadaController::class, 'store'])->name('coordenadas.store');
+
+    Route::get('/itinerario/mapa', [App\Http\Controllers\CoordenadaController::class, 'mapaItinerario'])->name('itinerario.mapa');
+
+
+
+    Route::post('/fix-log-permission', function () {
+        try {
+            $logFile = storage_path('logs/laravel.log');
+            $storagePath = storage_path();
+
+            // Garante que a pasta storage e logs tenham permissões apropriadas
+            if (!File::isWritable($logFile)) {
+                chmod($logFile, 0666); // Permite escrita
+            }
+
+            chmod($storagePath . '/logs', 0777);
+            chmod($logFile, 0777);
+
+            return response()->json(['success' => true, 'message' => 'Permissões corrigidas.']);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    })->name('fix.log');
+
+
 });

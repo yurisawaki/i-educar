@@ -43,6 +43,8 @@
         "league/flysystem-sftp-v3": "^3.0",
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpspreadsheet": "^1.8",
+        "portabilis/i-educar-library-package": "2.9.x-dev",
+        "portabilis/i-educar-transport-package": "2.9.x-dev",
         "predis/predis": "^1.1",
         "psr/simple-cache": "^2.0",
         "staudenmeir/laravel-adjacency-list": "^1.0",
@@ -142,5 +144,15 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "ieducar-transport": {
+            "type": "path",
+            "url": "i-educar-transport-package"
+        },
+        "ieducar-library": {
+            "type": "path",
+            "url": "i-educar-library-package"
+        }
+    }
 }

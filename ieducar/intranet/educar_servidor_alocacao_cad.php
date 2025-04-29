@@ -1,7 +1,6 @@
 <?php
 
-return new class extends clsCadastro
-{
+return new class extends clsCadastro {
     public $pessoa_logada;
 
     public $cod_servidor_alocacao;
@@ -174,9 +173,12 @@ return new class extends clsCadastro
             $this->data_saida,
         );
 
-        $carga = $this->carga_horaria_disponivel;
-        $carga = str_pad($carga, 2, 0, STR_PAD_LEFT);
-        $this->campoRotulo('carga_horaria_disponivel', 'Carga horária do servidor', $carga . ':00');
+        $this->campoRotulo(
+            'carga_horaria_disponivel',
+            'Carga horária do servidor',
+            $this->decimalHoraParaHHMM($this->carga_horaria_disponivel)
+        );
+
         $cargadisponivel = $servidorAlocacao->getCargaHorariaAno();
         $this->campoRotulo('carga_horaria_sem_alocacao', 'Carga horária alocada', substr($cargadisponivel, 0, -3));
 
@@ -230,6 +232,7 @@ return new class extends clsCadastro
 
         $this->campoLista('cod_servidor_funcao', 'Função', $opcoes, $this->cod_servidor_funcao, '', false, '', '', false, false);
 
+
         // Vínculos
         $objFuncionarioVinculo = new clsPmieducarFuncionarioVinculo;
         $opcoes = ['' => 'Selecione'] + $objFuncionarioVinculo->lista();
@@ -237,11 +240,21 @@ return new class extends clsCadastro
         $this->campoLista('ref_cod_funcionario_vinculo', 'Vínculo', $opcoes, $this->ref_cod_funcionario_vinculo, null, false, '', '', false, false);
 
         $this->campoRotulo('informacao_carga_horaria', '<b>Informações sobre carga horária</b>');
+        $this->campoHoraServidor('carga_horaria_alocada', 'Carga horária', $this->carga_horaria_alocada, true);
+
+        // Formatações de hora
+        $this->hora_inicial = $this->formatarHoraServidor($this->hora_inicial);
+        $this->hora_final = $this->formatarHoraServidor($this->hora_final);
+        $this->hora_atividade = $this->formatarHoraServidor($this->hora_atividade);
+        $this->horas_excedentes = $this->formatarHoraServidor($this->horas_excedentes);
+
+        // Campos de hora
         $this->campoHora('hora_inicial', 'Hora de início', $this->hora_inicial);
         $this->campoHora('hora_final', 'Hora de término', $this->hora_final);
-        $this->campoHoraServidor('carga_horaria_alocada', 'Carga horária', $this->carga_horaria_alocada, true);
         $this->campoHora('hora_atividade', 'Hora atividade', $this->hora_atividade);
         $this->campoHora('horas_excedentes', 'Horas excedentes', $this->horas_excedentes);
+
+
     }
 
     public function Novo()
@@ -382,4 +395,37 @@ return new class extends clsCadastro
         $this->title = 'Servidores - Servidor Alocação';
         $this->processoAp = 635;
     }
+    public function formatarHoraServidor($hora)
+    {
+        if (!$hora) {
+            return null;
+        }
+
+        // Aceita '08:00:00', '08:00', etc.
+        $partes = explode(':', $hora);
+        if (count($partes) >= 2) {
+            $horaFormatada = str_pad($partes[0], 2, '0', STR_PAD_LEFT) . ':' . str_pad($partes[1], 2, '0', STR_PAD_LEFT);
+            return $horaFormatada;
+        }
+
+        return null;
+    }
+
+    public function formatarMinutosParaHora($minutos)
+    {
+        $horas = floor($minutos / 60);
+        $min = $minutos % 60;
+
+        return sprintf('%02d:%02d', $horas, $min);
+    }
+
+    public function decimalHoraParaHHMM($decimal)
+    {
+        $horas = floor($decimal);
+        $minutos = round(($decimal - $horas) * 60);
+        return sprintf('%02d:%02d', $horas, $minutos);
+    }
+
+
+
 };
