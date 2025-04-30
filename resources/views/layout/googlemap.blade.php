@@ -9,9 +9,6 @@
         #map {
             height: 100vh;
             width: 100%;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
         }
 
         .coords {

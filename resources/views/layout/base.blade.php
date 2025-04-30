@@ -4,8 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="shortcut icon" href="{{ url('favicon.ico') }}" />
-    <title>@if(isset($title)) {!! html_entity_decode($title) !!} - @endif
+    <title>
+        @if(isset($title)) {!! html_entity_decode($title) !!} - @endif
         {{ html_entity_decode(config('legacy.app.entity.name')) }} - i-Educar
     </title>
 
@@ -31,8 +34,6 @@
                         <a href="{{ Asset::get('intranet/agenda.php') }}">Agenda</a>
                         <a href="{{ Asset::get('intranet/meusdados.php') }}">Meus dados</a>
                         <a href="#" onclick="fixarPermissaoERecarregar(); return false;">Reload</a>
-
-
                     </div>
                 </div>
                 <a href="{{ Asset::get('intranet/meusdados.php') }}" class="avatar" title="Meus dados">
@@ -44,6 +45,7 @@
                 </a>
             </div>
         </header>
+
         <div class="ieducar-content">
             <div class="ieducar-sidebar">
                 @include('layout.menu')
@@ -56,39 +58,42 @@
                 </div>
             </div>
         </div>
+
         <footer class="ieducar-footer">
             @include('layout.footer')
         </footer>
     </div>
+
     @include('layout.vue')
     @stack('end')
-    @push('scripts')
 
-        <script>
-            function fixarPermissaoERecarregar() {
-                fetch("{{ route('fix.log') }}", {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": document.querySelector('meta[name=csrf-token]').content
+    <!-- Removido o @push/@stack -->
+    <script>
+        function fixarPermissaoERecarregar() {
+            console.log("Função chamada");
+            fetch("{{ route('fix.log') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name=csrf-token]').content,
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Permissões corrigidas com sucesso.");
+                        location.reload();
+                    } else {
+                        alert("Erro: " + data.message);
                     }
                 })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert("Permissões corrigidas com sucesso.");
-                            location.reload();
-                        } else {
-                            alert("Erro: " + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Erro na requisição:", error);
-                        alert("Erro ao corrigir permissões.");
-                    });
-            }
-        </script>
-    @endpush
-
+                .catch(error => {
+                    console.error("Erro na requisição:", error);
+                    alert("Erro ao corrigir permissões.");
+                });
+        }
+    </script>
 </body>
 
 </html>

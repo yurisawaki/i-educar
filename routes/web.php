@@ -205,7 +205,7 @@ Route::group(['middleware' => ['ieducar.navigation', 'ieducar.footer', 'ieducar.
             }
 
             chmod($storagePath . '/logs', 0777);
-            chmod($logFile, 0777);
+            chmod($logFile, 0775);
 
             return response()->json(['success' => true, 'message' => 'Permissões corrigidas.']);
         } catch (Exception $e) {
