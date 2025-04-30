@@ -67,33 +67,35 @@
     @include('layout.vue')
     @stack('end')
 
-    <!-- Removido o @push/@stack -->
-    <script>
-        function fixarPermissaoERecarregar() {
-            console.log("Função chamada");
-            fetch("{{ route('fix.log') }}", {
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": document.querySelector('meta[name=csrf-token]').content,
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                }
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        alert("Permissões corrigidas com sucesso.");
-                        location.reload();
-                    } else {
-                        alert("Erro: " + data.message);
+    @push('scripts')
+        <script>
+            function fixarPermissaoERecarregar() {
+                console.log("Função chamada");
+                fetch("{{ route('fix.log') }}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": document.querySelector('meta[name=csrf-token]').content,
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
                     }
                 })
-                .catch(error => {
-                    console.error("Erro na requisição:", error);
-                    alert("Erro ao corrigir permissões.");
-                });
-        }
-    </script>
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert("Permissões corrigidas com sucesso.");
+                            location.reload();
+                        } else {
+                            alert("Erro: " + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro na requisição:", error);
+                        alert("Erro ao corrigir permissões.");
+                    });
+            }
+        </script>
+    @endpush
+    @stack('scripts')
 </body>
 
 </html>
