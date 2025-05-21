@@ -21,7 +21,7 @@ class FixController extends Controller
                 // Verifica se o arquivo de log é gravável
                 if (!File::isWritable($logFile)) {
                     // Tenta modificar a permissão para permitir escrita no arquivo de log
-                    exec('chmod 0666 ' . escapeshellarg($logFile)); // Permite leitura e escrita para o proprietário, grupo e outros
+                    chmod($logFile, 0664); // Permite leitura e escrita para o proprietário e grupo
                 }
             } else {
                 throw new Exception("O arquivo de log não foi encontrado.");
@@ -30,7 +30,7 @@ class FixController extends Controller
             // Verifica se a pasta de logs existe antes de tentar modificar as permissões
             if (File::exists($storagePath . '/logs')) {
                 // Garante que a pasta logs tenha permissões adequadas
-                exec('chmod -R 0777 ' . escapeshellarg($storagePath . '/logs')); // Permissões totais para todos (em ambiente de produção, use com cuidado)
+                chmod($storagePath . '/logs', 0775); // Permissões para o proprietário e grupo (não permite execução para outros)
             } else {
                 throw new Exception("A pasta de logs não foi encontrada.");
             }
