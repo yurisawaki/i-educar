@@ -4589,7 +4589,7 @@
         },
         {
             "name": "portabilis/i-educar-library-package",
-            "version": "dev-main",
+            "version": "2.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "i-educar-library-package",
@@ -4625,7 +4625,7 @@
         },
         {
             "name": "portabilis/i-educar-transport-package",
-            "version": "dev-main",
+            "version": "2.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "i-educar-transport-package",
