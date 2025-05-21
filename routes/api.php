@@ -18,7 +18,7 @@ use App\Http\Controllers\Api\SituationController;
 use App\Http\Controllers\Api\StageController;
 use App\Http\Controllers\Api\StateController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\UsuarioTransporteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,4 +83,16 @@ Route::group(['prefix' => 'resource', 'as' => 'api.resource.', 'namespace' => 'A
     Route::get('evaluation-rule', 'EvaluationRule\ResourceEvaluationRuleController@index')->name('evaluation-rule');
     Route::get('discipline', 'Discipline\ResourceDisciplineController@index')->name('discipline');
     Route::get('country', 'Country\ResourceCountryController@index')->name('country');
+});
+
+Route::prefix('transporte')->group(function () {
+    Route::get('/validar', function () {
+        return response()->json([
+            'code' => 200,
+            'status' => 'success',
+        ], 200);
+    });
+
+    Route::get('/usuarios', [UsuarioTransporteController::class, 'index']);
+
 });

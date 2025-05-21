@@ -16,11 +16,66 @@
     <div id="map"></div>
 
     <script>
-        function initMap() {
-            const pontos = @json($pontos);
+        const pontos = @json($pontos);
 
+        function haversine(lat1, lon1, lat2, lon2) {
+            const toRad = angle => angle * Math.PI / 180;
+            const R = 6371;
+            const dLat = toRad(lat2 - lat1);
+            const dLon = toRad(lon2 - lon1);
+            const a =
+                Math.sin(dLat / 2) ** 2 +
+                Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                Math.sin(dLon / 2) ** 2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        function construirMatriz(pontos) {
+            const matriz = [];
+            for (let i = 0; i < pontos.length; i++) {
+                matriz[i] = [];
+                for (let j = 0; j < pontos.length; j++) {
+                    matriz[i][j] = i === j ? 0 : haversine(
+                        pontos[i].latitude,
+                        pontos[i].longitude,
+                        pontos[j].latitude,
+                        pontos[j].longitude
+                    );
+                }
+            }
+            return matriz;
+        }
+
+        function tspNearestNeighbor(matriz) {
+            const n = matriz.length;
+            const visitado = Array(n).fill(false);
+            const rota = [0];
+            visitado[0] = true;
+
+            for (let i = 1; i < n; i++) {
+                const ultimo = rota[rota.length - 1];
+                let menor = Infinity;
+                let proximo = -1;
+
+                for (let j = 0; j < n; j++) {
+                    if (!visitado[j] && matriz[ultimo][j] < menor) {
+                        menor = matriz[ultimo][j];
+                        proximo = j;
+                    }
+                }
+
+                if (proximo !== -1) {
+                    rota.push(proximo);
+                    visitado[proximo] = true;
+                }
+            }
+
+            return rota;
+        }
+
+        function initMap() {
             if (pontos.length === 0) {
-                alert('Nenhum ponto encontrado para esta rota.');
+                alert('Nenhum ponto encontrado.');
                 return;
             }
 
@@ -29,61 +84,44 @@
                 center: {
                     lat: parseFloat(pontos[0].latitude),
                     lng: parseFloat(pontos[0].longitude)
-                },
+                }
             });
 
-            // Marcadores com descrição
-            pontos.forEach(ponto => {
+            const matriz = construirMatriz(pontos);
+            const ordemOtima = tspNearestNeighbor(matriz);
+            const pontosOtimizados = ordemOtima.map(i => pontos[i]);
+
+            // Adiciona marcadores no mapa
+            pontosOtimizados.forEach(p => {
                 new google.maps.Marker({
                     position: {
-                        lat: parseFloat(ponto.latitude),
-                        lng: parseFloat(ponto.longitude),
+                        lat: parseFloat(p.latitude),
+                        lng: parseFloat(p.longitude)
                     },
                     map: map,
-                    title: ponto.descricao,
+                    title: p.descricao
                 });
             });
 
-            // Traçando a linha da rota
-            if (pontos.length >= 2) {
-                const directionsService = new google.maps.DirectionsService();
-                const directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
+            // Desenha a linha da rota fluvial
+            const rota = pontosOtimizados.map(p => ({
+                lat: parseFloat(p.latitude),
+                lng: parseFloat(p.longitude)
+            }));
 
-                const origem = {
-                    lat: parseFloat(pontos[0].latitude),
-                    lng: parseFloat(pontos[0].longitude),
-                };
-                const destino = {
-                    lat: parseFloat(pontos[pontos.length - 1].latitude),
-                    lng: parseFloat(pontos[pontos.length - 1].longitude),
-                };
+            const linhaRota = new google.maps.Polyline({
+                path: rota,
+                geodesic: true,
+                strokeColor: '#0066FF',
+                strokeOpacity: 0.8,
+                strokeWeight: 4
+            });
 
-                const waypoints = pontos.slice(1, -1).map(p => ({
-                    location: {
-                        lat: parseFloat(p.latitude),
-                        lng: parseFloat(p.longitude),
-                    },
-                    stopover: true,
-                }));
-
-                const request = {
-                    origin: origem,
-                    destination: destino,
-                    waypoints: waypoints,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                };
-
-                directionsService.route(request, (result, status) => {
-                    if (status === 'OK') {
-                        directionsRenderer.setDirections(result);
-                    } else {
-                        console.error('Falha na rota:', status);
-                    }
-                });
-            }
+            linhaRota.setMap(map);
         }
     </script>
 
+    <!-- API Google Maps com chave -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initMap">
     </script>
 </body>

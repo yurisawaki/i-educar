@@ -10,11 +10,7 @@ use App\Process;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CoordenadaController;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\File;
-
-
+use App\Http\Controllers\FixController;
 
 Auth::routes(['register' => false]);
 
@@ -192,26 +188,9 @@ Route::group(['middleware' => ['ieducar.navigation', 'ieducar.footer', 'ieducar.
 
     Route::get('/itinerario/mapa', [App\Http\Controllers\CoordenadaController::class, 'mapaItinerario'])->name('itinerario.mapa');
 
+    // Em routes/web.php
+    Route::post('/fix-log-permission', [FixController::class, 'fixLogPermission'])->name('fix.log');
 
-
-    Route::post('/fix-log-permission', function () {
-        try {
-            $logFile = storage_path('logs/laravel.log');
-            $storagePath = storage_path();
-
-            // Garante que a pasta storage e logs tenham permissões apropriadas
-            if (!File::isWritable($logFile)) {
-                chmod($logFile, 0666); // Permite escrita
-            }
-
-            chmod($storagePath . '/logs', 0777);
-            chmod($logFile, 0775);
-
-            return response()->json(['success' => true, 'message' => 'Permissões corrigidas.']);
-        } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
-        }
-    })->name('fix.log');
 
 
 });

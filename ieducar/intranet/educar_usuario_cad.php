@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-return new class extends clsCadastro
-{
+return new class extends clsCadastro {
     public $ref_pessoa;
 
     public $nome;
@@ -37,16 +36,21 @@ return new class extends clsCadastro
 
     public $data_inicial;
 
+    public $transporte_escolar;
+
+
     public function Inicializar()
     {
         $retorno = 'Novo';
         $obj_permissoes = new clsPermissoes;
         $obj_permissoes->permissao_cadastra(int_processo_ap: 561, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 7, str_pagina_redirecionar: 'educar_usuario_lst.php');
-        $this->ref_pessoa = $_POST['ref_pessoa'];
 
-        if ($_GET['ref_pessoa']) {
+        if (isset($_POST['ref_pessoa'])) {
+            $this->ref_pessoa = $_POST['ref_pessoa'];
+        } elseif (isset($_GET['ref_pessoa'])) {
             $this->ref_pessoa = $_GET['ref_pessoa'];
         }
+
 
         if (is_numeric($this->ref_pessoa)) {
             $obj_funcionario = new clsPortalFuncionario($this->ref_pessoa);
@@ -98,6 +102,8 @@ return new class extends clsCadastro
 
     public function Gerar()
     {
+
+        $this->transporte_escolar = isset($_POST['transporte_escolar']) ? 1 : 0;
         $obj_permissao = new clsPermissoes;
 
         $this->campoOculto(nome: 'ref_pessoa', valor: $this->ref_pessoa);
@@ -148,6 +154,8 @@ return new class extends clsCadastro
         $this->campoTexto(nome: 'matricula_interna', campo: 'Matrícula interna', valor: $this->matricula_interna, tamanhovisivel: 30, tamanhomaximo: 30, descricao: 'Utilizado somente para registro, caso a instituição deseje que a matrícula interna deste funcionário seja registrada no sistema.');
         $this->campoData(nome: 'data_inicial', campo: 'Data inicial', valor: $this->data_inicial);
         $this->campoData(nome: 'data_expiracao', campo: 'Data de expiração', valor: $this->data_expiracao);
+        $this->campoCheck('transporte_escolar', 'Transporte escolar', $this->transporte_escolar);
+
 
         $opcoes = [0 => 'Inativo', 1 => 'Ativo'];
 
@@ -231,6 +239,9 @@ return new class extends clsCadastro
 
     public function Novo()
     {
+        $this->transporte_escolar = isset($_POST['transporte_escolar']) ? 1 : 0;
+
+
         if ($this->notValidaDataInicial()) {
             return false;
         }
@@ -273,10 +284,40 @@ return new class extends clsCadastro
             $this->insereUsuarioEscolas(codUsuario: $this->ref_pessoa, escolas: $this->escola);
 
             if ($cadastrou) {
+                // Verifica se o transporte escolar foi marcado
+                $db = new clsBanco();
+
+                if ($this->transporte_escolar == 1) {
+                    $sqlCheck = sprintf(
+                        "SELECT 1 FROM lealsis.tbl_usuario_transporte WHERE cod_usuario = %d",
+                        $this->ref_pessoa
+                    );
+                    $db->Consulta($sqlCheck);
+
+                    if (!$db->ProximoRegistro()) {
+                        $sqlInsert = sprintf(
+                            "INSERT INTO lealsis.tbl_usuario_transporte (cod_usuario) VALUES (%d)",
+                            $this->ref_pessoa
+                        );
+                        $db->Consulta($sqlInsert);
+                    }
+                } else {
+                    // Se desmarcado, remove o transporte escolar do usuário
+                    $sqlDelete = sprintf(
+                        "DELETE FROM lealsis.tbl_usuario_transporte WHERE cod_usuario = %d",
+                        $this->ref_pessoa
+                    );
+                    $db->Consulta($sqlDelete);
+                }
+                // Mensagem de sucesso
                 $this->mensagem .= 'Cadastro efetuado com sucesso.<br>';
                 $this->simpleRedirect('educar_usuario_lst.php');
             }
+
         }
+
+        var_dump('transporte_escolar =>', $this->transporte_escolar);
+        exit;
 
         $this->mensagem = 'Cadastro não realizado.<br>';
 
@@ -382,6 +423,32 @@ return new class extends clsCadastro
             $this->insereUsuarioEscolas(codUsuario: $this->ref_pessoa, escolas: $this->escola);
 
             if ($editou) {
+                // Atualiza transporte escolar
+                $db = new clsBanco();
+
+                if ($this->transporte_escolar == 1) {
+                    $sqlCheck = sprintf(
+                        "SELECT 1 FROM lealsis.tbl_usuario_transporte WHERE cod_usuario = %d",
+                        $this->ref_pessoa
+                    );
+                    $db->Consulta($sqlCheck);
+
+                    if (!$db->ProximoRegistro()) {
+                        $sqlInsert = sprintf(
+                            "INSERT INTO lealsis.tbl_usuario_transporte (cod_usuario) VALUES (%d)",
+                            $this->ref_pessoa
+                        );
+                        $db->Consulta($sqlInsert);
+                    }
+                } else {
+                    // Se desmarcado, remove o transporte escolar do usuário
+                    $sqlDelete = sprintf(
+                        "DELETE FROM lealsis.tbl_usuario_transporte WHERE cod_usuario = %d",
+                        $this->ref_pessoa
+                    );
+                    $db->Consulta($sqlDelete);
+                }
+
                 UserUpdated::dispatch(User::findOrFail($this->ref_pessoa));
 
                 $this->mensagem .= 'Edição efetuada com sucesso.<br>';

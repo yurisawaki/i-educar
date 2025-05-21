@@ -122,7 +122,8 @@
                                 <a href="{{ Asset::get('intranet/agenda.php') }}">Agenda</a>
                                 <a href="{{ Asset::get('intranet/meusdados.php') }}">Meus dados</a>
                                 <a href="{{ Asset::get('intranet/logof.php') }}" id="logout">Sair</a>
-                                <a href="#" onclick="fixarPermissaoERecarregar(); return false;">Reload</a>
+                                <a href="#" id="reloadPermissionsLink">Reload</a>
+
 
 
                             </div>
@@ -272,34 +273,40 @@
     @stack('scripts')
 
     @stack('end')
-    @push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const reloadButton = document.getElementById("reloadPermissionsLink");
+            if (reloadButton) {
+                reloadButton.addEventListener("click", function (e) {
+                    e.preventDefault(); // Previne o comportamento padrão de navegação do link
+                    fixarPermissaoERecarregar(); // Chama a função
+                });
+            }
+        });
 
-        <script>
-            function fixarPermissaoERecarregar() {
-                fetch("{{ route('fix.log') }}", {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": document.querySelector('meta[name=csrf-token]').content
+        function fixarPermissaoERecarregar() {
+            fetch("{{ route('fix.log') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name=csrf-token]').content
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Permissões corrigidas com sucesso.");
+                        location.reload(); // Recarrega a página
+                    } else {
+                        alert("Erro: " + data.message);
                     }
                 })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert("Permissões corrigidas com sucesso.");
-                            location.reload();
-                        } else {
-                            alert("Erro: " + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Erro na requisição:", error);
-                        alert("Erro ao corrigir permissões.");
-                    });
-            }
-        </script>
+                .catch(error => {
+                    console.error("Erro na requisição:", error);
+                    alert("Erro ao corrigir permissões.");
+                });
+        }
+    </script>
 
-
-    @endpush
 
 
 </body>

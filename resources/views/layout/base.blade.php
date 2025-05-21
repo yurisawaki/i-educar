@@ -17,8 +17,6 @@
     <link rel="stylesheet" href="{{ Asset::get('intranet/styles/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ Asset::get('css/base.css') }}">
     @stack('styles')
-    @stack('scripts')
-    @stack('head')
 </head>
 
 <body>
@@ -33,7 +31,7 @@
                     <div class="dropdown-content">
                         <a href="{{ Asset::get('intranet/agenda.php') }}">Agenda</a>
                         <a href="{{ Asset::get('intranet/meusdados.php') }}">Meus dados</a>
-                        <a href="#" onclick="fixarPermissaoERecarregar(); return false;">Reload</a>
+                        <a href="#" id="reloadPermissionsLink">Reload</a> <!-- Alterado o onclick -->
                     </div>
                 </div>
                 <a href="{{ Asset::get('intranet/meusdados.php') }}" class="avatar" title="Meus dados">
@@ -69,6 +67,7 @@
 
     @push('scripts')
         <script>
+            // Função para corrigir permissões e recarregar a página
             function fixarPermissaoERecarregar() {
                 console.log("Função chamada");
                 fetch("{{ route('fix.log') }}", {
@@ -93,8 +92,20 @@
                         alert("Erro ao corrigir permissões.");
                     });
             }
+
+            // Adicionar o evento de clique programaticamente
+            document.addEventListener("DOMContentLoaded", function () {
+                const reloadButton = document.getElementById("reloadPermissionsLink");
+                if (reloadButton) {
+                    reloadButton.addEventListener("click", function (e) {
+                        e.preventDefault(); // Previne o comportamento padrão do link
+                        fixarPermissaoERecarregar(); // Chama a função
+                    });
+                }
+            });
         </script>
     @endpush
+
     @stack('scripts')
 </body>
 
