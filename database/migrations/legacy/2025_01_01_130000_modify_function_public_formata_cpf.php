@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddFunctionPublicFormataCpf extends Migration
+class ModifyFunctionPublicFormataCpf extends Migration
 {
     /**
      * Run the migrations.
