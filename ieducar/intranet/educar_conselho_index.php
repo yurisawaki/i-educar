@@ -1,5 +1,4 @@
 <?php
-
 return new class {
     public function RenderHTML()
     {
@@ -12,7 +11,7 @@ return new class {
 
     public function Formular()
     {
-        $this->title = 'Configurações';
-        $this->processoAp = 25;
+        $this->title = 'Conselho';
+        $this->processoAp = 30000; // Coloque aqui o código correto do processo
     }
 };

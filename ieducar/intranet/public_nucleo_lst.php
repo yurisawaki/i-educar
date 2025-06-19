@@ -9,7 +9,7 @@ return new class extends clsListagem {
     public $__limite;
     public $__offset;
 
-    public $no_nucleo;
+    public $nm_nucleo;
     public $ds_nucleo;
 
     public function model()
@@ -36,15 +36,15 @@ return new class extends clsListagem {
             'Ação'
         ]);
 
-        $this->campoTexto('no_nucleo', 'Nome do Núcleo', $this->no_nucleo, 30, 255, false);
+        $this->campoTexto('nm_nucleo', 'Nome do Núcleo', $this->nm_nucleo, 30, 255, false);
         $this->campoTexto('ds_nucleo', 'Descrição', $this->ds_nucleo, 30, 255, false);
 
         $this->__limite = 20;
-        $this->__offset = isset($_GET["pagina_{$this->no_nucleo}"]) ? $_GET["pagina_{$this->no_nucleo}"] * $this->__limite - $this->__limite : 0;
+        $this->__offset = isset($_GET["pagina_{$this->nm_nucleo}"]) ? $_GET["pagina_{$this->nm_nucleo}"] * $this->__limite - $this->__limite : 0;
 
         [$data, $total] = $this->paginate($this->__limite, $this->__offset, function ($query) {
-            $query->when($this->no_nucleo, function ($query) {
-                $query->whereUnaccent('no_nucleo', $this->no_nucleo);
+            $query->when($this->nm_nucleo, function ($query) {
+                $query->whereUnaccent('no_nucleo', $this->nm_nucleo);
             });
 
             $query->when($this->ds_nucleo, function ($query) {
@@ -62,7 +62,7 @@ return new class extends clsListagem {
             ]);
         }
 
-        $this->addPaginador2('public_nucleo_lst.php', $total, $_GET, $this->no_nucleo, $this->__limite);
+        $this->addPaginador2('public_nucleo_lst.php', $total, $_GET, $this->nm_nucleo, $this->__limite);
 
         $obj_permissao = new clsPermissoes;
 
@@ -81,6 +81,6 @@ return new class extends clsListagem {
     public function Formular()
     {
         $this->title = 'Núcleo';
-        $this->processoAp = 758; // Código real do processo
+        $this->processoAp = 760;
     }
 };

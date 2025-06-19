@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DistrictController;
 use App\Http\Controllers\Api\EmployeeWithdrawalController;
 use App\Http\Controllers\Api\GradeController;
 use App\Http\Controllers\Api\InstitutionController;
+use App\Http\Controllers\Api\ItinerarioApiController;
 use App\Http\Controllers\Api\People\LegacyDeficiencyController;
 use App\Http\Controllers\Api\PeriodController;
 use App\Http\Controllers\Api\RegistrationController;
@@ -17,8 +18,16 @@ use App\Http\Controllers\Api\SchoolController;
 use App\Http\Controllers\Api\SituationController;
 use App\Http\Controllers\Api\StageController;
 use App\Http\Controllers\Api\StateController;
+use App\Http\Controllers\Api\PontoTransporteApiController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UsuarioTransporteController;
+use App\Http\Controllers\Api\UsuarioTransporteApiController;
+use App\Http\Controllers\Api\RotaTransporteApiController;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\ConfiguracaoController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -85,14 +94,57 @@ Route::group(['prefix' => 'resource', 'as' => 'api.resource.', 'namespace' => 'A
     Route::get('country', 'Country\ResourceCountryController@index')->name('country');
 });
 
-Route::prefix('transporte')->group(function () {
-    Route::get('/validar', function () {
-        return response()->json([
-            'code' => 200,
-            'status' => 'success',
-        ], 200);
-    });
 
-    Route::get('/usuarios', [UsuarioTransporteController::class, 'index']);
+
+
+
+Route::post('/login', function (Request $request) {
+    $matricula = $request->input('matricula');
+    $senha = $request->input('senha');
+
+    // Buscar usuário pelo relacionamento employee com matricula
+    $user = User::whereHas('employee', function ($query) use ($matricula) {
+        $query->where('matricula', $matricula)->where('ativo', 1);
+    })->first();
+
+    if (!$user) {
+        return response()->json(['message' => 'Usuário não encontrado'], 401);
+    }
+
+    // Verificar senha via relacionamento employee (que está no model User)
+    if (!Hash::check($senha, $user->password)) {
+        return response()->json(['message' => 'Senha incorreta'], 401);
+    }
+
+    // Criar token com Sanctum
+    $token = $user->createToken('api-token')->plainTextToken;
+
+    return response()->json([
+        'token' => $token,
+        'nome' => $user->name,
+        'cod_usuario' => $user->id,
+    ]);
+});
+
+Route::get('/transporte/validar', function () {
+    return response()->json([
+        'code' => 200,
+        'status' => 'success',
+    ], 200);
+});
+
+Route::prefix('transporte')->middleware('auth:sanctum')->group(function () {
+
+    Route::get('/usuarios', [UsuarioTransporteApiController::class, 'index']);
+
+    Route::get('/pontos', [PontoTransporteApiController::class, 'index']);
+
+    Route::get('/rotas', [RotaTransporteApiController::class, 'index']);
+
+    Route::get('/rota_ponto', [ItinerarioApiController::class, 'index']);
 
 });
+
+
+
+

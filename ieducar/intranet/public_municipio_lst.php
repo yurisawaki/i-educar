@@ -4,8 +4,7 @@ use App\Models\City;
 use iEducar\Legacy\InteractWithDatabase;
 use iEducar\Legacy\SelectOptions;
 
-return new class extends clsListagem
-{
+return new class extends clsListagem {
     use InteractWithDatabase, SelectOptions;
 
     public $__limite;

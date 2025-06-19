@@ -3,10 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Itinerário no Mapa</title>
+    <title>Itinerário OSM</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
     <style>
-        body {
+        body,
+        html {
             margin: 0;
+            padding: 0;
+            height: 100%;
         }
 
         #map {
@@ -18,7 +24,7 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            z-index: 999;
+            z-index: 1000;
             padding: 10px 15px;
             background-color: #0066FF;
             color: white;
@@ -26,6 +32,7 @@
             cursor: pointer;
             font-weight: bold;
             border-radius: 4px;
+            margin-right: 50px;
         }
     </style>
 </head>
@@ -34,17 +41,21 @@
     <button id="toggleTipoRota">Modo: Rural</button>
     <div id="map"></div>
 
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
+
     <script>
+
         const pontos = @json($pontos);
-        let tipoRota = 'Rural'; // valor inicial
+        let tipoRota = 'Rural';
+        let map, routingControl;
 
         function haversine(lat1, lon1, lat2, lon2) {
-            const toRad = angle => angle * Math.PI / 180;
+            const toRad = deg => deg * Math.PI / 180;
             const R = 6371;
             const dLat = toRad(lat2 - lat1);
             const dLon = toRad(lon2 - lon1);
-            const a =
-                Math.sin(dLat / 2) ** 2 +
+            const a = Math.sin(dLat / 2) ** 2 +
                 Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
                 Math.sin(dLon / 2) ** 2;
             return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -56,10 +67,8 @@
                 matriz[i] = [];
                 for (let j = 0; j < pontos.length; j++) {
                     matriz[i][j] = i === j ? 0 : haversine(
-                        pontos[i].latitude,
-                        pontos[i].longitude,
-                        pontos[j].latitude,
-                        pontos[j].longitude
+                        pontos[i].latitude, pontos[i].longitude,
+                        pontos[j].latitude, pontos[j].longitude
                     );
                 }
             }
@@ -94,72 +103,59 @@
         }
 
         function renderMapa(tipo) {
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 13,
-                center: {
-                    lat: parseFloat(pontos[0].latitude),
-                    lng: parseFloat(pontos[0].longitude)
-                }
+            if (map) map.remove(); // destruir mapa anterior
+            map = L.map('map').setView([pontos[0].latitude, pontos[0].longitude], 13);
+
+            const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
             });
 
+            // Camada satélite Esri
+            const esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                maxZoom: 17,
+                attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+            });
+
+
+            osm.addTo(map);
+
+
+            const baseMaps = {
+                "Mapa (OSM)": osm,
+                "Satélite (Esri)": esriSat
+            };
+            L.control.layers(baseMaps).addTo(map);
+            if (routingControl) {
+                map.removeControl(routingControl);
+            }
+
             if (tipo === 'Urbana') {
-                const directionsService = new google.maps.DirectionsService();
-                const directionsRenderer = new google.maps.DirectionsRenderer();
-                directionsRenderer.setMap(map);
-
-                const waypoints = pontos.slice(1, -1).map(p => ({
-                    location: { lat: parseFloat(p.latitude), lng: parseFloat(p.longitude) },
-                    stopover: true
-                }));
-
-                const request = {
-                    origin: {
-                        lat: parseFloat(pontos[0].latitude),
-                        lng: parseFloat(pontos[0].longitude)
-                    },
-                    destination: {
-                        lat: parseFloat(pontos[pontos.length - 1].latitude),
-                        lng: parseFloat(pontos[pontos.length - 1].longitude)
-                    },
-                    waypoints: waypoints,
-                    travelMode: 'DRIVING'
-                };
-
-                directionsService.route(request, (result, status) => {
-                    if (status === 'OK') {
-                        directionsRenderer.setDirections(result);
-                    }
-                });
-
+                routingControl = L.Routing.control({
+                    waypoints: pontos.map(p => L.latLng(p.latitude, p.longitude)),
+                    routeWhileDragging: false,
+                    draggableWaypoints: false,
+                    addWaypoints: false,
+                    show: false,
+                }).addTo(map);
             } else {
                 const matriz = construirMatriz(pontos);
                 const ordemOtima = tspNearestNeighbor(matriz);
                 const pontosOtimizados = ordemOtima.map(i => pontos[i]);
 
                 pontosOtimizados.forEach(p => {
-                    new google.maps.Marker({
-                        position: {
-                            lat: parseFloat(p.latitude),
-                            lng: parseFloat(p.longitude)
-                        },
-                        map: map,
-                        title: p.descricao
-                    });
+                    L.marker([p.latitude, p.longitude])
+                        .addTo(map)
+                        .bindPopup(p.descricao || 'Ponto')
+                        .openPopup();
                 });
 
-                const rota = pontosOtimizados.map(p => ({
-                    lat: parseFloat(p.latitude),
-                    lng: parseFloat(p.longitude)
-                }));
-
-                new google.maps.Polyline({
-                    path: rota,
-                    geodesic: true,
-                    strokeColor: '#0066FF',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 4,
-                    map: map
-                });
+                const latlngs = pontosOtimizados.map(p => [p.latitude, p.longitude]);
+                L.polyline(latlngs, {
+                    color: '#0066FF',
+                    weight: 4,
+                    opacity: 0.8,
+                    smoothFactor: 1
+                }).addTo(map);
             }
         }
 
@@ -172,9 +168,8 @@
                 renderMapa(tipoRota);
             });
         }
-    </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initApp">
+        window.onload = initApp;
     </script>
 </body>
 

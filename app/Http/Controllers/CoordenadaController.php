@@ -49,5 +49,23 @@ class CoordenadaController extends Controller
                 ->values()
         ]);
     }
+
+    public function mapaItinerarioOsm(Request $request)
+    {
+        return view('layout.mapa-osm-itinerario', [
+            'pontos' => ItinerarioTransporteEscolar::with('ponto')
+                ->where('ref_cod_rota_transporte_escolar', $request->query('cod_rota'))
+                ->orderBy('seq')
+                ->get()
+                ->pluck('ponto')
+                ->filter(fn($p) => $p && $p->latitude && $p->longitude)
+                ->map(fn($p) => [
+                    'latitude' => (float) $p->latitude,
+                    'longitude' => (float) $p->longitude,
+                    'descricao' => $p->descricao,
+                ])
+                ->values()
+        ]);
+    }
 }
 

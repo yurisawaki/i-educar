@@ -14,21 +14,21 @@ $j('#tab1').addClass('turmaTab-active').removeClass('turmaTab');
 $j('#ref_cod_disciplina_dispensada').css('maxWidth', '600px');
 
 // Atribui um id a linha, para identificar até onde/a partir de onde esconder os campos
-$j('#codigo_inep_educacenso').closest('tr').attr('id','tr_codigo_inep_educacenso');
+$j('#codigo_inep_educacenso').closest('tr').attr('id', 'tr_codigo_inep_educacenso');
 
 // Adiciona um ID à linha que termina o formulário para parar de esconder os campos
-$j('.tableDetalheLinhaSeparador').closest('tr').attr('id','stop');
+$j('.tableDetalheLinhaSeparador').closest('tr').attr('id', 'stop');
 
 // Pega o número dessa linha
-linha_inicial_tipo = $j('#tr_codigo_inep_educacenso').index()-3;
-linha_inicial_turno_parcial = $j('#tr_horario_funcionamento_turno_matutino').index()-3;
+linha_inicial_tipo = $j('#tr_codigo_inep_educacenso').index() - 3;
+linha_inicial_turno_parcial = $j('#tr_horario_funcionamento_turno_matutino').index() - 3;
 
 // hide nos campos das outras abas (deixando só os campos da primeira aba)
-$j('.tablecadastro >tbody  > tr').each(function(index, row) {
-  if (index>=linha_inicial_tipo){
-    if (row.id!='stop')
+$j('.tablecadastro >tbody  > tr').each(function (index, row) {
+  if (index >= linha_inicial_tipo) {
+    if (row.id != 'stop')
       row.hide();
-    else{
+    else {
       return false;
     }
   }
@@ -37,17 +37,17 @@ $j('.tablecadastro >tbody  > tr').each(function(index, row) {
 var modoCadastro = $j('#retorno').val() == 'Novo';
 let obrigarCamposCenso = $j('#obrigar_campos_censo').val() == '1';
 
-let verificaEtapaEducacenso = ()=>{
+let verificaEtapaEducacenso = () => {
   $j('#etapa_educacenso').makeUnrequired();
   if ($j('#estrutura_curricular').val() &&
     ($j('#estrutura_curricular').val().include('1') ||
-    $j('#estrutura_curricular').val().include('3')) &&
+      $j('#estrutura_curricular').val().include('3')) &&
     obrigarCamposCenso) {
-      $j('#etapa_educacenso').makeRequired();
+    $j('#etapa_educacenso').makeRequired();
   }
 }
 
-let verificaHorariosTurnoParcial = ()=>{
+let verificaHorariosTurnoParcial = () => {
   if (!obrigarCamposCenso) {
     return true;
   }
@@ -81,20 +81,20 @@ let verificaHorariosTurnoParcial = ()=>{
   }
 }
 
-let verificaOutrasUnidadesCurricularesObrigatorias = ()=> {
-  $j("#outras_unidades_curriculares_obrigatorias").prop('disabled', !$j('#estrutura_curricular').val() || ! $j('#estrutura_curricular').val().includes("2"));
+let verificaOutrasUnidadesCurricularesObrigatorias = () => {
+  $j("#outras_unidades_curriculares_obrigatorias").prop('disabled', !$j('#estrutura_curricular').val() || !$j('#estrutura_curricular').val().includes("2"));
 }
 
-let verificaFormaOrganizacaoTurma = ()=> {
+let verificaFormaOrganizacaoTurma = () => {
   const etapasInvalidas = ['1', '2', '3', '24', '62'];
   const escolarizacao = $j('#tipo_atendimento').val() == '0';
   const etapaEducacenso = $j('#etapa_educacenso').val()
 
   $j('#formas_organizacao_turma').makeUnrequired();
   if (obrigarCamposCenso &&
-      escolarizacao &&
-      etapaEducacenso &&
-     !etapasInvalidas.includes(etapaEducacenso)
+    escolarizacao &&
+    etapaEducacenso &&
+    !etapasInvalidas.includes(etapaEducacenso)
   ) {
     $j('#formas_organizacao_turma').makeRequired();
   }
@@ -106,7 +106,7 @@ let verificaFormaOrganizacaoTurma = ()=> {
   }
 }
 
-let verificaUnidadeCurricular = ()=> {
+let verificaUnidadeCurricular = () => {
   $j('#unidade_curricular').makeUnrequired();
   if (obrigarCamposCenso &&
     $j('#estrutura_curricular').val() &&
@@ -117,7 +117,7 @@ let verificaUnidadeCurricular = ()=> {
 
 let verificaLocalFuncionamentoDiferenciado = () => {
   $j('#local_funcionamento_diferenciado').makeUnrequired();
-  let habilitaCampo = [1,2].includes(+($j('#tipo_mediacao_didatico_pedagogico').val()));
+  let habilitaCampo = [1, 2].includes(+($j('#tipo_mediacao_didatico_pedagogico').val()));
   $j('#local_funcionamento_diferenciado').prop('disabled', !habilitaCampo);
 
   if (habilitaCampo) {
@@ -129,12 +129,12 @@ let verificaLocalFuncionamentoDiferenciado = () => {
   }
 }
 
-$j('#tipo_atendimento').change(function() {
+$j('#tipo_atendimento').change(function () {
   mostraAtividadesComplementares();
   verificaEstruturacurricular();
   verificaFormaOrganizacaoTurma();
 });
-$j('#estrutura_curricular').change(function() {
+$j('#estrutura_curricular').change(function () {
   verificaUnidadeCurricular();
   habilitaUnidadeCurricular();
   verificaEtapaEducacenso();
@@ -145,12 +145,12 @@ $j('#estrutura_curricular').change(function() {
 
 verificaLocalFuncionamentoDiferenciado();
 
-$j('#etapa_educacenso').change(function() {
+$j('#etapa_educacenso').change(function () {
   mostraCursoTecnico();
   verificaFormaOrganizacaoTurma();
 });
 
-function mostraAtividadesComplementares(){
+function mostraAtividadesComplementares() {
   var mostraCampo = $j('#tipo_atendimento').val() == '4';
   $j('#atividades_complementares').makeUnrequired();
   if (mostraCampo) {
@@ -184,7 +184,7 @@ function verificaEstruturacurricular() {
 
 function mostraCursoTecnico() {
   var etapasEnsinoTecnico = ['30', '31', '32', '33', '34', '39', '40', '64', '74'];
-  var mostraCampo = $j.inArray($j('#etapa_educacenso').val(),etapasEnsinoTecnico) != -1;
+  var mostraCampo = $j.inArray($j('#etapa_educacenso').val(), etapasEnsinoTecnico) != -1;
   if (mostraCampo) {
     $j('#cod_curso_profissional').prop('disabled', false);
     $j('#cod_curso_profissional').trigger('chosen:updated');
@@ -205,12 +205,12 @@ function validaHorarioInicialFinal() {
   var horarioInicialIntervalo = $j('#hora_inicio_intervalo').val().replace(':', '');
   var horarioFinalIntervalo = $j('#hora_fim_intervalo').val().replace(':', '');
 
-  if (horarioInicial > horarioFinal){
+  if (horarioInicial > horarioFinal) {
     alert('O horário inicial não pode ser maior que o horário final.');
     return false;
   }
 
-  if (horarioInicialIntervalo > horarioFinalIntervalo){
+  if (horarioInicialIntervalo > horarioFinalIntervalo) {
     alert('O horário inicial de intervalo não pode ser maior que o horário final de intervalo.');
     return false;
   }
@@ -219,17 +219,17 @@ function validaHorarioInicialFinal() {
 }
 
 function validaHoras() {
-  var campos = [{'id' : 'hora_inicial', 'label' : 'Hora inicial'},
-                {'id' : 'hora_final', 'label' : 'Hora final'},
-                {'id' : 'hora_inicio_intervalo', 'label' : 'Hora início intervalo'},
-                {'id' : 'hora_fim_intervalo', 'label' : 'Hora fim intervalo'}];
-  var minutosPermitidos = ['00','05','10','15','20','25','30','35','40','45','50','55'];
+  var campos = [{ 'id': 'hora_inicial', 'label': 'Hora inicial' },
+  { 'id': 'hora_final', 'label': 'Hora final' },
+  { 'id': 'hora_inicio_intervalo', 'label': 'Hora início intervalo' },
+  { 'id': 'hora_fim_intervalo', 'label': 'Hora fim intervalo' }];
+  var minutosPermitidos = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
   var retorno = true;
 
-  $j.each(campos, function(i, campo) {
+  $j.each(campos, function (i, campo) {
     var hora = $j('#' + campo.id).val();
     var minutos = hora.substr(3, 2);
-    var minutosValidos = $j.inArray(minutos,minutosPermitidos) != -1;
+    var minutosValidos = $j.inArray(minutos, minutosPermitidos) != -1;
 
     if (obrigarCamposCenso && (minutos != '' && !minutosValidos)) {
       alert('O campo ' + campo.label + ' não permite minutos diferentes de 0 ou 5.');
@@ -270,7 +270,7 @@ function habilitaEtapaEducacenso() {
   const notContainData = $j('#estrutura_curricular').val() === null;
 
   if (notContainData || (!$j('#estrutura_curricular').val().include('1') &&
-      !$j('#estrutura_curricular').val().include('3'))) {
+    !$j('#estrutura_curricular').val().include('3'))) {
     $j("#etapa_educacenso").prop('disabled', true).val('');
   }
 }
@@ -288,7 +288,7 @@ function habilitaUnidadeCurricular() {
   $j("#unidade_curricular").prop('disabled', true).val([]).trigger('chosen:updated');
 }
 
-$j('#tipo_mediacao_didatico_pedagogico').on('change', function(){
+$j('#tipo_mediacao_didatico_pedagogico').on('change', function () {
   if (!obrigarCamposCenso) {
     return true;
   }
@@ -318,14 +318,14 @@ $j('#tipo_mediacao_didatico_pedagogico').on('change', function(){
 
 function buscaEtapasDaEscola() {
   var urlApi = getResourceUrlBuilder.buildUrl('/module/Api/Escola', 'etapas-da-escola-por-ano', {
-    escola_id : $j('#ref_cod_escola').val(),
-    ano : new Date().getFullYear()
+    escola_id: $j('#ref_cod_escola').val(),
+    ano: new Date().getFullYear()
   });
 
   var options = {
-    url : urlApi,
-    dataType : 'json',
-    success  : function(dataResponse){
+    url: urlApi,
+    dataType: 'json',
+    success: function (dataResponse) {
       $j('#ref_cod_modulo').val(dataResponse.modulo).trigger('change');
       preencheEtapasNaTurma(dataResponse.etapas);
     }
@@ -341,7 +341,7 @@ function atualizaEtapaEducacenso() {
   }
 
   var urlApi = getResourceUrlBuilder.buildUrl('/module/Api/Serie', 'etapa-educacenso', {
-    serie_id : $j('#ref_cod_serie').val()
+    serie_id: $j('#ref_cod_serie').val()
   });
 
   getResources({
@@ -365,7 +365,7 @@ $j('[name="ref_cod_serie"], #multiseriada').change(atualizaEtapaEducacenso);
 atualizaEtapaEducacenso();
 
 function preencheEtapasNaTurma(etapas) {
-  $j.each( etapas, function( key, etapa ) {
+  $j.each(etapas, function (key, etapa) {
     $j('input[name^="data_inicio[' + key + '"]').val(formatDate(etapa.data_inicio));
     $j('input[name^="data_fim[' + key + '"]').val(formatDate(etapa.data_fim));
     $j('input[name^="dias_letivos[' + key + '"]').val(etapa.dias_letivos);
@@ -398,7 +398,7 @@ function atualizaOpcoesDeDisciplinas() {
   }
 }
 
-var preencheComponentesCurriculares = function(data) {
+var preencheComponentesCurriculares = function (data) {
   let componentesCurriculares = data.componentes_curriculares;
   var conteudo = '';
   let multisseriada = $j('#multiseriada').is(':checked');
@@ -418,7 +418,7 @@ var preencheComponentesCurriculares = function(data) {
 
     $j('#tr_disciplinas_ td:first').html('Componentes curriculares definidos em séries da escola');
     $j('#disciplinas').show();
-  }  else if (multisseriada) {
+  } else if (multisseriada) {
     $j('#tr_disciplinas_ td:first').html('Os componentes curriculares de turmas multisseriadas devem ser definidos em suas respectivas series (Escola > Cadastros > Séries da escola)');
     $j('#disciplinas').hide();
   } else {
@@ -437,8 +437,8 @@ var preencheComponentesCurriculares = function(data) {
 }
 
 
-var getLinhaComponente = function(componente) {
-  return  `
+var getLinhaComponente = function (componente) {
+  return `
   <tr class="linha-disciplina">
     <td width="250"><input type="checkbox" name="disciplinas[${componente.id}]" class="check-disciplina" id="disciplinas[]" value="${componente.id}">${componente.nome}</td>
     <td><span>${componente.abreviatura}</span></td>
@@ -448,23 +448,23 @@ var getLinhaComponente = function(componente) {
   </tr>`;
 }
 
-$j(document).ready(function() {
+$j(document).ready(function () {
 
   // on click das abas
 
   // DADOS GERAIS
   $j('#tab1').click(
-    function(){
+    function () {
 
       $j('.turmaTab-active').toggleClass('turmaTab-active turmaTab');
       $j('#tab1').toggleClass('turmaTab turmaTab-active')
-      $j('.tablecadastro >tbody  > tr').each(function(index, row) {
-        if (index>=linha_inicial_tipo){
-          if (row.id!='stop')
+      $j('.tablecadastro >tbody  > tr').each(function (index, row) {
+        if (index >= linha_inicial_tipo) {
+          if (row.id != 'stop')
             row.hide();
           else
             return false;
-        }else{
+        } else {
           row.show();
         }
       });
@@ -475,26 +475,26 @@ $j(document).ready(function() {
 
   // Adicionais
   $j('#tab2').click(
-    function(){
+    function () {
       $j('.turmaTab-active').toggleClass('turmaTab-active turmaTab');
       $j('#tab2').toggleClass('turmaTab turmaTab-active')
-      $j('.tablecadastro >tbody  > tr').each(function(index, row) {
-        if (row.id!='stop'){
-          if (index>=linha_inicial_tipo && index < linha_inicial_turno_parcial){
-            if ((index - linha_inicial_tipo) % 2 == 0){
-              $j('#'+row.id).find('td').removeClass('formlttd');
-              $j('#'+row.id).find('td').addClass('formmdtd');
-            }else{
-              $j('#'+row.id).find('td').removeClass('formmdtd');
-              $j('#'+row.id).find('td').addClass('formlttd');
+      $j('.tablecadastro >tbody  > tr').each(function (index, row) {
+        if (row.id != 'stop') {
+          if (index >= linha_inicial_tipo && index < linha_inicial_turno_parcial) {
+            if ((index - linha_inicial_tipo) % 2 == 0) {
+              $j('#' + row.id).find('td').removeClass('formlttd');
+              $j('#' + row.id).find('td').addClass('formmdtd');
+            } else {
+              $j('#' + row.id).find('td').removeClass('formmdtd');
+              $j('#' + row.id).find('td').addClass('formlttd');
 
             }
 
             row.show();
-          }else if (index>0){
+          } else if (index > 0) {
             row.hide();
           }
-        }else
+        } else
           return false;
       });
       mostraAtividadesComplementares();
@@ -510,45 +510,45 @@ $j(document).ready(function() {
 
   // Turmas Parciais
   $j('#tab3').click(
-    function(){
+    function () {
       $j('.turmaTab-active').toggleClass('turmaTab-active turmaTab');
       $j('#tab3').toggleClass('turmaTab turmaTab-active')
-      $j('.tablecadastro >tbody  > tr').each(function(index, row) {
-        if (row.id!='stop'){
-          if (index>=linha_inicial_turno_parcial){
-            if ((index - linha_inicial_turno_parcial) % 2 == 0){
-              $j('#'+row.id).find('td').removeClass('formlttd');
-              $j('#'+row.id).find('td').addClass('formmdtd');
-            }else{
-              $j('#'+row.id).find('td').removeClass('formmdtd');
-              $j('#'+row.id).find('td').addClass('formlttd');
+      $j('.tablecadastro >tbody  > tr').each(function (index, row) {
+        if (row.id != 'stop') {
+          if (index >= linha_inicial_turno_parcial) {
+            if ((index - linha_inicial_turno_parcial) % 2 == 0) {
+              $j('#' + row.id).find('td').removeClass('formlttd');
+              $j('#' + row.id).find('td').addClass('formmdtd');
+            } else {
+              $j('#' + row.id).find('td').removeClass('formmdtd');
+              $j('#' + row.id).find('td').addClass('formlttd');
 
             }
 
             row.show();
-          }else if (index>0){
+          } else if (index > 0) {
             row.hide();
           }
-        }else
+        } else
           return false;
       });
       verificaHorariosTurnoParcial();
     });
 
   // fix checkboxs
-  $j('.tablecadastro >tbody  > tr').each(function(index, row) {
-    if (index>=linha_inicial_tipo){
-      $j('#'+row.id).find('input:checked').val('on');
+  $j('.tablecadastro >tbody  > tr').each(function (index, row) {
+    if (index >= linha_inicial_tipo) {
+      $j('#' + row.id).find('input:checked').val('on');
     }
   });
 
-  var submitForm = function(){
+  var submitForm = function () {
     let canSubmit = validationUtils.validatesFields(true);
     if (canSubmit) {
       valida();
     }
   }
-  $j('#outras_unidades_curriculares_obrigatorias').on('change', function(){
+  $j('#outras_unidades_curriculares_obrigatorias').on('change', function () {
     if ($j('#outras_unidades_curriculares_obrigatorias').val().length > 0 && $j('#outras_unidades_curriculares_obrigatorias').val().length < 4) {
       alert('O campo Outras Unidades Curriculares deve conter no mínimo 4 caracteres.');
       $j('#btn_enviar').hide();
@@ -557,19 +557,19 @@ $j(document).ready(function() {
     }
   });
 
-  $j('#ano').on('change', function(){
+  $j('#ano').on('change', function () {
     $j('#ano_letivo').val($j('#ano').val());
   });
 
-  $j('#ref_cod_escola').on('change', function(){
+  $j('#ref_cod_escola').on('change', function () {
     $j('#ref_cod_escola_').val($j('#ref_cod_escola').val());
   });
 
-  $j('#ref_cod_curso').on('change', function(){
+  $j('#ref_cod_curso').on('change', function () {
     $j('#ref_cod_curso_').val($j('#ref_cod_curso').val());
   });
 
-  $j('#ref_cod_serie').on('change', function(){
+  $j('#ref_cod_serie').on('change', function () {
     atualizaOpcoesDeDisciplinas();
     $j('#ref_cod_serie_').val($j('#ref_cod_serie').val());
   });
@@ -582,12 +582,12 @@ $j(document).ready(function() {
 });
 
 // Força reload na página quando utiliza "voltar" do navegador
-window.addEventListener( "pageshow", function ( event ) {
+window.addEventListener("pageshow", function (event) {
   var historyTraversal = (
     event.persisted ||
-    ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 )
+    (typeof window.performance != "undefined" && window.performance.navigation.type === 2)
   );
-  if ( historyTraversal ) {
+  if (historyTraversal) {
     // Handle page restore.
     window.location.reload();
   }
