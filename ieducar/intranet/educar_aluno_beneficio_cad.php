@@ -3,8 +3,7 @@
 use App\Models\LegacyBenefit;
 use App\Models\LegacyStudentBenefit;
 
-return new class extends clsCadastro
-{
+return new class extends clsCadastro {
     /**
      * Referencia pega da session para o idpes do usuario atual
      *
@@ -30,7 +29,7 @@ return new class extends clsCadastro
 
     public function Inicializar()
     {
-        $retorno = 'Novo';
+        $retorno = __('Novo');
 
         $this->cod_aluno_beneficio = $_GET['cod_aluno_beneficio'];
 
@@ -48,18 +47,18 @@ return new class extends clsCadastro
                 $this->fexcluir = $obj_permissoes->permissao_excluir(int_processo_ap: 581, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 3);
                 // **
 
-                $retorno = 'Editar';
+                $retorno = __('Editar');
             }
         }
-        $this->url_cancelar = ($retorno == 'Editar') ? "educar_aluno_beneficio_det.php?cod_aluno_beneficio={$registro['cod_aluno_beneficio']}" : 'educar_aluno_beneficio_lst.php';
+        $this->url_cancelar = ($retorno == __('Editar')) ? "educar_aluno_beneficio_det.php?cod_aluno_beneficio={$registro['cod_aluno_beneficio']}" : 'educar_aluno_beneficio_lst.php';
 
-        $nomeMenu = $retorno == 'Editar' ? $retorno : 'Cadastrar';
+        $nomeMenu = ($retorno == __('Editar')) ? $retorno : __('Cadastrar');
 
-        $this->breadcrumb(currentPage: $nomeMenu . ' benefícios de alunos', breadcrumbs: [
-            url('intranet/educar_index.php') => 'Escola',
+        $this->breadcrumb(currentPage: $nomeMenu . ' ' . __('benefícios de alunos'), breadcrumbs: [
+            url('intranet/educar_index.php') => __('Escola'),
         ]);
 
-        $this->nome_url_cancelar = 'Cancelar';
+        $this->nome_url_cancelar = __('Cancelar');
 
         return $retorno;
     }
@@ -70,8 +69,8 @@ return new class extends clsCadastro
         $this->campoOculto(nome: 'cod_aluno_beneficio', valor: $this->cod_aluno_beneficio);
 
         // text
-        $this->campoTexto(nome: 'nm_beneficio', campo: 'Benefício', valor: $this->nm_beneficio, tamanhovisivel: 30, tamanhomaximo: 255, obrigatorio: true);
-        $this->campoMemo(nome: 'desc_beneficio', campo: 'Descrição Benefício', valor: $this->desc_beneficio, colunas: 60, linhas: 5);
+        $this->campoTexto(nome: 'nm_beneficio', campo: __('Benefício'), valor: $this->nm_beneficio, tamanhovisivel: 30, tamanhomaximo: 255, obrigatorio: true);
+        $this->campoMemo(nome: 'desc_beneficio', campo: __('Descrição Benefício'), valor: $this->desc_beneficio, colunas: 60, linhas: 5);
     }
 
     public function Novo()
@@ -82,11 +81,11 @@ return new class extends clsCadastro
         $classType->desc_beneficio = $this->desc_beneficio;
 
         if ($classType->save()) {
-            $this->mensagem .= 'Cadastro efetuado com sucesso.<br>';
+            $this->mensagem .= __('Cadastro efetuado com sucesso.') . '<br>';
             $this->simpleRedirect('educar_aluno_beneficio_lst.php');
         }
 
-        $this->mensagem = 'Cadastro não realizado.<br>';
+        $this->mensagem = __('Cadastro não realizado.') . '<br>';
 
         return false;
     }
@@ -100,11 +99,11 @@ return new class extends clsCadastro
         $classType->desc_beneficio = $this->desc_beneficio;
 
         if ($classType->save()) {
-            $this->mensagem .= 'Edição efetuada com sucesso.<br>';
+            $this->mensagem .= __('Edição efetuada com sucesso.') . '<br>';
             $this->simpleRedirect('educar_aluno_beneficio_lst.php');
         }
 
-        $this->mensagem = 'Edição não realizada.<br>';
+        $this->mensagem = __('Edição não realizada.') . '<br>';
 
         return false;
     }
@@ -116,7 +115,7 @@ return new class extends clsCadastro
             ->count();
 
         if ($count > 0) {
-            $this->mensagem = 'Você não pode excluir esse benefício, pois ele possui vínculo com aluno(s).<br>';
+            $this->mensagem = __('Você não pode excluir esse benefício, pois ele possui vínculo com aluno(s).') . '<br>';
 
             return false;
         }
@@ -125,18 +124,18 @@ return new class extends clsCadastro
         $classType->ativo = 0;
 
         if ($classType->save()) {
-            $this->mensagem .= 'Exclusão efetuada com sucesso.<br>';
+            $this->mensagem .= __('Exclusão efetuada com sucesso.') . '<br>';
             $this->simpleRedirect('educar_aluno_beneficio_lst.php');
         }
 
-        $this->mensagem = 'Exclusão não realizada.<br>';
+        $this->mensagem = __('Exclusão não realizada.') . '<br>';
 
         return false;
     }
 
     public function Formular()
     {
-        $this->title = 'Benefício Aluno';
+        $this->title = __('Benefício Aluno');
         $this->processoAp = '581';
     }
 };

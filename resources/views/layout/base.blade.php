@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="{{ app()->getLocale() }}"> {{-- Use a localidade dinâmica --}}
 
 <head>
     <meta charset="utf-8">
@@ -29,16 +29,17 @@
                 <div class="dropdown">
                     <div class="dropbtn">{{ $loggedUser->name }}</div>
                     <div class="dropdown-content">
-                        <a href="{{ Asset::get('intranet/agenda.php') }}">Agenda</a>
-                        <a href="{{ Asset::get('intranet/meusdados.php') }}">Meus dados</a>
-                        <a href="#" id="reloadPermissionsLink">Reload</a> <!-- Alterado o onclick -->
+                        <a href="{{ Asset::get('intranet/agenda.php') }}">{{ __('Agenda') }}</a>
+                        <a href="{{ Asset::get('intranet/meusdados.php') }}">{{ __('Meus dados') }}</a>
+                        <a href="#" id="reloadPermissionsLink">{{ __('Recarregar') }}</a> {{-- Tradução --}}
                     </div>
                 </div>
-                <a href="{{ Asset::get('intranet/meusdados.php') }}" class="avatar" title="Meus dados">
-                    <img height="35" src="{{ Asset::get('intranet/imagens/user-perfil.png') }}" alt="Perfil">
+                <a href="{{ Asset::get('intranet/meusdados.php') }}" class="avatar" title="{{ __('Meus dados') }}">
+                    <img height="35" src="{{ Asset::get('intranet/imagens/user-perfil.png') }}"
+                        alt="{{ __('Perfil') }}">
                 </a>
                 <a href="#" class="notifications">
-                    <img alt="Notificação" id="notificacao"
+                    <img alt="{{ __('Notificação') }}" id="notificacao"
                         src="{{ Asset::get('intranet/imagens/icon-nav-notifications.png') }}">
                 </a>
             </div>
@@ -81,15 +82,15 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-                            alert("Permissões corrigidas com sucesso.");
+                            alert("{{ __('Permissões corrigidas com sucesso.') }}");
                             location.reload();
                         } else {
-                            alert("Erro: " + data.message);
+                            alert("{{ __('Erro:') }} " + data.message);
                         }
                     })
                     .catch(error => {
-                        console.error("Erro na requisição:", error);
-                        alert("Erro ao corrigir permissões.");
+                        console.error("{{ __('Erro na requisição:') }}", error);
+                        alert("{{ __('Erro ao corrigir permissões.') }}");
                     });
             }
 

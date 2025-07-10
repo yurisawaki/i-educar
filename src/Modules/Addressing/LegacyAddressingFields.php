@@ -81,17 +81,25 @@ trait LegacyAddressingFields
     {
         $enderecamentoObrigatorio = false;
 
-        $this->campoRotulo('enderecamento', '<b>Endereçamento</b>', '', '', 'Digite um CEP para buscar <br>o endereço completo');
+        $this->campoRotulo(
+            'enderecamento',
+            '<b>' . __('Endereçamento') . '</b>',
+            '',
+            '',
+            __('Digite um CEP para buscar') . ' <br>' . __('o endereço completo')
+        );
 
-        $searchPostalCode = '<a id="search-postal-code" data-optional="'.$optionalFields.'" href="javascript:void(0)" class="span-busca-cep" style="color: blue; margin-left: 10px;">Preencher automaticamente usando o CEP</a>';
-        $notKnowMyPostalCode = '<a href="http://www.buscacep.correios.com.br/sistemas/buscacep/" target="_blank" class="span-busca-cep" style="color: blue; margin-left: 10px;">Não sei meu CEP</a>';
+        $searchPostalCode = '<a id="search-postal-code" data-optional="' . $optionalFields . '" href="javascript:void(0)" class="span-busca-cep" style="color: blue; margin-left: 10px;">' . __('Preencher automaticamente usando o CEP') . '</a>';
+
+        $notKnowMyPostalCode = '<a href="http://www.buscacep.correios.com.br/sistemas/buscacep/" target="_blank" class="span-busca-cep" style="color: blue; margin-left: 10px;">' . __('Não sei meu CEP') . '</a>';
+
         $loading = '<img id="postal_code_search_loading" src="/intranet/imagens/indicator.gif" style="margin-left: 10px; visibility: hidden">';
 
         $disabled = !$optionalFields && empty($this->postal_code);
 
         $this->campoCep(
             'postal_code',
-            'CEP',
+            __('CEP'),
             $this->postal_code,
             $enderecamentoObrigatorio,
             '-',
@@ -100,7 +108,7 @@ trait LegacyAddressingFields
         );
 
         $this->inputsHelper()->text('address', [
-            'label' => 'Endereço',
+            'label' => __('Endereço'),
             'disabled' => $disabled,
             'value' => $this->address,
             'required' => $enderecamentoObrigatorio,
@@ -108,24 +116,24 @@ trait LegacyAddressingFields
 
         $this->inputsHelper()->integer('number', [
             'required' => $enderecamentoObrigatorio,
-            'label' => 'Número',
+            'label' => __('Número'),
             'disabled' => $disabled,
-            'placeholder' => 'Número',
+            'placeholder' => __('Número'),
             'value' => $this->number,
             'max_length' => 6,
         ]);
 
         $this->inputsHelper()->text('complement', [
             'required' => $enderecamentoObrigatorio,
-            'label' => 'Complemento',
+            'label' => __('Complemento'),
             'disabled' => $disabled,
-            'placeholder' => 'Complemento',
+            'placeholder' => __('Complemento'),
             'value' => $this->complement,
             'max_length' => $complementMaxLength,
         ]);
 
         $this->inputsHelper()->text('neighborhood', [
-            'label' => 'Bairro',
+            'label' => __('Bairro'),
             'disabled' => $disabled,
             'value' => $this->neighborhood,
             'required' => $enderecamentoObrigatorio,
@@ -133,7 +141,7 @@ trait LegacyAddressingFields
 
         $this->inputsHelper()->simpleSearchMunicipio('city', [
             'required' => $enderecamentoObrigatorio,
-            'label' => 'Município',
+            'label' => __('Município'),
             'disabled' => $disabled,
         ], [
             'objectName' => 'city',
@@ -143,5 +151,6 @@ trait LegacyAddressingFields
                 ],
             ],
         ]);
+
     }
 }

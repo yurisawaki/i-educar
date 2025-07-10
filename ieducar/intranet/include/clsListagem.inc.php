@@ -183,13 +183,13 @@ class clsListagem extends clsCampos
                 $linkFixo .= "$mixVariaveisMantidas&";
             }
 
-            $strReturn = <<<HTML
+            $strReturn = '
 <table>
   <tr>
-    <td>Total de registros: {$intTotalRegistros}</td>
+    <td>' . __('Total de registros:') . " {$intTotalRegistros}</td>
   </tr>
 </table>
-HTML;
+";
 
             $strReturn .= '<table class=\'paginacao\' style=\'border: 0; padding: 0; border-collapse: collapse; text-align: center\'><tr>';
 
@@ -207,7 +207,7 @@ HTML;
             for ($i = 0; $i <= $intPaginasExibidas * 2 && $i + $pagStart <= $totalPaginas; $i++) {
                 $compl_url = ($add_iniciolimit) ? '&iniciolimit=' . ($pagStart + $i + $pag_modifier) : '';
                 $classe_botao = ($pagina_formulario == ($pagStart + $i)) ? 'nvp_paginador_ativo' : '';
-                $strReturn .= "<td class=\"{$classe_botao}\" style=\"padding-left:5px;padding-right:5px;text-align: center\"><a href=\"{$linkFixo}$getVar=" . ($pagStart + $i + $pag_modifier) . "{$compl_url}&ordenacao={$ordenacao}\" class=\"nvp_paginador\" title=\"Ir para a página " . ($pagStart + $i) . '">' . addLeadingZero($pagStart + $i) .'</a></td>';
+                $strReturn .= "<td class=\"{$classe_botao}\" style=\"padding-left:5px;padding-right:5px;text-align: center\"><a href=\"{$linkFixo}$getVar=" . ($pagStart + $i + $pag_modifier) . "{$compl_url}&ordenacao={$ordenacao}\" class=\"nvp_paginador\" title=\"Ir para a página " . ($pagStart + $i) . '">' . addLeadingZero($pagStart + $i) . '</a></td>';
             }
 
             // Setas de fim e próxima
@@ -283,7 +283,7 @@ HTML;
 
                 foreach ($this->campos as $nome => $componente) {
                     if ($componente[0] == 'oculto' || $componente[0] == 'rotulo') {
-                        $retorno .= "<input name='$nome' id='$nome' type='hidden' value='".urlencode($componente[3]).'\'>';
+                        $retorno .= "<input name='$nome' id='$nome' type='hidden' value='" . urlencode($componente[3]) . '\'>';
                     }
                 }
             }
@@ -620,7 +620,7 @@ HTML;
                     }
                 }
 
-                $retorno .= '&nbsp;<input type=\'button\' class=\''. $extraCssClass . '\' onclick=\'javascript:go( "'.$url.'" );\' value=\''.$value."'>&nbsp;\n";
+                $retorno .= '&nbsp;<input type=\'button\' class=\'' . $extraCssClass . '\' onclick=\'javascript:go( "' . $url . '" );\' value=\'' . $value . "'>&nbsp;\n";
             }
         }
 

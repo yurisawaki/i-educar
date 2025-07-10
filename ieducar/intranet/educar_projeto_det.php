@@ -2,8 +2,7 @@
 
 use App\Models\LegacyProject;
 
-return new class extends clsDetalhe
-{
+return new class extends clsDetalhe {
     /**
      * Titulo no topo da pagina
      *
@@ -19,7 +18,7 @@ return new class extends clsDetalhe
 
     public function Gerar()
     {
-        $this->titulo = 'Projeto - Detalhe';
+        $this->titulo = __('Projeto - Detalhe');
 
         $this->cod_projeto = $_GET['cod_projeto'];
 
@@ -30,13 +29,13 @@ return new class extends clsDetalhe
         }
 
         if ($registro['cod_projeto']) {
-            $this->addDetalhe(detalhe: ['Código projeto', "{$registro['cod_projeto']}"]);
+            $this->addDetalhe(detalhe: [__('Código projeto'), "{$registro['cod_projeto']}"]);
         }
         if ($registro['nome']) {
-            $this->addDetalhe(detalhe: ['Nome do projeto', "{$registro['nome']}"]);
+            $this->addDetalhe(detalhe: [__('Nome do projeto'), "{$registro['nome']}"]);
         }
         if ($registro['observacao']) {
-            $this->addDetalhe(detalhe: ['Observação', nl2br(string: "{$registro['observacao']}")]);
+            $this->addDetalhe(detalhe: [__('Observação'), nl2br(string: "{$registro['observacao']}")]);
         }
 
         // ** Verificacao de permissao para cadastro
@@ -50,14 +49,14 @@ return new class extends clsDetalhe
         $this->url_cancelar = 'educar_projeto_lst.php';
         $this->largura = '100%';
 
-        $this->breadcrumb(currentPage: 'Detalhe do projeto', breadcrumbs: [
-            url(path: 'intranet/educar_index.php') => 'Escola',
+        $this->breadcrumb(currentPage: __('Detalhe do projeto'), breadcrumbs: [
+            url(path: 'intranet/educar_index.php') => __('Escola'),
         ]);
     }
 
     public function Formular()
     {
-        $this->title = 'Projeto';
+        $this->title = __('Projeto');
         $this->processoAp = '21250';
     }
 };

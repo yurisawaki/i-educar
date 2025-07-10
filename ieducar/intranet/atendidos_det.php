@@ -7,11 +7,10 @@ use App\Models\LegacyStudent;
 use App\Services\FileService;
 use App\Services\UrlPresigner;
 
-return new class extends clsDetalhe
-{
+return new class extends clsDetalhe {
     public function Gerar()
     {
-        $this->titulo = 'Detalhe da Pessoa';
+        $this->titulo = __('Detalhe da Pessoa');
 
         $cod_pessoa = (int) $this->getQueryString(name: 'cod_pessoa');
 
@@ -50,23 +49,25 @@ return new class extends clsDetalhe
         $objFoto = new clsCadastroFisicaFoto(idpes: $cod_pessoa);
         $caminhoFoto = $objFoto->detalhe();
         if ($caminhoFoto != false) {
-            $this->addDetalhe(detalhe: ['Nome', $detalhe['nome'].'
-                <p><img height="117" src="' . (new UrlPresigner)->getPresignedUrl(url: $caminhoFoto['caminho']) . '"/></p>']);
+            $this->addDetalhe(detalhe: [
+                __('Nome'),
+                $detalhe['nome'] . '
+                <p><img height="117" src="' . (new UrlPresigner)->getPresignedUrl(url: $caminhoFoto['caminho']) . '"/></p>'
+            ]);
         } else {
-            $this->addDetalhe(detalhe: ['Nome', $detalhe['nome']]);
+            $this->addDetalhe(detalhe: [__('Nome'), $detalhe['nome']]);
         }
 
         if ($detalhe['nome_social']) {
-            $this->addDetalhe(detalhe: ['Nome social e/ou afetivo', $detalhe['nome_social']]);
+            $this->addDetalhe(detalhe: [__('Nome social e/ou afetivo'), $detalhe['nome_social']]);
         }
 
-        $this->addDetalhe(detalhe: ['CPF', int2cpf(int: $detalhe['cpf'])]);
+        $this->addDetalhe(detalhe: [__('CPF'), int2cpf(int: $detalhe['cpf'])]);
 
         if ($detalhe['data_nasc']) {
-            $this->addDetalhe(detalhe: ['Data de Nascimento', dataFromPgToBr(data_original: $detalhe['data_nasc'])]);
+            $this->addDetalhe(detalhe: [__('Data de Nascimento'), dataFromPgToBr(data_original: $detalhe['data_nasc'])]);
         }
 
-        // Cor/Raça.
         $raca = new clsCadastroFisicaRaca(ref_idpes: $cod_pessoa);
         $raca = $raca->detalhe();
         if (is_array(value: $raca)) {
@@ -75,7 +76,7 @@ return new class extends clsDetalhe
                 ->value(column: 'nm_raca');
 
             if ($nameRace) {
-                $this->addDetalhe(detalhe: ['Raça', $nameRace]);
+                $this->addDetalhe(detalhe: [__('Raça'), $nameRace]);
             }
         }
 
@@ -84,88 +85,91 @@ return new class extends clsDetalhe
                 $end = ' nº ' . $detalhe['numero'];
             }
 
-            $this->addDetalhe(detalhe: ['Endereço', $detalhe['logradouro'] . ' ' . $end]);
+            $this->addDetalhe(detalhe: [__('Endereço'), $detalhe['logradouro'] . ' ' . $end]);
         }
 
         if ($detalhe['complemento']) {
-            $this->addDetalhe(detalhe: ['Complemento', $detalhe['complemento']]);
+            $this->addDetalhe(detalhe: [__('Complemento'), $detalhe['complemento']]);
         }
 
         if ($detalhe['cidade']) {
-            $this->addDetalhe(detalhe: ['Cidade', $detalhe['cidade']]);
+            $this->addDetalhe(detalhe: [__('Cidade'), $detalhe['cidade']]);
         }
 
         if ($detalhe['sigla_uf']) {
-            $this->addDetalhe(detalhe: ['Estado', $detalhe['sigla_uf']]);
+            $this->addDetalhe(detalhe: [__('Estado'), $detalhe['sigla_uf']]);
         }
 
         $zona = App_Model_ZonaLocalizacao::getInstance();
         if ($detalhe['zona_localizacao']) {
             $this->addDetalhe(detalhe: [
-                'Zona Localização', $zona->getValue(key: $detalhe['zona_localizacao']),
+                __('Zona Localização'),
+                $zona->getValue(key: $detalhe['zona_localizacao']),
             ]);
         }
 
         if ($detalhe['cep']) {
-            $this->addDetalhe(detalhe: ['CEP', int2cep(int: $detalhe['cep'])]);
+            $this->addDetalhe(detalhe: [__('CEP'), int2cep(int: $detalhe['cep'])]);
         }
 
         if ($detalhe['fone_1']) {
             $this->addDetalhe(
-                detalhe: ['Telefone 1', sprintf('(%s) %s', $detalhe['ddd_1'], $detalhe['fone_1'])]
+                detalhe: [__('Telefone 1'), sprintf('(%s) %s', $detalhe['ddd_1'], $detalhe['fone_1'])]
             );
         }
 
         if ($detalhe['fone_2']) {
             $this->addDetalhe(
-                detalhe: ['Telefone 2', sprintf('(%s) %s', $detalhe['ddd_2'], $detalhe['fone_2'])]
+                detalhe: [__('Telefone 2'), sprintf('(%s) %s', $detalhe['ddd_2'], $detalhe['fone_2'])]
             );
         }
 
         if ($detalhe['fone_mov']) {
             $this->addDetalhe(
-                detalhe: ['Celular', sprintf('(%s) %s', $detalhe['ddd_mov'], $detalhe['fone_mov'])]
+                detalhe: [__('Celular'), sprintf('(%s) %s', $detalhe['ddd_mov'], $detalhe['fone_mov'])]
             );
         }
 
         if ($detalhe['fone_fax']) {
             $this->addDetalhe(
-                detalhe: ['Fax', sprintf('(%s) %s', $detalhe['ddd_fax'], $detalhe['fone_fax'])]
+                detalhe: [__('Fax'), sprintf('(%s) %s', $detalhe['ddd_fax'], $detalhe['fone_fax'])]
             );
         }
 
         if ($detalhe['url']) {
-            $this->addDetalhe(detalhe: ['Site', $detalhe['url']]);
+            $this->addDetalhe(detalhe: [__('Site'), $detalhe['url']]);
         }
 
         if ($detalhe['email']) {
-            $this->addDetalhe(detalhe: ['E-mail', $detalhe['email']]);
+            $this->addDetalhe(detalhe: [__('E-mail'), $detalhe['email']]);
         }
 
         if ($detalhe['sexo']) {
-            $this->addDetalhe(detalhe: ['Sexo', $detalhe['sexo'] == 'M' ? 'Masculino' : 'Feminino']);
+            $this->addDetalhe(detalhe: [__('Sexo'), $detalhe['sexo'] == 'M' ? __('Masculino') : __('Feminino')]);
         }
 
         $vinculos = collect();
         if ($aluno = LegacyStudent::active()->where('ref_idpes', $cod_pessoa)->first(['cod_aluno'])) {
             $vinculos->push(sprintf(
-                '<a target="_blank" href="/intranet/educar_aluno_det.php?cod_aluno=%s">Aluno</a>',
-                $aluno->getKey()
+                '<a target="_blank" href="/intranet/educar_aluno_det.php?cod_aluno=%s">%s</a>',
+                $aluno->getKey(),
+                __('Aluno')
             ));
         }
 
         if ($servidor = Employee::active()->find($cod_pessoa, ['cod_servidor', 'ref_cod_instituicao'])) {
             $vinculos->push(sprintf(
-                '<a target="_blank" href="/intranet/educar_servidor_det.php?cod_servidor=%s&ref_cod_instituicao=%s">Servidor</a>',
+                '<a target="_blank" href="/intranet/educar_servidor_det.php?cod_servidor=%s&ref_cod_instituicao=%s">%s</a>',
                 $servidor->getKey(),
-                $servidor->ref_cod_instituicao
+                $servidor->ref_cod_instituicao,
+                __('Servidor')
             ));
         }
 
         if ($vinculos->isEmpty()) {
-            $vinculos->push('Pessoa física não possui vínculos');
+            $vinculos->push(__('Pessoa física não possui vínculos'));
         }
-        $this->addHtml('<tr><td class="formlttd" width="20%">Vínculos:</td><td class="formlttd">' . $vinculos->implode('<br>') . '</td></tr>');
+        $this->addHtml('<tr><td class="formlttd" width="20%">' . __('Vínculos:') . '</td><td class="formlttd">' . $vinculos->implode('<br>') . '</td></tr>');
 
         $fileService = new FileService(urlPresigner: new UrlPresigner);
         $files = $fileService->getFiles(relation: LegacyIndividual::find($cod_pessoa));
@@ -185,12 +189,12 @@ return new class extends clsDetalhe
 
         $this->largura = '100%';
 
-        $this->breadcrumb(currentPage: 'Pessoa física', breadcrumbs: ['educar_pessoas_index.php' => 'Pessoas']);
+        $this->breadcrumb(currentPage: __('Pessoa física'), breadcrumbs: ['educar_pessoas_index.php' => __('Pessoas')]);
     }
 
     public function Formular()
     {
-        $this->title = 'Pessoa';
+        $this->title = __('Pessoa');
         $this->processoAp = 43;
     }
 };

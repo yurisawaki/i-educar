@@ -23,18 +23,18 @@ return new class extends clsListagem {
 
     public function Gerar()
     {
-        $this->__titulo = 'Cargo - Listagem';
+        $this->__titulo = __('Cargo - Listagem');
 
         foreach ($_GET as $var => $val) {
             $this->$var = ($val === '') ? null : $val;
         }
 
         $this->addCabecalhos([
-            'Descrição do Cargo',
-            'Ação'
+            __('Descrição do Cargo'),
+            __('Ação')
         ]);
 
-        $this->campoTexto('ds_cargo', 'Descrição do Cargo', $this->ds_cargo, 30, 255, false);
+        $this->campoTexto('ds_cargo', __('Descrição do Cargo'), $this->ds_cargo, 30, 255, false);
 
         $this->__limite = 20;
         $this->__offset = isset($_GET["pagina_{$this->ds_cargo}"]) ? $_GET["pagina_{$this->ds_cargo}"] * $this->__limite - $this->__limite : 0;
@@ -50,7 +50,7 @@ return new class extends clsListagem {
         foreach ($data as $item) {
             $this->addLinhas([
                 htmlspecialchars($item->ds_cargo),
-                "<a href=\"public_cargo_cad.php?id={$item->cd_cargo}\">Editar</a>"
+                "<a href=\"public_cargo_cad.php?id={$item->cd_cargo}\">" . __('Editar') . "</a>"
             ]);
         }
 
@@ -60,19 +60,19 @@ return new class extends clsListagem {
 
         if ($obj_permissao->permissao_cadastra(758, $this->pessoa_logada, 7, null, true)) {
             $this->acao = 'go("public_cargo_cad.php")';
-            $this->nome_acao = 'Novo';
+            $this->nome_acao = __('Novo');
         }
 
         $this->largura = '100%';
 
-        $this->breadcrumb('Listagem de Cargos', [
-            url('intranet/educar_enderecamento_index.php') => 'Endereçamento',
+        $this->breadcrumb(__('Listagem de Cargos'), [
+            url('intranet/educar_enderecamento_index.php') => __('Endereçamento'),
         ]);
     }
 
     public function Formular()
     {
-        $this->title = 'Cargo';
+        $this->title = __('Cargo');
         $this->processoAp = 757;
     }
 };

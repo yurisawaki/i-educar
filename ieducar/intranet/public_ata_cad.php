@@ -19,7 +19,7 @@ return new class extends clsCadastro {
 
     public function Inicializar()
     {
-        $retorno = 'Novo';
+        $retorno = __('Novo');
 
         $this->cd_ata = $_GET['id'] ?? $_POST['cd_ata'] ?? null;
 
@@ -31,16 +31,16 @@ return new class extends clsCadastro {
                 $this->ds_pauta = $ata->ds_pauta;
                 $this->ds_votacao = $ata->ds_votacao;
                 $this->ds_encerramento = $ata->ds_encerramento;
-                $retorno = 'Editar';
+                $retorno = __('Editar');
             }
         }
 
         $this->url_cancelar = 'public_ata_lst.php';
-        $this->nome_url_cancelar = 'Cancelar';
+        $this->nome_url_cancelar = __('Cancelar');
 
-        $this->breadcrumb('Cadastro de Ata', [
-            url('intranet/educar_enderecamento_index.php') => 'Endereçamento',
-            url('public_ata_lst.php') => 'Ata',
+        $this->breadcrumb(__('Cadastro de Ata'), [
+            url('intranet/educar_enderecamento_index.php') => __('Endereçamento'),
+            url('public_ata_lst.php') => __('Ata'),
         ]);
 
         return $retorno;
@@ -49,10 +49,10 @@ return new class extends clsCadastro {
     public function Gerar()
     {
         $this->campoOculto('cd_ata', $this->cd_ata);
-        $this->campoTexto('no_ata', 'Nome da Ata', $this->no_ata, 50, 255, true);
-        $this->campoMemo('ds_pauta', 'Pauta', $this->ds_pauta, 60, 5, false);
-        $this->campoMemo('ds_votacao', 'Votação', $this->ds_votacao, 60, 5, false);
-        $this->campoMemo('ds_encerramento', 'Encerramento', $this->ds_encerramento, 60, 5, false);
+        $this->campoTexto('no_ata', __('Nome da Ata'), $this->no_ata, 50, 255, true);
+        $this->campoMemo('ds_pauta', __('Pauta'), $this->ds_pauta, 60, 5, false);
+        $this->campoMemo('ds_votacao', __('Votação'), $this->ds_votacao, 60, 5, false);
+        $this->campoMemo('ds_encerramento', __('Encerramento'), $this->ds_encerramento, 60, 5, false);
     }
 
     public function Novo()
@@ -64,7 +64,7 @@ return new class extends clsCadastro {
             'ds_encerramento' => $this->ds_encerramento,
         ]);
 
-        $this->mensagem = 'Cadastro realizado com sucesso!';
+        $this->mensagem = __('Cadastro realizado com sucesso!');
         return true;
     }
 
@@ -79,7 +79,7 @@ return new class extends clsCadastro {
             'ds_encerramento' => $this->ds_encerramento,
         ]);
 
-        $this->mensagem = 'Edição realizada com sucesso!';
+        $this->mensagem = __('Edição realizada com sucesso!');
         return true;
     }
 
@@ -89,7 +89,7 @@ return new class extends clsCadastro {
 
         $ata->delete();
 
-        $this->mensagem = 'Exclusão realizada com sucesso!';
+        $this->mensagem = __('Exclusão realizada com sucesso!');
         return true;
     }
 };

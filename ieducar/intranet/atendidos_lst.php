@@ -2,24 +2,23 @@
 
 use App\Models\LegacyPerson;
 
-return new class extends clsListagem
-{
+return new class extends clsListagem {
     public function Gerar()
     {
-        $this->titulo = 'Pessoas Físicas';
+        $this->titulo = __('Pessoas Físicas');
 
         $par_nome = str_replace(['[', ']', '{', '}', '(', ')', '\\', '/'], '', $this->getQueryString(name: 'nm_pessoa')) ?: false;
         $par_id_federal = idFederal2Int(str: $this->getQueryString(name: 'id_federal')) ?: false;
 
         $this->addCabecalhos(
             coluna: [
-                'Nome',
-                'CPF',
+                __('Nome'),
+                __('CPF'),
             ]
         );
         $this->campoTexto(
             nome: 'nm_pessoa',
-            campo: 'Nome',
+            campo: __('Nome'),
             valor: $par_nome,
             tamanhovisivel: '50',
             tamanhomaximo: '255'
@@ -27,7 +26,7 @@ return new class extends clsListagem
 
         $this->campoCpf(
             nome: 'id_federal',
-            campo: 'CPF',
+            campo: __('CPF'),
             valor: $par_id_federal
         );
 
@@ -39,14 +38,14 @@ return new class extends clsListagem
             'name' => $par_nome,
             'cpf' => is_numeric($par_id_federal) ? $par_id_federal : null,
         ])->select([
-            'idpes',
-            'nome',
-        ])->with([
-            'individual:idpes,cpf',
-        ])->active()->orderBy('nome')->paginate(
-            perPage: $limite,
-            pageName: "pagina_{$this->nome}",
-        );
+                    'idpes',
+                    'nome',
+                ])->with([
+                    'individual:idpes,cpf',
+                ])->active()->orderBy('nome')->paginate(
+                perPage: $limite,
+                pageName: "pagina_{$this->nome}",
+            );
 
         $total = $lista->total();
 
@@ -56,7 +55,7 @@ return new class extends clsListagem
                 $nome = $pessoa->name;
 
                 if ($pessoa->social_name) {
-                    $nome = $pessoa->social_name . '<br> <i>Nome de registro: </i>' . $pessoa->name;
+                    $nome = $pessoa->social_name . '<br> <i>' . __('Nome de registro:') . ' </i>' . $pessoa->name;
                 }
 
                 $cpf = $pessoa->individual?->cpf ?? int2CPF(int: $pessoa->individual->cpf);
@@ -69,14 +68,16 @@ return new class extends clsListagem
 
         $obj_permissao = new clsPermissoes;
 
-        if ($obj_permissao->permissao_cadastra(
-            int_processo_ap: 43,
-            int_idpes_usuario: $this->pessoa_logada,
-            int_soma_nivel_acesso: 7,
-            super_usuario: true
-        )) {
+        if (
+            $obj_permissao->permissao_cadastra(
+                int_processo_ap: 43,
+                int_idpes_usuario: $this->pessoa_logada,
+                int_soma_nivel_acesso: 7,
+                super_usuario: true
+            )
+        ) {
             $this->acao = 'go("atendidos_cad.php")';
-            $this->nome_acao = 'Novo';
+            $this->nome_acao = __('Novo');
         }
 
         $this->largura = '100%';
@@ -89,14 +90,14 @@ return new class extends clsListagem
         );
 
         $this->breadcrumb(
-            currentPage: 'Listagem de pessoa física',
-            breadcrumbs: ['educar_pessoas_index.php' => 'Pessoas']
+            currentPage: __('Listagem de pessoa física'),
+            breadcrumbs: ['educar_pessoas_index.php' => __('Pessoas')]
         );
     }
 
     public function Formular()
     {
-        $this->title = 'Pessoas Físicas';
+        $this->title = __('Pessoas Físicas');
         $this->processoAp = '43';
     }
 };

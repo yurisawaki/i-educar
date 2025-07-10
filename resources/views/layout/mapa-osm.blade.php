@@ -135,28 +135,16 @@
 
                 if (!confirm("Tem certeza que deseja salvar as coordenadas?")) return;
 
-                fetch('/coordenadas', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ latitude: lat, longitude: lng })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert(data.message);
-                        if (window.opener && !window.opener.closed) {
-                            window.opener.document.getElementById('latitude').value = lat.toFixed(6);
-                            window.opener.document.getElementById('longitude').value = lng.toFixed(6);
-                        }
-                        window.close();
-                    })
-                    .catch(error => {
-                        console.error('Erro ao salvar coordenadas:', error);
-                        alert('Erro ao salvar as coordenadas. Tente novamente.');
-                    });
+                // Atualiza a página anterior e fecha a janela
+                if (window.opener && !window.opener.closed) {
+                    window.opener.document.getElementById('latitude').value = lat.toFixed(6);
+                    window.opener.document.getElementById('longitude').value = lng.toFixed(6);
+                }
+
+                window.close();
             });
+
+
         }
 
         window.onload = initMap;

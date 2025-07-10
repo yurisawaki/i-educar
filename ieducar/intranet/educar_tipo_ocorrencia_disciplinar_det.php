@@ -2,8 +2,7 @@
 
 use App\Models\LegacyDisciplinaryOccurrenceType;
 
-return new class extends clsDetalhe
-{
+return new class extends clsDetalhe {
     public $titulo;
 
     public $cod_tipo_ocorrencia_disciplinar;
@@ -28,7 +27,7 @@ return new class extends clsDetalhe
 
     public function Gerar()
     {
-        $this->titulo = 'Tipo Ocorrência Disciplinar - Detalhe';
+        $this->titulo = __('Tipo Ocorrência Disciplinar - Detalhe');
 
         $this->cod_tipo_ocorrencia_disciplinar = $_GET['cod_tipo_ocorrencia_disciplinar'];
 
@@ -46,17 +45,17 @@ return new class extends clsDetalhe
         $nivel_usuario = $obj_permissao->nivel_acesso($this->pessoa_logada);
         if ($nivel_usuario == 1) {
             if ($registro['ref_cod_instituicao']) {
-                $this->addDetalhe(['Instituição', "{$registro['ref_cod_instituicao']}"]);
+                $this->addDetalhe([__('Instituição'), "{$registro['ref_cod_instituicao']}"]);
             }
         }
         if ($registro['nm_tipo']) {
-            $this->addDetalhe(['Tipo Ocorrência Disciplinar', "{$registro['nm_tipo']}"]);
+            $this->addDetalhe([__('Tipo Ocorrência Disciplinar'), "{$registro['nm_tipo']}"]);
         }
         if ($registro['descricao']) {
-            $this->addDetalhe(['Descrição', "{$registro['descricao']}"]);
+            $this->addDetalhe([__('Descrição'), "{$registro['descricao']}"]);
         }
         if ($registro['max_ocorrencias']) {
-            $this->addDetalhe(['Máximo Ocorrências', "{$registro['max_ocorrencias']}"]);
+            $this->addDetalhe([__('Máximo Ocorrências'), "{$registro['max_ocorrencias']}"]);
         }
 
         if ($obj_permissao->permissao_cadastra(580, $this->pessoa_logada, 3)) {
@@ -66,14 +65,14 @@ return new class extends clsDetalhe
         $this->url_cancelar = 'educar_tipo_ocorrencia_disciplinar_lst.php';
         $this->largura = '100%';
 
-        $this->breadcrumb('Detalhe do tipo de ocorrência disciplinar', [
-            url('intranet/educar_index.php') => 'Escola',
+        $this->breadcrumb(__('Detalhe do tipo de ocorrência disciplinar'), [
+            url('intranet/educar_index.php') => __('Escola'),
         ]);
     }
 
     public function Formular()
     {
-        $this->title = 'Tipo Ocorrência Disciplinar';
+        $this->title = __('Tipo Ocorrência Disciplinar');
         $this->processoAp = '580';
     }
 };

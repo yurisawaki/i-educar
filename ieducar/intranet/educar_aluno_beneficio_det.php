@@ -2,8 +2,7 @@
 
 use App\Models\LegacyBenefit;
 
-return new class extends clsDetalhe
-{
+return new class extends clsDetalhe {
     public $titulo;
 
     public $cod_aluno_beneficio;
@@ -24,7 +23,7 @@ return new class extends clsDetalhe
 
     public function Gerar()
     {
-        $this->titulo = 'Aluno Beneficio - Detalhe';
+        $this->titulo = __('Aluno Beneficio - Detalhe');
 
         $this->cod_aluno_beneficio = $_GET['cod_aluno_beneficio'];
 
@@ -35,13 +34,13 @@ return new class extends clsDetalhe
         }
 
         if ($registro['cod_aluno_beneficio']) {
-            $this->addDetalhe(detalhe: ['Código Benefício', "{$registro['cod_aluno_beneficio']}"]);
+            $this->addDetalhe(detalhe: [__('Código Benefício'), "{$registro['cod_aluno_beneficio']}"]);
         }
         if ($registro['nm_beneficio']) {
-            $this->addDetalhe(detalhe: ['Benefício', "{$registro['nm_beneficio']}"]);
+            $this->addDetalhe(detalhe: [__('Benefício'), "{$registro['nm_beneficio']}"]);
         }
         if ($registro['desc_beneficio']) {
-            $this->addDetalhe(detalhe: ['Descrição', nl2br(string: "{$registro['desc_beneficio']}")]);
+            $this->addDetalhe(detalhe: [__('Descrição'), nl2br(string: "{$registro['desc_beneficio']}")]);
         }
 
         $obj_permissao = new clsPermissoes;
@@ -54,14 +53,14 @@ return new class extends clsDetalhe
         $this->url_cancelar = 'educar_aluno_beneficio_lst.php';
         $this->largura = '100%';
 
-        $this->breadcrumb(currentPage: 'Detalhe do benefício de alunos', breadcrumbs: [
-            url(path: 'intranet/educar_index.php') => 'Escola',
+        $this->breadcrumb(currentPage: __('Detalhe do benefício de alunos'), breadcrumbs: [
+            url(path: 'intranet/educar_index.php') => __('Escola'),
         ]);
     }
 
     public function Formular()
     {
-        $this->title = 'Benefício Aluno';
+        $this->title = __('Benefício Aluno');
         $this->processoAp = '581';
     }
 };
