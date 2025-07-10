@@ -6,15 +6,25 @@ class IndexController extends Core_Controller_Page_ListController
 {
     protected $_dataMapper = 'FormulaMedia_Model_FormulaDataMapper';
 
-    protected $_titulo = 'Listagem de fórmulas de cálculo de média';
+    protected $_titulo;
 
     protected $_processoAp = 948;
 
-    protected $_tableMap = [
-        'Nome' => 'nome',
-        'Fórmula de cálculo' => 'formula_media',
-        'Tipo fórmula' => 'tipo_formula',
-    ];
+    protected $_tableMap;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Inicializa as traduções aqui, em runtime
+        $this->_titulo = __('Listagem de fórmulas de cálculo de média');
+
+        $this->_tableMap = [
+            __('Nome') => 'nome',
+            __('Fórmula de cálculo') => 'formula_media',
+            __('Tipo fórmula') => 'tipo_formula',
+        ];
+    }
 
     public function Gerar()
     {
@@ -22,20 +32,23 @@ class IndexController extends Core_Controller_Page_ListController
 
         $this->campoTexto(
             nome: 'nome',
-            campo: 'Nome',
+            campo: __('Nome'),
             valor: request('nome'),
         );
 
         $this->campoTexto(
             nome: 'formula_media',
-            campo: 'Fórmula de cálculo',
+            campo: __('Fórmula de cálculo'),
             valor: request('formula_media'),
         );
 
-        $tipoFormula = collect(FormulaMedia_Model_TipoFormula::getInstance()->getEnums())->prepend('Todos os tipos', '');
+        $tipoFormula = collect(FormulaMedia_Model_TipoFormula::getInstance()->getEnums())
+            ->mapWithKeys(fn($v, $k) => [$k => __($v)])
+            ->prepend(__('Todos os tipos'), '');
+
         $this->campoLista(
             nome: 'tipo_formula',
-            campo: 'Tipo de fórmula',
+            campo: __('Tipo de fórmula'),
             valor: $tipoFormula,
             default: request('tipo_formula')
         );
@@ -44,16 +57,17 @@ class IndexController extends Core_Controller_Page_ListController
     public function getEntries()
     {
         return LegacyAverageFormula::query()
-            ->when(request('nome'), fn ($q, $nome) => $q->whereRaw('unaccent(nome) ~* unaccent(?)', $nome))
+            ->when(request('nome'), fn($q, $nome) => $q->whereRaw('unaccent(nome) ~* unaccent(?)', $nome))
             ->when(request('formula_media'), function ($q, $formulaMedia) {
                 return $q->where('formula_media', 'ilike', "%{$formulaMedia}%");
             })
-            ->when(request('tipo_formula'), fn ($q, $tipoFormula) => $q->where('tipo_formula', $tipoFormula))
+            ->when(request('tipo_formula'), fn($q, $tipoFormula) => $q->where('tipo_formula', $tipoFormula))
             ->orderBy('nome')
             ->get()
             ->map(function ($averageFormula) {
                 $tipoFormula = FormulaMedia_Model_TipoFormula::getInstance()->getEnums();
-                $averageFormula->tipo_formula = $tipoFormula[$averageFormula->tipo_formula];
+
+                $averageFormula->tipo_formula = __($tipoFormula[$averageFormula->tipo_formula]);
 
                 return $averageFormula;
             });
@@ -63,8 +77,11 @@ class IndexController extends Core_Controller_Page_ListController
     {
         parent::_preRender();
 
-        $this->breadcrumb('Listagem de fórmulas de média', [
-            url('intranet/educar_index.php') => 'Escola',
-        ]);
+        $this->breadcrumb(
+            __('Listagem de fórmulas de média'),
+            [
+                url('intranet/educar_index.php') => __('Escola'),
+            ]
+        );
     }
 }

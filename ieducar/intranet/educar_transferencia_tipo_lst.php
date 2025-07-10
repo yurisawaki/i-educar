@@ -2,8 +2,7 @@
 
 use App\Models\LegacyTransferType;
 
-return new class extends clsListagem
-{
+return new class extends clsListagem {
     public $pessoa_logada;
 
     public $titulo;
@@ -32,20 +31,20 @@ return new class extends clsListagem
 
     public function Gerar()
     {
-        $this->titulo = 'Motivo Transferência - Listagem';
+        $this->titulo = __('Motivo Transferência - Listagem');
 
         foreach ($_GET as $var => $val) { // passa todos os valores obtidos no GET para atributos do objeto
             $this->$var = ($val === '') ? null : $val;
         }
 
         $lista_busca = [
-            'Transferência',
+            __('Transferência'),
         ];
 
         $obj_permissao = new clsPermissoes;
         $nivel_usuario = $obj_permissao->nivel_acesso(int_idpes_usuario: $this->pessoa_logada);
         if ($nivel_usuario == 1) {
-            $lista_busca[] = 'Instituição';
+            $lista_busca[] = __('Instituição');
         }
 
         $this->addCabecalhos(coluna: $lista_busca);
@@ -54,7 +53,7 @@ return new class extends clsListagem
         include 'include/pmieducar/educar_campo_lista.php';
 
         // outros Filtros
-        $this->campoTexto(nome: 'nm_tipo', campo: 'Transferência', valor: $this->nm_tipo, tamanhovisivel: 30, tamanhomaximo: 255);
+        $this->campoTexto(nome: 'nm_tipo', campo: __('Transferência'), valor: $this->nm_tipo, tamanhovisivel: 30, tamanhomaximo: 255);
 
         // Paginador
         $this->limite = 20;
@@ -71,7 +70,7 @@ return new class extends clsListagem
             $query->where(column: 'ref_cod_instituicao', operator: $this->ref_cod_instituicao);
         }
 
-        $result = $query->paginate(perPage: $this->limite, pageName: 'pagina_'.$this->nome);
+        $result = $query->paginate(perPage: $this->limite, pageName: 'pagina_' . $this->nome);
 
         $lista = $result->items();
         $total = $result->total();
@@ -95,20 +94,20 @@ return new class extends clsListagem
         }
         $this->addPaginador2(strUrl: 'educar_transferencia_tipo_lst.php', intTotalRegistros: $total, mixVariaveisMantidas: $_GET, nome: $this->nome, intResultadosPorPagina: $this->limite);
 
-        if ($obj_permissoes->permissao_cadastra(575, $this->pessoa_logada, 7)) {
+        if ($obj_permissao->permissao_cadastra(575, $this->pessoa_logada, 7)) {
             $this->acao = 'go("educar_transferencia_tipo_cad.php")';
-            $this->nome_acao = 'Novo';
+            $this->nome_acao = __('Novo');
         }
         $this->largura = '100%';
 
-        $this->breadcrumb(currentPage: 'Listagem de tipos de transferência', breadcrumbs: [
-            url(path: 'intranet/educar_index.php') => 'Escola',
+        $this->breadcrumb(currentPage: __('Listagem de tipos de transferência'), breadcrumbs: [
+            url(path: 'intranet/educar_index.php') => __('Escola'),
         ]);
     }
 
     public function Formular()
     {
-        $this->title = 'Motivo Transferência';
+        $this->title = __('Motivo Transferência');
         $this->processoAp = '575';
     }
 };

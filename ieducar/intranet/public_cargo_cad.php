@@ -13,6 +13,7 @@ return new class extends clsCadastro {
     {
         return Cargo::class;
     }
+
     public function index()
     {
         return 'public_cargo_lst.php';
@@ -20,21 +21,24 @@ return new class extends clsCadastro {
 
     public function Inicializar()
     {
-        $retorno = 'Novo';
+        $retorno = __('Novo');
         $this->cd_cargo = $_GET['cd_cargo'] ?? null;
 
         if (is_numeric($this->cd_cargo)) {
             $cargo = $this->find($this->cd_cargo);
             $this->ds_cargo = $cargo->ds_cargo;
-            $retorno = 'Editar';
+            $retorno = __('Editar');
         }
 
-        $this->url_cancelar = $retorno == 'Editar'
+        $this->url_cancelar = $retorno == __('Editar')
             ? 'public_cargo_det.php?cd_cargo=' . $this->cd_cargo
             : 'public_cargo_lst.php';
 
-        $this->nome_url_cancelar = 'Cancelar';
-        $this->breadcrumb("{$retorno} Cargo", [url('intranet/educar_enderecamento_index.php') => 'Endereçamento']);
+        $this->nome_url_cancelar = __('Cancelar');
+
+        $this->breadcrumb("{$retorno} " . __('Cargo'), [
+            url('intranet/educar_enderecamento_index.php') => __('Endereçamento')
+        ]);
 
         return $retorno;
     }
@@ -42,7 +46,7 @@ return new class extends clsCadastro {
     public function Gerar()
     {
         $this->campoOculto('cd_cargo', $this->cd_cargo);
-        $this->campoTexto('ds_cargo', 'Descrição do Cargo', $this->ds_cargo, 30, 255, true);
+        $this->campoTexto('ds_cargo', __('Descrição do Cargo'), $this->ds_cargo, 30, 255, true);
     }
 
     public function Novo()
@@ -62,7 +66,7 @@ return new class extends clsCadastro {
 
     public function Formular()
     {
-        $this->title = 'Cargo';
+        $this->title = __('Cargo');
         $this->processoAp = 757;
     }
 };

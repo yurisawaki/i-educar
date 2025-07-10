@@ -27,7 +27,7 @@ return new class extends clsCadastro {
 
     public function Inicializar()
     {
-        $retorno = 'Novo';
+        $retorno = __('Novo');
 
         $this->id = $_GET['id'] ?? null;
 
@@ -42,17 +42,17 @@ return new class extends clsCadastro {
             $this->is_ativo = $conselho->is_ativo;
             $this->cd_nucleo = $conselho->cd_nucleo;
 
-            $retorno = 'Editar';
+            $retorno = __('Editar');
         }
 
-        $this->url_cancelar = $retorno == 'Editar'
+        $this->url_cancelar = $retorno == __('Editar')
             ? "public_conselho_det.php?id={$this->id}"
             : 'public_conselho_lst.php';
 
-        $nomeMenu = $retorno == 'Editar' ? $retorno : 'Cadastrar';
+        $nomeMenu = $retorno == __('Editar') ? $retorno : __('Cadastrar');
 
-        $this->breadcrumb("{$nomeMenu} Conselho", [
-            url('intranet/educar_conselho_index.php') => 'Conselhos',
+        $this->breadcrumb("{$nomeMenu} " . __('Conselho'), [
+            url('intranet/educar_conselho_index.php') => __('Conselhos'),
         ]);
 
         return $retorno;
@@ -62,19 +62,19 @@ return new class extends clsCadastro {
     {
         $this->campoOculto('id', $this->id);
 
-        $this->campoTexto('no_conselho', 'Nome', $this->no_conselho, 50, 100, true);
-        $this->campoMemo('ds_conselho', 'Descrição', $this->ds_conselho, 60, 5, false);
+        $this->campoTexto('no_conselho', __('Nome'), $this->no_conselho, 50, 100, true);
+        $this->campoMemo('ds_conselho', __('Descrição'), $this->ds_conselho, 60, 5, false);
 
-        $this->campoData('dt_inicial', 'Data Inicial', $this->dt_inicial, true);
-        $this->campoData('dt_final', 'Data Final', $this->dt_final, false);
+        $this->campoData('dt_inicial', __('Data Inicial'), $this->dt_inicial, true);
+        $this->campoData('dt_final', __('Data Final'), $this->dt_final, false);
 
-        $this->campoTexto('cd_ata', 'Código da Ata', $this->cd_ata, 20, 20, false);
+        $this->campoTexto('cd_ata', __('Código da Ata'), $this->cd_ata, 20, 20, false);
 
         // Campo is_ativo como checkbox
-        $this->campoCheck('is_ativo', 'Ativo', $this->is_ativo);
+        $this->campoCheck('is_ativo', __('Ativo'), $this->is_ativo);
 
         // Campo cd_nucleo (relacionamento) - pode ser select se quiser
-        $this->campoTexto('cd_nucleo', 'Código Núcleo', $this->cd_nucleo, 10, 10, false);
+        $this->campoTexto('cd_nucleo', __('Código Núcleo'), $this->cd_nucleo, 10, 10, false);
     }
 
     public function Novo()
@@ -85,7 +85,7 @@ return new class extends clsCadastro {
             ->exists();
 
         if ($exists) {
-            $this->mensagem = 'Já existe um Conselho com este nome.<br>';
+            $this->mensagem = __('Já existe um Conselho com este nome.') . '<br>';
             return false;
         }
 
@@ -109,7 +109,7 @@ return new class extends clsCadastro {
             ->exists();
 
         if ($exists) {
-            $this->mensagem = 'Já existe um Conselho com este nome.<br>';
+            $this->mensagem = __('Já existe um Conselho com este nome.') . '<br>';
             return false;
         }
 
@@ -142,7 +142,7 @@ return new class extends clsCadastro {
 
     public function Formular()
     {
-        $this->title = 'Conselho';
+        $this->title = __('Conselho');
         $this->processoAp = 760; // ajuste conforme processo correto
     }
 };

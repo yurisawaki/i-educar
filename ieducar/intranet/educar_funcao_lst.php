@@ -2,8 +2,7 @@
 
 use App\Models\LegacyRole;
 
-return new class extends clsListagem
-{
+return new class extends clsListagem {
     public $pessoa_logada;
 
     public $titulo;
@@ -34,22 +33,22 @@ return new class extends clsListagem
 
     public function Gerar()
     {
-        $this->titulo = 'Função - Listagem';
+        $this->titulo = __('Função - Listagem');
 
         foreach ($_GET as $var => $val) { // passa todos os valores obtidos no GET para atributos do objeto
             $this->$var = ($val === '') ? null : $val;
         }
 
         $lista_busca = [
-            'Nome Funcão',
-            'Abreviatura',
-            'Professor',
+            __('Nome Função'),
+            __('Abreviatura'),
+            __('Professor'),
         ];
 
         $obj_permissoes = new clsPermissoes;
         $nivel_usuario = $obj_permissoes->nivel_acesso($this->pessoa_logada);
         if ($nivel_usuario == 1) {
-            $lista_busca[] = 'Instituição';
+            $lista_busca[] = __('Instituição');
         }
 
         $this->addCabecalhos($lista_busca);
@@ -58,15 +57,15 @@ return new class extends clsListagem
         include 'include/pmieducar/educar_campo_lista.php';
 
         // outros Filtros
-        $this->campoTexto(nome: 'nm_funcao', campo: 'Nome Função', valor: $this->nm_funcao, tamanhovisivel: 30, tamanhomaximo: 255);
-        $this->campoTexto(nome: 'abreviatura', campo: 'Abreviatura', valor: $this->abreviatura, tamanhovisivel: 30, tamanhomaximo: 255);
+        $this->campoTexto(nome: 'nm_funcao', campo: __('Nome Função'), valor: $this->nm_funcao, tamanhovisivel: 30, tamanhomaximo: 255);
+        $this->campoTexto(nome: 'abreviatura', campo: __('Abreviatura'), valor: $this->abreviatura, tamanhovisivel: 30, tamanhomaximo: 255);
         $opcoes = [
-            '' => 'Selecione',
-            'N' => 'Não',
-            'S' => 'Sim',
+            '' => __('Selecione'),
+            'N' => __('Não'),
+            'S' => __('Sim'),
         ];
 
-        $this->campoLista(nome: 'professor', campo: 'Professor', valor: $opcoes, default: $this->professor, obrigatorio: false);
+        $this->campoLista(nome: 'professor', campo: __('Professor'), valor: $opcoes, default: $this->professor, obrigatorio: false);
 
         if ($this->professor == 'N') {
             $this->professor = '0';
@@ -95,7 +94,7 @@ return new class extends clsListagem
             $query->where('professor', $this->professor);
         }
 
-        $result = $query->paginate(perPage: $this->limite, pageName: 'pagina_'.$this->nome);
+        $result = $query->paginate(perPage: $this->limite, pageName: 'pagina_' . $this->nome);
 
         $lista = $result->items();
         $total = $result->total();
@@ -103,7 +102,7 @@ return new class extends clsListagem
         // monta a lista
         if (is_array($lista) && count($lista)) {
             foreach ($lista as $registro) {
-                $registro['professor'] = $registro['professor'] == 1 ? 'Sim' : 'Não';
+                $registro['professor'] = $registro['professor'] == 1 ? __('Sim') : __('Não');
 
                 $obj_ref_cod_instituicao = new clsPmieducarInstituicao($registro['ref_cod_instituicao']);
                 $det_ref_cod_instituicao = $obj_ref_cod_instituicao->detalhe();
@@ -125,19 +124,19 @@ return new class extends clsListagem
 
         if ($obj_permissoes->permissao_cadastra(int_processo_ap: 634, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 3)) {
             $this->acao = 'go("educar_funcao_cad.php")';
-            $this->nome_acao = 'Novo';
+            $this->nome_acao = __('Novo');
         }
 
         $this->largura = '100%';
 
-        $this->breadcrumb(currentPage: 'Funções do servidor', breadcrumbs: [
-            url('intranet/educar_servidores_index.php') => 'Servidores',
+        $this->breadcrumb(currentPage: __('Funções do servidor'), breadcrumbs: [
+            url('intranet/educar_servidores_index.php') => __('Servidores'),
         ]);
     }
 
     public function Formular()
     {
-        $this->title = 'Servidores - Funções do servidor';
+        $this->title = __('Servidores - Funções do servidor');
         $this->processoAp = '634';
     }
 };

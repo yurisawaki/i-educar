@@ -16,19 +16,26 @@ class FotoController extends Controller
             'id_ponto' => 'required|integer'
         ]);
 
-        // Armazena a imagem
-        $path = $request->file('photo')->store('fotos', 'public');
+        // Pega o arquivo e obtém o tamanho
+        $file = $request->file('photo');
+        $path = $file->store('imagem/transporte/ponto', 'public');
 
-        // Grava caminho da imagem no banco de dados
+        $tamanho = $file->getSize();
+
+        // Insere ou atualiza no banco
         DB::table('lealsis.tbl_ponto_imagem')->updateOrInsert(
-            ['id_ponto' => $request->id_ponto], // se já existir, atualiza
-            ['no_imagem' => 'fotos/' . basename($path)]
+            ['id_ponto' => $request->id_ponto],
+            [
+                'no_imagem' => $path,
+                'tamanho_arquivo' => $tamanho,
+                'created_at' => now()
+            ]
         );
 
-        // Retorna o caminho completo (para uso no frontend)
         return response()->json([
             'success' => true,
-            'path' => '/storage/' . $path
+            'path' => '/storage/' . $path,
+            'size' => $tamanho . ' bytes'
         ]);
     }
 }

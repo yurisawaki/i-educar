@@ -27,6 +27,6 @@ class Portabilis_View_Helper_Input_Resource_SimpleSearchPessoaj extends Portabil
 
     protected function inputPlaceholder($inputOptions)
     {
-        return 'Informe o código ou nome da pessoa jurídica';
+        return __('Informe o código ou nome da pessoa jurídica');
     }
 }

@@ -2,8 +2,7 @@
 
 use App\Models\LegacyTransferType;
 
-return new class extends clsCadastro
-{
+return new class extends clsCadastro {
     public $pessoa_logada;
 
     public $cod_transferencia_tipo;
@@ -26,7 +25,7 @@ return new class extends clsCadastro
 
     public function Inicializar()
     {
-        $retorno = 'Novo';
+        $retorno = __('Novo');
 
         $this->cod_transferencia_tipo = $_GET['cod_transferencia_tipo'];
 
@@ -41,18 +40,18 @@ return new class extends clsCadastro
                 }
 
                 $this->fexcluir = $obj_permissoes->permissao_excluir(int_processo_ap: 575, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 7);
-                $retorno = 'Editar';
+                $retorno = __('Editar');
             }
         }
-        $this->url_cancelar = ($retorno == 'Editar') ? "educar_transferencia_tipo_det.php?cod_transferencia_tipo={$registro['cod_transferencia_tipo']}" : 'educar_transferencia_tipo_lst.php';
+        $this->url_cancelar = ($retorno == __('Editar')) ? "educar_transferencia_tipo_det.php?cod_transferencia_tipo={$registro['cod_transferencia_tipo']}" : 'educar_transferencia_tipo_lst.php';
 
-        $nomeMenu = $retorno == 'Editar' ? $retorno : 'Cadastrar';
+        $nomeMenu = $retorno == __('Editar') ? $retorno : __('Cadastrar');
 
-        $this->breadcrumb(currentPage: $nomeMenu . ' tipo de transferência', breadcrumbs: [
-            url(path: 'intranet/educar_index.php') => 'Escola',
+        $this->breadcrumb(currentPage: $nomeMenu . ' ' . __('tipo de transferência'), breadcrumbs: [
+            url(path: 'intranet/educar_index.php') => __('Escola'),
         ]);
 
-        $this->nome_url_cancelar = 'Cancelar';
+        $this->nome_url_cancelar = __('Cancelar');
 
         return $retorno;
     }
@@ -66,8 +65,8 @@ return new class extends clsCadastro
         include 'include/pmieducar/educar_campo_lista.php';
 
         // text
-        $this->campoTexto(nome: 'nm_tipo', campo: 'Motivo Transferência', valor: $this->nm_tipo, tamanhovisivel: 30, tamanhomaximo: 255, obrigatorio: true);
-        $this->campoMemo(nome: 'desc_tipo', campo: 'Descrição', valor: $this->desc_tipo, colunas: 60, linhas: 5);
+        $this->campoTexto(nome: 'nm_tipo', campo: __('Motivo Transferência'), valor: $this->nm_tipo, tamanhovisivel: 30, tamanhomaximo: 255, obrigatorio: true);
+        $this->campoMemo(nome: 'desc_tipo', campo: __('Descrição'), valor: $this->desc_tipo, colunas: 60, linhas: 5);
     }
 
     public function Novo()
@@ -79,11 +78,11 @@ return new class extends clsCadastro
         $object->ref_cod_instituicao = $this->ref_cod_instituicao;
 
         if ($object->save()) {
-            $this->mensagem .= 'Cadastro efetuado com sucesso.<br>';
+            $this->mensagem .= __('Cadastro efetuado com sucesso.') . '<br>';
             $this->simpleRedirect(url: 'educar_transferencia_tipo_lst.php');
         }
 
-        $this->mensagem = 'Cadastro não realizado.<br>';
+        $this->mensagem = __('Cadastro não realizado.') . '<br>';
 
         return false;
     }
@@ -98,11 +97,11 @@ return new class extends clsCadastro
         $object->ref_cod_instituicao = $this->ref_cod_instituicao;
 
         if ($object->save()) {
-            $this->mensagem .= 'Edição efetuada com sucesso.<br>';
+            $this->mensagem .= __('Edição efetuada com sucesso.') . '<br>';
             $this->simpleRedirect(url: 'educar_transferencia_tipo_lst.php');
         }
 
-        $this->mensagem = 'Edição não realizada.<br>';
+        $this->mensagem = __('Edição não realizada.') . '<br>';
 
         return false;
     }
@@ -114,18 +113,18 @@ return new class extends clsCadastro
         $object->ref_usuario_exc = $this->pessoa_logada;
 
         if ($object->save()) {
-            $this->mensagem .= 'Exclusão efetuada com sucesso.<br>';
+            $this->mensagem .= __('Exclusão efetuada com sucesso.') . '<br>';
             $this->simpleRedirect(url: 'educar_transferencia_tipo_lst.php');
         }
 
-        $this->mensagem = 'Exclusão não realizada.<br>';
+        $this->mensagem = __('Exclusão não realizada.') . '<br>';
 
         return false;
     }
 
     public function Formular()
     {
-        $this->title = 'Motivo Transferência';
+        $this->title = __('Motivo Transferência');
         $this->processoAp = '575';
     }
 };

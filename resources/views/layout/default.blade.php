@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="pt" class="no-js">
+<html lang="{{ app()->getLocale() }}" class="no-js">
+
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -119,10 +120,10 @@
                         <div class="dropdown">
                             <div class="dropbtn">{{ $loggedUser->name }}</div>
                             <div class="dropdown-content">
-                                <a href="{{ Asset::get('intranet/agenda.php') }}">Agenda</a>
-                                <a href="{{ Asset::get('intranet/meusdados.php') }}">Meus dados</a>
-                                <a href="{{ Asset::get('intranet/logof.php') }}" id="logout">Sair</a>
-                                <a href="#" id="reloadPermissionsLink">Reload</a>
+                                <a href="{{ Asset::get('intranet/agenda.php') }}">{{ __('Agenda') }}</a>
+                                <a href="{{ Asset::get('intranet/meusdados.php') }}">{{ __('Meus dados') }}</a>
+                                <a href="{{ Asset::get('intranet/logof.php') }}" id="logout">{{ __('Sair') }}</a>
+                                <a href="#" id="reloadPermissionsLink">{{ __('Reload') }}</a>
 
 
 

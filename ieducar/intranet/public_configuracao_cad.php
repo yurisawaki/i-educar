@@ -22,9 +22,9 @@ return new class extends clsCadastro {
 
     public function Inicializar()
     {
-        $retorno = 'Novo';
+        $retorno = __('Novo');
 
-        // Sempre busca o primeiro e único registro
+
         $config = Configuracao::first();
 
         if ($config) {
@@ -32,16 +32,16 @@ return new class extends clsCadastro {
             $this->tempo = $config->tempo;
             $this->distancia = $config->distancia;
 
-            $retorno = 'Cadastrar ou Editar';
+            $retorno = __('Cadastrar ou Editar');
         }
 
         $this->url_cancelar = 'public_configuracao_lst.php';
-        $this->nome_url_cancelar = 'Cancelar';
+        $this->nome_url_cancelar = __('Cancelar');
 
-        $nomeMenu = $retorno == 'Editar' ? 'Editar' : 'Cadastrar';
+        $nomeMenu = $retorno == __('Editar') ? __('Editar') : __('Cadastrar');
 
-        $this->breadcrumb("{$nomeMenu} configuração", [
-            url('intranet/educar_configuracao_index.php') => 'Configuração',
+        $this->breadcrumb("{$nomeMenu} " . __('configuração'), [
+            url('intranet/educar_configuracao_index.php') => __('Configuração'),
         ]);
 
         return $retorno;
@@ -50,8 +50,8 @@ return new class extends clsCadastro {
     public function Gerar()
     {
         $this->campoOculto('idconfig', $this->idconfig);
-        $this->campoNumero('tempo', 'Tempo (segundos)', $this->tempo, 3, 5, true);
-        $this->campoNumero('distancia', 'Distância (metros)', $this->distancia, 3, 5, true);
+        $this->campoNumero('tempo', __('Tempo (segundos)'), $this->tempo, 3, 5, true);
+        $this->campoNumero('distancia', __('Distância (metros)'), $this->distancia, 3, 5, true);
     }
 
     public function Novo()
@@ -94,7 +94,7 @@ return new class extends clsCadastro {
 
     public function Formular()
     {
-        $this->title = 'Configuração';
-        $this->processoAp = 69;  // Ajuste conforme o seu processo
+        $this->title = __('Configuração');
+        $this->processoAp = 69;
     }
 };

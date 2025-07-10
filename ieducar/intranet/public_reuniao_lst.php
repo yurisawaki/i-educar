@@ -25,27 +25,23 @@ return new class extends clsListagem {
 
     public function Gerar()
     {
-        $this->__titulo = 'Reunião - Listagem';
+        $this->__titulo = __('Reunião - Listagem');
 
-        // Captura os filtros da query string
         foreach ($_GET as $var => $val) {
             $this->$var = ($val === '') ? null : $val;
         }
 
-        // Cabeçalhos da tabela
         $this->addCabecalhos([
-            'Nome da Reunião',
-            'Descrição',
-            'Status',
-            'Data da Reunião',
-            'Ação'
+            __('Nome da Reunião'),
+            __('Descrição'),
+            __('Status'),
+            __('Data da Reunião'),
+            __('Ação')
         ]);
 
-        // Campos de filtro
-        $this->campoTexto('no_reuniao', 'Nome da Reunião', $this->no_reuniao, 30, 255, false);
-        $this->campoTexto('ds_reuniao', 'Descrição', $this->ds_reuniao, 30, 255, false);
+        $this->campoTexto('no_reuniao', __('Nome da Reunião'), $this->no_reuniao, 30, 255, false);
+        $this->campoTexto('ds_reuniao', __('Descrição'), $this->ds_reuniao, 30, 255, false);
 
-        // Paginação
         $this->__limite = 20;
         $this->__offset = isset($_GET["pagina_{$this->no_reuniao}"]) ? $_GET["pagina_{$this->no_reuniao}"] * $this->__limite - $this->__limite : 0;
 
@@ -65,39 +61,35 @@ return new class extends clsListagem {
             $query->orderBy('no_reuniao');
         });
 
-        // Adiciona as linhas da tabela
         foreach ($data as $item) {
             $this->addLinhas([
                 htmlspecialchars($item->no_reuniao),
                 htmlspecialchars(mb_strimwidth($item->ds_reuniao, 0, 40, '...')),
-                $item->cd_reuniao_status, // Aqui pode ser traduzido para texto, se desejar
+                $item->cd_reuniao_status,
                 $item->dh_reuniao ? date('d/m/Y H:i', strtotime($item->dh_reuniao)) : '',
-                "<a href=\"public_reuniao_cad.php?id={$item->cd_reuniao}\">Editar</a>"
+                "<a href=\"public_reuniao_cad.php?id={$item->cd_reuniao}\">" . __('Editar') . "</a>"
             ]);
         }
 
-        // Paginador
         $this->addPaginador2('public_reuniao_lst.php', $total, $_GET, $this->no_reuniao, $this->__limite);
 
-        // Permissões para novo registro
         $obj_permissao = new clsPermissoes;
 
         if ($obj_permissao->permissao_cadastra(760, $this->pessoa_logada, 7, null, true)) {
             $this->acao = 'go("public_reuniao_cad.php")';
-            $this->nome_acao = 'Novo';
+            $this->nome_acao = __('Novo');
         }
 
         $this->largura = '100%';
 
-        // Breadcrumb para navegação
-        $this->breadcrumb('Listagem de Reuniões', [
-            url('intranet/educar_enderecamento_index.php') => 'Endereçamento',
+        $this->breadcrumb(__('Listagem de Reuniões'), [
+            url('intranet/educar_enderecamento_index.php') => __('Endereçamento'),
         ]);
     }
 
     public function Formular()
     {
-        $this->title = 'Reunião';
-        $this->processoAp = 761; // Código real do processo (altere conforme necessário)
+        $this->title = __('Reunião');
+        $this->processoAp = 761;
     }
 };

@@ -29,15 +29,16 @@ class PontoTransporteApiController extends Controller
         $pFetch = $validated['pFetch'];
         $pOffset = $validated['pOffset'];
 
-        if ($pOffset == 0) {
 
-            DB::delete("
+
+        DB::delete("
                 DELETE FROM lealsis.out_tbl_ponto_transporte
-                WHERE id_token = ?
+                WHERE id_token = ? OR dh_sincronizacao < CURRENT_DATE - INTERVAL '1 day'
+
             ", [$user->currentAccessToken()->token]);
 
 
-            DB::insert("
+        DB::insert("
                 INSERT INTO lealsis.out_tbl_ponto_transporte (
                     id_token,
                     dh_sincronizacao,
@@ -48,23 +49,26 @@ class PontoTransporteApiController extends Controller
                 )
                 SELECT
                     ?,
-                    NOW(),
+                    CURRENT_TIMESTAMP AT TIME ZONE 'America/fortaleza',
                     P.cod_ponto_transporte_escolar,
                     P.descricao,
                     P.latitude,
                     P.longitude
                 FROM modules.ponto_transporte_escolar P
             ", [$user->currentAccessToken()->token]);
-        }
+
 
         // Consulta com paginação baseada no token
         $pontos = DB::select("
-            SELECT *
-            FROM lealsis.out_tbl_ponto_transporte
-            WHERE id_token = ?
-            ORDER BY no_ponto ASC
+            SELECT P.*, PI.no_imagem, PI.tamanho_arquivo
+            FROM lealsis.out_tbl_ponto_transporte P
+            LEFT JOIN lealsis.tbl_ponto_imagem PI ON PI.id_ponto = P.id_ponto
+            WHERE P.id_token = ?
+            ORDER BY P.no_ponto ASC
             LIMIT ? OFFSET ?
         ", [$user->currentAccessToken()->token, $pFetch, $pOffset * $pFetch]);
+
+
 
         $count = count($pontos);
         $inicio = $pOffset + 1;
@@ -83,6 +87,6 @@ class PontoTransporteApiController extends Controller
                 'count' => $count,
                 'pontos' => $pontos
             ]
-        ]);
+        ], 200);
     }
 }

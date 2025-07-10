@@ -26,7 +26,7 @@ return new class extends clsListagem {
 
     public function Gerar()
     {
-        $this->__titulo = 'Ata - Listagem';
+        $this->__titulo = __('Ata - Listagem');
 
         // Captura os filtros da query string
         foreach ($_GET as $var => $val) {
@@ -35,21 +35,21 @@ return new class extends clsListagem {
 
         // Cabeçalhos da tabela
         $this->addCabecalhos([
-            'Nome da Ata',
-            'Descrição',
-            'Votação',
-            'Encerramento',
-            'Criado em',
-            'Atualizado em',
-            'Deletado em',
-            'Ação'
+            __('Nome da Ata'),
+            __('Descrição'),
+            __('Votação'),
+            __('Encerramento'),
+            __('Criado em'),
+            __('Atualizado em'),
+            __('Deletado em'),
+            __('Ação')
         ]);
 
         // Campos de filtro
-        $this->campoTexto('no_ata', 'Nome da Ata', $this->no_ata, 30, 255, false);
-        $this->campoTexto('ds_ata', 'Descrição', $this->ds_ata, 30, 255, false);
-        $this->campoTexto('ds_votacao', 'Votação', $this->ds_votacao, 30, 255, false);
-        $this->campoTexto('ds_encerramento', 'Encerramento', $this->ds_encerramento, 30, 255, false);
+        $this->campoTexto('no_ata', __('Nome da Ata'), $this->no_ata, 30, 255, false);
+        $this->campoTexto('ds_ata', __('Descrição'), $this->ds_ata, 30, 255, false);
+        $this->campoTexto('ds_votacao', __('Votação'), $this->ds_votacao, 30, 255, false);
+        $this->campoTexto('ds_encerramento', __('Encerramento'), $this->ds_encerramento, 30, 255, false);
 
         // Paginação
         $this->__limite = 20;
@@ -85,7 +85,7 @@ return new class extends clsListagem {
                 $item->created_at ? date('d/m/Y H:i', strtotime($item->created_at)) : '',
                 $item->updated_at ? date('d/m/Y H:i', strtotime($item->updated_at)) : '',
                 $item->deleted_at ? date('d/m/Y H:i', strtotime($item->deleted_at)) : '',
-                "<a href=\"public_ata_cad.php?id={$item->cd_ata}\">Editar</a>"
+                "<a href=\"public_ata_cad.php?id={$item->cd_ata}\">" . __('Editar') . "</a>"
             ]);
         }
 
@@ -97,20 +97,20 @@ return new class extends clsListagem {
 
         if ($obj_permissao->permissao_cadastra(761, $this->pessoa_logada, 7, null, true)) {
             $this->acao = 'go("public_ata_cad.php")';
-            $this->nome_acao = 'Novo';
+            $this->nome_acao = __('Novo');
         }
 
         $this->largura = '100%';
 
         // Breadcrumb para navegação
-        $this->breadcrumb('Listagem de Atas', [
-            url('intranet/educar_enderecamento_index.php') => 'Endereçamento',
+        $this->breadcrumb(__('Listagem de Atas'), [
+            url('intranet/educar_enderecamento_index.php') => __('Endereçamento'),
         ]);
     }
 
     public function Formular()
     {
-        $this->title = 'Ata';
+        $this->title = __('Ata');
         $this->processoAp = 756; // Código real do processo
     }
 };

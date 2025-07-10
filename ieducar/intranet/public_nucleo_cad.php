@@ -24,7 +24,7 @@ return new class extends clsCadastro {
 
     public function Inicializar()
     {
-        $retorno = 'Novo';
+        $retorno = __('Novo');
 
         $this->cd_nucleo = $_GET['cd_nucleo'] ?? null;
 
@@ -34,19 +34,19 @@ return new class extends clsCadastro {
             $this->no_nucleo = $nucleo->no_nucleo;
             $this->ds_nucleo = $nucleo->ds_nucleo;
 
-            $retorno = 'Editar';
+            $retorno = __('Editar');
         }
 
-        $this->url_cancelar = $retorno == 'Editar'
+        $this->url_cancelar = $retorno == __('Editar')
             ? "public_nucleo_det.php?cd_nucleo={$this->cd_nucleo}"
             : 'public_nucleo_lst.php';
 
-        $this->nome_url_cancelar = 'Cancelar';
+        $this->nome_url_cancelar = __('Cancelar');
 
-        $nomeMenu = $retorno == 'Editar' ? $retorno : 'Cadastrar';
+        $nomeMenu = $retorno == __('Editar') ? $retorno : __('Cadastrar');
 
-        $this->breadcrumb("{$nomeMenu} Núcleo", [
-            url('intranet/educar_nucleo_index.php') => 'Núcleos',
+        $this->breadcrumb("{$nomeMenu} " . __('Núcleo'), [
+            url('intranet/educar_nucleo_index.php') => __('Núcleos'),
         ]);
 
         return $retorno;
@@ -56,9 +56,9 @@ return new class extends clsCadastro {
     {
         $this->campoOculto('cd_nucleo', $this->cd_nucleo);
 
-        $this->campoTexto('no_nucleo', 'Nome', $this->no_nucleo, 50, 100, true);
+        $this->campoTexto('no_nucleo', __('Nome'), $this->no_nucleo, 50, 100, true);
 
-        $this->campoMemo('ds_nucleo', 'Descrição', $this->ds_nucleo, 60, 5, false);
+        $this->campoMemo('ds_nucleo', __('Descrição'), $this->ds_nucleo, 60, 5, false);
     }
 
     public function Novo()
@@ -69,7 +69,7 @@ return new class extends clsCadastro {
             ->exists();
 
         if ($exists) {
-            $this->mensagem = 'Já existe um Núcleo com este nome.<br>';
+            $this->mensagem = __('Já existe um Núcleo com este nome.') . '<br>';
             return false;
         }
 
@@ -88,7 +88,7 @@ return new class extends clsCadastro {
             ->exists();
 
         if ($exists) {
-            $this->mensagem = 'Já existe um Núcleo com este nome.<br>';
+            $this->mensagem = __('Já existe um Núcleo com este nome.') . '<br>';
             return false;
         }
 
@@ -105,7 +105,7 @@ return new class extends clsCadastro {
 
     public function Formular()
     {
-        $this->title = 'Núcleo';
+        $this->title = __('Núcleo');
         $this->processoAp = 758; // ajuste conforme o processo correto
     }
 };

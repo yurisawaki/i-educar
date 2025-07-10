@@ -3,13 +3,7 @@
 use App\Models\LegacyProject;
 use App\Models\LegacyStudentProject;
 
-return new class extends clsCadastro
-{
-    /**
-     * Referencia pega da session para o idpes do usuario atual
-     *
-     * @var int
-     */
+return new class extends clsCadastro {
     public $pessoa_logada;
 
     public $cod_projeto;
@@ -20,7 +14,7 @@ return new class extends clsCadastro
 
     public function Inicializar()
     {
-        $retorno = 'Novo';
+        $retorno = __('Novo');
 
         $this->cod_projeto = $_GET['cod_projeto'];
 
@@ -30,37 +24,35 @@ return new class extends clsCadastro
         if (is_numeric($this->cod_projeto)) {
             $registro = LegacyProject::find($this->cod_projeto)?->getAttributes();
             if ($registro) {
-                foreach ($registro as $campo => $val) {  // passa todos os valores obtidos no registro para atributos do objeto
+                foreach ($registro as $campo => $val) {
                     $this->$campo = $val;
                 }
 
-                // ** verificao de permissao para exclusao
                 $this->fexcluir = $obj_permissoes->permissao_excluir(int_processo_ap: 21250, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 3);
-                // **
 
-                $retorno = 'Editar';
+                $retorno = __('Editar');
             }
         }
-        $this->url_cancelar = ($retorno == 'Editar') ? "educar_projeto_det.php?cod_projeto={$registro['cod_projeto']}" : 'educar_projeto_lst.php';
 
-        $nomeMenu = $retorno == 'Editar' ? $retorno : 'Cadastrar';
+        $this->url_cancelar = ($retorno == __('Editar')) ? "educar_projeto_det.php?cod_projeto={$registro['cod_projeto']}" : 'educar_projeto_lst.php';
 
-        $this->breadcrumb(currentPage: $nomeMenu . ' projeto', breadcrumbs: [
-            url('intranet/educar_index.php') => 'Escola',
+        $nomeMenu = $retorno == __('Editar') ? $retorno : __('Cadastrar');
+
+        $this->breadcrumb(currentPage: $nomeMenu . ' ' . __('projeto'), breadcrumbs: [
+            url('intranet/educar_index.php') => __('Escola'),
         ]);
 
-        $this->nome_url_cancelar = 'Cancelar';
+        $this->nome_url_cancelar = __('Cancelar');
 
         return $retorno;
     }
 
     public function Gerar()
     {
-        // primary keys
         $this->campoOculto(nome: 'cod_projeto', valor: $this->cod_projeto);
 
-        $this->campoTexto(nome: 'nome', campo: 'Nome do projeto', valor: $this->nome, tamanhovisivel: 50, tamanhomaximo: 50, obrigatorio: true);
-        $this->campoMemo(nome: 'observacao', campo: 'Observação', valor: $this->observacao, colunas: 52, linhas: 5);
+        $this->campoTexto(nome: 'nome', campo: __('Nome do projeto'), valor: $this->nome, tamanhovisivel: 50, tamanhomaximo: 50, obrigatorio: true);
+        $this->campoMemo(nome: 'observacao', campo: __('Observação'), valor: $this->observacao, colunas: 52, linhas: 5);
     }
 
     public function Novo()
@@ -70,10 +62,10 @@ return new class extends clsCadastro
         $project->observacao = $this->observacao;
 
         if ($project->save()) {
-            $this->mensagem .= 'Cadastro efetuado com sucesso.<br>';
+            $this->mensagem .= __('Cadastro efetuado com sucesso.') . '<br>';
             $this->simpleRedirect('educar_projeto_lst.php');
         }
-        $this->mensagem = 'Cadastro não realizado.<br>';
+        $this->mensagem = __('Cadastro não realizado.') . '<br>';
 
         return false;
     }
@@ -85,10 +77,10 @@ return new class extends clsCadastro
         $project->observacao = $this->observacao;
 
         if ($project->save()) {
-            $this->mensagem .= 'Edição efetuada com sucesso.<br>';
+            $this->mensagem .= __('Edição efetuada com sucesso.') . '<br>';
             $this->simpleRedirect('educar_projeto_lst.php');
         }
-        $this->mensagem = 'Edição não realizada.<br>';
+        $this->mensagem = __('Edição não realizada.') . '<br>';
 
         return false;
     }
@@ -100,7 +92,7 @@ return new class extends clsCadastro
             ->count();
 
         if ($count > 0) {
-            $this->mensagem = 'Você não pode excluir esse projeto, pois ele possui alunos vinculados.<br>';
+            $this->mensagem = __('Você não pode excluir esse projeto, pois ele possui alunos vinculados.') . '<br>';
 
             return false;
         }
@@ -108,17 +100,17 @@ return new class extends clsCadastro
         $project = LegacyProject::find($this->cod_projeto);
 
         if ($project->delete()) {
-            $this->mensagem .= 'Exclusão efetuada com sucesso.<br>';
+            $this->mensagem .= __('Exclusão efetuada com sucesso.') . '<br>';
             $this->simpleRedirect('educar_projeto_lst.php');
         }
-        $this->mensagem = 'Exclusão não realizada.<br>';
+        $this->mensagem = __('Exclusão não realizada.') . '<br>';
 
         return false;
     }
 
     public function Formular()
     {
-        $this->title = 'Projeto';
+        $this->title = __('Projeto');
         $this->processoAp = '21250';
     }
 };

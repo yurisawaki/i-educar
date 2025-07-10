@@ -25,7 +25,7 @@ return new class extends clsListagem {
 
     public function Gerar()
     {
-        $this->__titulo = 'Conselho - Listagem';
+        $this->__titulo = __('Conselho - Listagem');
 
         // Captura os filtros da query string
         foreach ($_GET as $var => $val) {
@@ -34,18 +34,17 @@ return new class extends clsListagem {
 
         // Cabeçalhos da tabela
         $this->addCabecalhos([
-            'Nome do Conselho',
-            'Descrição',
-            'Data Inicial',
-            'Data Final',
-            'Ativo',
-            'Ação'
+            __('Nome do Conselho'),
+            __('Descrição'),
+            __('Data Inicial'),
+            __('Data Final'),
+            __('Ativo'),
+            __('Ação')
         ]);
 
         // Campos de filtro
-        $this->campoTexto('no_conselho', 'Nome do Conselho', $this->no_conselho, 30, 255, false);
-        $this->campoTexto('ds_conselho', 'Descrição', $this->ds_conselho, 30, 255, false);
-
+        $this->campoTexto('no_conselho', __('Nome do Conselho'), $this->no_conselho, 30, 255, false);
+        $this->campoTexto('ds_conselho', __('Descrição'), $this->ds_conselho, 30, 255, false);
 
         // Paginação
         $this->__limite = 20;
@@ -74,8 +73,8 @@ return new class extends clsListagem {
                 htmlspecialchars(mb_strimwidth($item->ds_conselho, 0, 40, '...')),
                 $item->dt_inicial ? date('d/m/Y', strtotime($item->dt_inicial)) : '',
                 $item->dt_final ? date('d/m/Y', strtotime($item->dt_final)) : '',
-                $item->is_ativo ? 'Sim' : 'Não',
-                "<a href=\"public_conselho_cad.php?id={$item->cd_conselho}\">Editar</a>"
+                $item->is_ativo ? __('Sim') : __('Não'),
+                "<a href=\"public_conselho_cad.php?id={$item->cd_conselho}\">" . __('Editar') . "</a>"
             ]);
         }
 
@@ -87,20 +86,20 @@ return new class extends clsListagem {
 
         if ($obj_permissao->permissao_cadastra(759, $this->pessoa_logada, 7, null, true)) {
             $this->acao = 'go("public_conselho_cad.php")';
-            $this->nome_acao = 'Novo';
+            $this->nome_acao = __('Novo');
         }
 
         $this->largura = '100%';
 
         // Breadcrumb para navegação
-        $this->breadcrumb('Listagem de Conselhos', [
-            url('intranet/educar_enderecamento_index.php') => 'Endereçamento',
+        $this->breadcrumb(__('Listagem de Conselhos'), [
+            url('intranet/educar_enderecamento_index.php') => __('Endereçamento'),
         ]);
     }
 
     public function Formular()
     {
-        $this->title = 'Conselho';
+        $this->title = __('Conselho');
         $this->processoAp = 760; // Código real do processo
     }
 };

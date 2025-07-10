@@ -95,7 +95,9 @@ class clsCadastro extends clsCampos
         $this->tipoacao = @$_POST['tipoacao'];
     }
 
-    public function PreCadastrar() {}
+    public function PreCadastrar()
+    {
+    }
 
     public function Processar()
     {
@@ -166,7 +168,9 @@ class clsCadastro extends clsCampos
         return '';
     }
 
-    public function Formular() {}
+    public function Formular()
+    {
+    }
 
     public function Novo()
     {

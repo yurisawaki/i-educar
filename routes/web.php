@@ -207,15 +207,5 @@ Route::group(['middleware' => ['ieducar.navigation', 'ieducar.footer', 'ieducar.
 
 
 
-    Route::get('/foto-ponto/{id_ponto}', function ($id_ponto) {
-        $row = DB::table('lealsis.tbl_ponto_imagem')
-            ->where('id_ponto', $id_ponto)
-            ->first();
-
-        return response()->json([
-            'path' => $row ? $row->no_imagem : null
-        ]);
-    });
-
 
 });
