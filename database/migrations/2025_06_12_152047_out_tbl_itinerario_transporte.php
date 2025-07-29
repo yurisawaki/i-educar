@@ -14,7 +14,6 @@ return new class extends Migration {
             CREATE TABLE IF NOT EXISTS lealsis.out_tbl_itinerario_transporte (
                 id_token VARCHAR(255) NOT NULL,
                 dh_sincronizacao TIMESTAMP,
-
                 id_itinerario INT,
                 id_rota INT,
                 id_ponto INT,

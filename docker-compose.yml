@@ -50,6 +50,7 @@ services:
     volumes:
       - ./:/var/www/ieducar
       - ./docker/nginx:/etc/nginx/conf.d/
+      - ../ftp-volume/ieducar/imagem:/imagem
     ports:
       - ${DOCKER_NGINX_PORT:-80}:80
       - ${DOCKER_NGINX_SSL_PORT:-443}:443
@@ -58,7 +59,7 @@ services:
     container_name: ieducar-postgres
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: ieducar_restore
+      POSTGRES_DB: ieducar
       POSTGRES_USER: ieducar
       POSTGRES_PASSWORD: ieducar
     volumes:
@@ -74,4 +75,4 @@ services:
       - ${DOCKER_REDIS_PORT:-6379}:6379
 
 volumes:
-    postgres:
+  postgres:

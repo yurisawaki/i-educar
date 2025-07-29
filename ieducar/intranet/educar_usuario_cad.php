@@ -423,30 +423,16 @@ return new class extends clsCadastro {
             $this->insereUsuarioEscolas(codUsuario: $this->ref_pessoa, escolas: $this->escola);
 
             if ($editou) {
-                // Atualiza transporte escolar
-                $db = new clsBanco();
-
                 if ($this->transporte_escolar == 1) {
-                    $sqlCheck = sprintf(
-                        "SELECT 1 FROM lealsis.tbl_usuario_transporte WHERE cod_usuario = %d",
-                        $this->ref_pessoa
-                    );
-                    $db->Consulta($sqlCheck);
-
-                    if (!$db->ProximoRegistro()) {
-                        $sqlInsert = sprintf(
-                            "INSERT INTO lealsis.tbl_usuario_transporte (cod_usuario) VALUES (%d)",
-                            $this->ref_pessoa
+                    \DB::table('lealsis.tbl_usuario_transporte')
+                        ->updateOrInsert(
+                            ['cod_usuario' => $this->ref_pessoa],
+                            []
                         );
-                        $db->Consulta($sqlInsert);
-                    }
                 } else {
-                    // Se desmarcado, remove o transporte escolar do usuário
-                    $sqlDelete = sprintf(
-                        "DELETE FROM lealsis.tbl_usuario_transporte WHERE cod_usuario = %d",
-                        $this->ref_pessoa
-                    );
-                    $db->Consulta($sqlDelete);
+                    \DB::table('lealsis.tbl_usuario_transporte')
+                        ->where('cod_usuario', $this->ref_pessoa)
+                        ->delete();
                 }
 
                 UserUpdated::dispatch(User::findOrFail($this->ref_pessoa));
@@ -454,6 +440,7 @@ return new class extends clsCadastro {
                 $this->mensagem .= 'Edição efetuada com sucesso.<br>';
                 $this->simpleRedirect('educar_usuario_lst.php');
             }
+
         }
 
         $this->mensagem = 'Edição não realizada.<br>';

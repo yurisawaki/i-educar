@@ -27,7 +27,7 @@ class FotoController extends Controller
             ['id_ponto' => $request->id_ponto],
             [
                 'no_imagem' => $path,
-                'tamanho_arquivo' => $tamanho,
+                'tamanho_imagem' => $tamanho,
                 'created_at' => now()
             ]
         );

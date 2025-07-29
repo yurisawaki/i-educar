@@ -27,6 +27,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\ConfiguracaoController;
 use App\Http\Controllers\InPontoTransporteApiController;
+use App\Http\Controllers\Api\RotaTrajetoController;
+use App\Http\Controllers\Api\OutRotaTrajetoApiController;
 
 
 
@@ -145,7 +147,19 @@ Route::prefix('transporte')->middleware('auth:sanctum')->group(function () {
     Route::get('/rota_ponto', [ItinerarioApiController::class, 'index']);
 
     Route::post('/sincronizar-pontos', [InPontoTransporteApiController::class, 'sincronizar']);
+
+    Route::post('/rota-trajetos', [RotaTrajetoController::class, 'store']);
+
+
+    Route::get('/out-rota-trajetos', [OutRotaTrajetoApiController::class, 'index']);
+
+
+
+
+
 });
+
+
 
 
 
