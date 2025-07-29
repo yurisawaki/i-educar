@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c1a228eeec5ff4b68ee00c8c5c115e1",
+    "content-hash": "9ed0467893d6aa5f3c1c461a333b74a8",
     "packages": [
         {
             "name": "ankurk91/laravel-eloquent-relationships",
@@ -4588,7 +4588,7 @@
         },
         {
             "name": "portabilis/i-educar-library-package",
-            "version": "2.9.x-dev",
+            "version": "2.8.0",
             "dist": {
                 "type": "path",
                 "url": "i-educar-library-package",
@@ -4624,11 +4624,11 @@
         },
         {
             "name": "portabilis/i-educar-transport-package",
-            "version": "2.9.x-dev",
+            "version": "2.8.0",
             "dist": {
                 "type": "path",
                 "url": "i-educar-transport-package",
-                "reference": "19cecbd73e04c8fc0c75accf17d59d79fdf41654"
+                "reference": "0d121932397f3b3d992f654e27775b0d3f367ffb"
             },
             "type": "library",
             "extra": {
@@ -5137,16 +5137,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.12.9",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "1b801844becfe648985372cb4b12ad6840245ace"
+                "reference": "a1e10c96e30230b8eefdedbd6716ea64bd1de2dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/1b801844becfe648985372cb4b12ad6840245ace",
-                "reference": "1b801844becfe648985372cb4b12ad6840245ace",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/a1e10c96e30230b8eefdedbd6716ea64bd1de2dd",
+                "reference": "a1e10c96e30230b8eefdedbd6716ea64bd1de2dd",
                 "shasum": ""
             },
             "require": {
@@ -5168,6 +5168,7 @@
                 "ext-pdo-sqlite": "The doc command requires SQLite to work.",
                 "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well."
             },
+            "default-branch": true,
             "bin": [
                 "bin/psysh"
             ],
@@ -5196,12 +5197,11 @@
             "authors": [
                 {
                     "name": "Justin Hileman",
-                    "email": "justin@justinhileman.info",
-                    "homepage": "http://justinhileman.com"
+                    "email": "justin@justinhileman.info"
                 }
             ],
             "description": "An interactive shell for modern PHP.",
-            "homepage": "http://psysh.org",
+            "homepage": "https://psysh.org",
             "keywords": [
                 "REPL",
                 "console",
@@ -5210,9 +5210,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.12.9"
+                "source": "https://github.com/bobthecow/psysh/tree/main"
             },
-            "time": "2025-06-23T02:35:06+00:00"
+            "time": "2025-07-04T20:38:13+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -8834,16 +8834,16 @@
         },
         {
             "name": "laravel/pint",
-            "version": "v1.23.0",
+            "version": "v1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/pint.git",
-                "reference": "9ab851dba4faa51a3c3223dd3d07044129021024"
+                "reference": "0345f3b05f136801af8c339f9d16ef29e6b4df8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/pint/zipball/9ab851dba4faa51a3c3223dd3d07044129021024",
-                "reference": "9ab851dba4faa51a3c3223dd3d07044129021024",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/0345f3b05f136801af8c339f9d16ef29e6b4df8a",
+                "reference": "0345f3b05f136801af8c339f9d16ef29e6b4df8a",
                 "shasum": ""
             },
             "require": {
@@ -8854,7 +8854,7 @@
                 "php": "^8.2.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.76.0",
+                "friendsofphp/php-cs-fixer": "^3.82.2",
                 "illuminate/view": "^11.45.1",
                 "larastan/larastan": "^3.5.0",
                 "laravel-zero/framework": "^11.45.0",
@@ -8899,7 +8899,7 @@
                 "issues": "https://github.com/laravel/pint/issues",
                 "source": "https://github.com/laravel/pint"
             },
-            "time": "2025-07-03T10:37:47+00:00"
+            "time": "2025-07-10T18:09:32+00:00"
         },
         {
             "name": "laravel/sail",
@@ -11827,10 +11827,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "portabilis/i-educar-library-package": 20,
-        "portabilis/i-educar-transport-package": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

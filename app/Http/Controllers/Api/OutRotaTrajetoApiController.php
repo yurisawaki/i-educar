@@ -6,12 +6,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-
-class ItinerarioApiController extends Controller
+class OutRotaTrajetoApiController extends Controller
 {
     public function index(Request $request)
     {
-        // Autenticação via Sanctum
+        // Autenticação
         $user = $request->user();
         if (!$user) {
             return response()->json([
@@ -29,56 +28,59 @@ class ItinerarioApiController extends Controller
         $pFetch = $validated['pFetch'];
         $pOffset = $validated['pOffset'];
 
-        // Se for o primeiro carregamento (offset 0)
+        // Se offset for 0, limpar e popular a tabela
         if ($pOffset == 0) {
-            // Limpa dados antigos deste token
+            // Deletar registros antigos
             DB::delete("
-                DELETE FROM lealsis.out_tbl_itinerario_transporte
+                DELETE FROM lealsis.out_tbl_rota_trajeto
                  WHERE id_token = ?
                     OR dh_sincronizacao < CURRENT_DATE - INTERVAL '1 day'
             ", [$user->currentAccessToken()->token]);
 
+            // Inserir novos dados
+            $token = $user->currentAccessToken()->token;
 
-            // Insere dados atualizados da origem
             DB::insert("
-                INSERT INTO lealsis.out_tbl_itinerario_transporte (
+                INSERT INTO lealsis.out_tbl_rota_trajeto (
                     id_token,
-                    dh_sincronizacao,
-                    id_itinerario,
+                    dh_sincronizacao, 
+                    id_rota_trajeto,
                     id_rota,
-                    id_ponto,
-                    nu_sequencia,
-                    hr_ponto,
-                    ds_rota_tipo
+                    id_ponto_1,
+                    id_ponto_2,
+                    dh_coordenada,
+                    nu_latitude,
+                    nu_longitude
                 )
                 SELECT
-                    ?,
-                    NOW(),
-                    I.cod_itinerario_transporte_escolar,
-                    I.ref_cod_rota_transporte_escolar,
-                    I.ref_cod_ponto_transporte_escolar,
-                    I.seq,
-                    I.hora,
-                    CASE WHEN I.tipo = 'I' THEN 'IDA' ELSE 'VOLTA' END
-                FROM modules.itinerario_transporte_escolar I
-            ", [$user->currentAccessToken()->token]);
+                    ? as id_token,
+                    CURRENT_TIMESTAMP AT TIME ZONE 'America/Fortaleza',
+                    RT.id_rota_trajeto,
+                    RT.id_rota,
+                    RT.id_ponto_1,
+                    RT.id_ponto_2,
+                    RT.dh_coordenada,
+                    RT.nu_latitude,
+                    RT.nu_longitude
+                FROM lealsis.tbl_rota_trajeto RT
+            ", [$token]);
 
         }
 
-        // Consulta paginada
-        $itinerarios = DB::select("
+        // SELECT paginado dos dados
+        $trajetos = DB::select("
             SELECT *
-            FROM lealsis.out_tbl_itinerario_transporte
-            WHERE id_token = ?
-            ORDER BY nu_sequencia ASC
-            LIMIT ? OFFSET ?
+              FROM lealsis.out_tbl_rota_trajeto
+             WHERE id_token = ?
+             ORDER BY id_rota_trajeto ASC
+             LIMIT ? OFFSET ?
         ", [$user->currentAccessToken()->token, $pFetch, $pOffset * $pFetch]);
 
-        $count = count($itinerarios);
+        // Dados de retorno
+        $count = count($trajetos);
         $inicio = $pOffset + 1;
         $final = $inicio + $count - 1;
 
-        // Retorno JSON padronizado
         return response()->json([
             'status' => 'success',
             'usuario' => [
@@ -90,7 +92,7 @@ class ItinerarioApiController extends Controller
                 'pOffset' => $pOffset
             ],
             'result' => [
-                'itinerarios' => $itinerarios
+                'trajetos' => $trajetos
             ]
         ], 200);
     }
