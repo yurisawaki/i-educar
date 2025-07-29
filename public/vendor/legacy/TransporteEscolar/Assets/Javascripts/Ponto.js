@@ -70,7 +70,7 @@ $j(document).ready(function () {
 
 
       $j.ajax({
-        url: '/upload-foto',
+        url: '/upload-foto', // ou '/api/upload-foto' se for API
         type: 'POST',
         data: formData,
         contentType: false,
@@ -80,7 +80,6 @@ $j(document).ready(function () {
         },
         success: function (response) {
           console.log('Foto salva em:', response.path);
-          alert('Imagem salva com sucesso');
         },
         error: function (xhr) {
           console.error('Erro ao enviar a foto:', xhr.responseText);
