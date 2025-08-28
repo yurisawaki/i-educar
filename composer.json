@@ -67,6 +67,7 @@
     },
     "autoload": {
         "classmap": [
+            "ieducar/intranet/include",
             "ieducar/lib",
             "ieducar/modules/*/Model",
             "ieducar/modules/Avaliacao/Service",
@@ -148,8 +149,8 @@
     "prefer-stable": true,
     "repositories": {
         "ieducar-transport": {
-           "type": "vcs",
-           "url": "https://github.com/portabilis/i-educar-transport-package"
+            "type": "path",
+            "url": "i-educar-transport-package"
         },
         "ieducar-library": {
             "type": "path",
