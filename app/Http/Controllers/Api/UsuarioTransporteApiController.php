@@ -8,6 +8,73 @@ use App\Http\Controllers\Controller;
 
 class UsuarioTransporteApiController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/usuarios",
+     *     summary="Lista usuários de transporte com paginação",
+     *     description="Retorna a lista de usuários do transporte escolar, incluindo nome, matrícula e senha. Autenticado via Sanctum.",
+     *     tags={"Usuários de Transporte"},
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\Parameter(
+     *         name="pFetch",
+     *         in="query",
+     *         required=true,
+     *         description="Quantidade de registros por página",
+     *         @OA\Schema(type="integer", example=10)
+     *     ),
+     *     @OA\Parameter(
+     *         name="pOffset",
+     *         in="query",
+     *         required=true,
+     *         description="Número da página (offset)",
+     *         @OA\Schema(type="integer", example=0)
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de usuários retornada com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(
+     *                 property="usuario",
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=8629)
+     *             ),
+     *             @OA\Property(
+     *                 property="parametros_recebidos",
+     *                 type="object",
+     *                 @OA\Property(property="pFetch", type="integer", example=10),
+     *                 @OA\Property(property="pOffset", type="integer", example=0)
+     *             ),
+     *             @OA\Property(
+     *                 property="result",
+     *                 type="object",
+     *                 @OA\Property(property="count", type="integer", example=10),
+     *                 @OA\Property(
+     *                     property="usuarios",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         @OA\Property(property="cod_usuario", type="integer", example=1001),
+     *                         @OA\Property(property="nome", type="string", example="João Silva"),
+     *                         @OA\Property(property="matricula", type="string", example="MAT123"),
+     *                         @OA\Property(property="senha", type="string", example="hash_senha")
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=401,
+     *         description="Usuário não autenticado",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="erro"),
+     *             @OA\Property(property="mensagem", type="string", example="Usuário não autenticado")
+     *         )
+     *     ),
+     * )
+     */
     public function index(Request $request)
     {
         $user = $request->user(); // Autenticado via Sanctum

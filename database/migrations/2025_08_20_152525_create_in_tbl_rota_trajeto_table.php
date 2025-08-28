@@ -11,15 +11,21 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('lealsis.in_tbl_rota_trajeto', function (Blueprint $table) {
-            $table->string('id_token')->nullable()->after('id_rota_trajeto');
             $table->bigIncrements('id_rota_trajeto');
+            $table->string('id_token');
             $table->unsignedBigInteger('id_rota');
             $table->unsignedBigInteger('id_ponto_1')->nullable();
             $table->unsignedBigInteger('id_ponto_2')->nullable();
             $table->timestamp('dh_sincronizacao')->nullable();
-            $table->text('dh_coordenada')->nullable();
-            $table->text('nu_latitude')->nullable();
-            $table->text('nu_longitude')->nullable();
+            $table->timestamp('dh_coordenada')->nullable();
+            $table->string('nu_latitude')->nullable();
+            $table->string('nu_longitude')->nullable();
+            $table->string('no_imagem')->nullable();
+
+            // Índices opcionais para otimizar consultas
+            $table->index('id_token');
+            $table->index('id_rota');
+            $table->index(['id_ponto_1', 'id_ponto_2']);
         });
     }
 

@@ -34,6 +34,32 @@
             border-radius: 4px;
             margin-right: 50px;
         }
+
+        .legend {
+            background: white;
+            padding: 10px;
+            line-height: 18px;
+            color: #333;
+            border-radius: 4px;
+        }
+
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+
+        .subtle-marker {
+            background-color: rgba(255, 0, 0, 0.5);
+            border-radius: 50%;
+            /* deixa redondo */
+            width: 15px;
+            height: 15px;
+            box-shadow: 0 0 2px rgba(255, 0, 0, 0.5);
+            /* sombra bem leve */
+        }
     </style>
 </head>
 
@@ -42,13 +68,12 @@
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
-
     <script>
 
-        const pontos = @json($pontos);
+        const pontosItinerario = @json($pontosItinerario);
+        const pontosTrajeto = @json($pontosTrajeto);
         let tipoRota = 'Rural';
-        let map, routingControl;
+        let map;
 
         function haversine(lat1, lon1, lat2, lon2) {
             const toRad = deg => deg * Math.PI / 180;
@@ -103,65 +128,100 @@
         }
 
         function renderMapa(tipo) {
-            if (map) map.remove(); // destruir mapa anterior
-            map = L.map('map').setView([pontos[0].latitude, pontos[0].longitude], 13);
+            if (map) map.remove();
+            map = L.map('map').setView([pontosItinerario[0]?.latitude || pontosTrajeto[0]?.latitude,
+            pontosItinerario[0]?.longitude || pontosTrajeto[0]?.longitude], 13);
 
             const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
             });
-
-            // Camada satélite Esri
-            const esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                maxZoom: 17,
-                attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-            });
-
-
             osm.addTo(map);
 
+            const esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                maxZoom: 17,
+                attribution: '&copy; <a href="https://www.esri.com/">Esri</a>',
+            });
 
             const baseMaps = {
                 "Mapa (OSM)": osm,
                 "Satélite (Esri)": esriSat
             };
             L.control.layers(baseMaps).addTo(map);
-            if (routingControl) {
-                map.removeControl(routingControl);
-            }
 
-            if (tipo === 'Urbana') {
-                routingControl = L.Routing.control({
-                    waypoints: pontos.map(p => L.latLng(p.latitude, p.longitude)),
-                    routeWhileDragging: false,
-                    draggableWaypoints: false,
-                    addWaypoints: false,
-                    show: false,
-                }).addTo(map);
-            } else {
-                const matriz = construirMatriz(pontos);
-                const ordemOtima = tspNearestNeighbor(matriz);
-                const pontosOtimizados = ordemOtima.map(i => pontos[i]);
+            // Itinerário
+            if (pontosItinerario.length) {
+                const matrizIti = construirMatriz(pontosItinerario);
+                const ordemIti = tspNearestNeighbor(matrizIti);
+                const pontosItiOtimizados = ordemIti.map(i => pontosItinerario[i]);
 
-                pontosOtimizados.forEach(p => {
+                pontosItiOtimizados.forEach(p => {
                     L.marker([p.latitude, p.longitude])
                         .addTo(map)
-                        .bindPopup(p.descricao || 'Ponto')
-                        .openPopup();
+                        .bindPopup(p.descricao || 'Ponto Itinerário');
                 });
 
-                const latlngs = pontosOtimizados.map(p => [p.latitude, p.longitude]);
-                L.polyline(latlngs, {
+                L.polyline(pontosItiOtimizados.map(p => [p.latitude, p.longitude]), {
                     color: '#0066FF',
-                    weight: 4,
-                    opacity: 0.8,
-                    smoothFactor: 1
+                    weight: 4
                 }).addTo(map);
             }
+
+
+            if (pontosTrajeto.length) {
+                const matrizTrajeto = construirMatriz(pontosTrajeto);
+                const ordemTrajeto = tspNearestNeighbor(matrizTrajeto);
+                const pontosTrajetoOtimizados = ordemTrajeto.map(i => pontosTrajeto[i]);
+
+                pontosTrajetoOtimizados.forEach((p, i) => {
+                    if (i === 0 || i === pontosTrajetoOtimizados.length - 1) {
+                        // Marker normal para primeiro e último
+                        L.marker([p.latitude, p.longitude])
+                            .addTo(map)
+                            .bindPopup(p.no_ponto)
+                            .openPopup();
+                    } else {
+                        // Marker sutil com tooltip para pontos intermediários
+                        // Marker sutil com tooltip para pontos intermediários
+                        var subtleIcon = L.divIcon({
+                            className: 'subtle-marker',
+                            iconSize: [6, 6]
+                        });
+
+                        L.marker([p.latitude, p.longitude], { icon: subtleIcon })
+                            .addTo(map)
+                            .bindTooltip(p.no_ponto || p.descricao, {
+                                permanent: false, // só aparece no hover
+                                direction: 'top',
+                                offset: [0, -5]
+                            });
+                    }
+                });
+
+                L.polyline(pontosTrajetoOtimizados.map(p => [p.latitude, p.longitude]), {
+                    color: '#1E90FF',
+                    weight: 4,
+                    opacity: 0.7,
+                    dashArray: '6, 6',
+                }).addTo(map);
+
+            }
+
+
+
+
+            // Legenda
+            const legend = L.control({ position: "bottomright" });
+            legend.onAdd = function () {
+                const div = L.DomUtil.create("div", "legend");
+                div.innerHTML += "<i style='background:#0066FF'></i> Itinerário<br>";
+                div.innerHTML += "<i style='background:#FF0000'></i> Trajeto";
+                return div;
+            };
+            legend.addTo(map);
         }
 
         function initApp() {
             renderMapa(tipoRota);
-
             document.getElementById('toggleTipoRota').addEventListener('click', () => {
                 tipoRota = tipoRota === 'Urbana' ? 'Rural' : 'Urbana';
                 document.getElementById('toggleTipoRota').innerText = 'Modo: ' + tipoRota;

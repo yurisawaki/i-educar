@@ -25,7 +25,7 @@ use App\Http\Controllers\Api\RotaTransporteApiController;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\ConfiguracaoController;
+use App\Http\Controllers\Api\ParametroApiController;
 use App\Http\Controllers\InPontoTransporteApiController;
 use App\Http\Controllers\Api\RotaTrajetoController;
 use App\Http\Controllers\Api\OutRotaTrajetoApiController;
@@ -136,29 +136,41 @@ Route::get('/transporte/validar', function () {
     ], 200);
 });
 
+
+//*
+//  @A\Info(
+//      title="API Transporte Escolar",
+//      version="1.0.0",
+//      description="API para gerenciamento de transporte escolar, incluindo rotas, pontos e trajetos estao documentadas neste swagger
+// )*/
 Route::prefix('transporte')->middleware('auth:sanctum')->group(function () {
 
+    //documentado no Swagger
     Route::get('/usuarios', [UsuarioTransporteApiController::class, 'index']);
 
     Route::get('/pontos', [PontoTransporteApiController::class, 'index']);
 
     Route::get('/rotas', [RotaTransporteApiController::class, 'index']);
 
+
     Route::get('/rota_ponto', [ItinerarioApiController::class, 'index']);
 
     Route::post('/sincronizar-pontos', [InPontoTransporteApiController::class, 'sincronizar']);
+
 
     Route::post('/rota-trajetos', [RotaTrajetoController::class, 'store']);
 
 
     Route::get('/out-rota-trajetos', [OutRotaTrajetoApiController::class, 'index']);
 
+    Route::get('/parametros', [ParametroApiController::class, 'getParametros']);
 
 
 
 
 });
 
+Route::post('/wwebjs', [\App\Http\Controllers\Api\WwebjsApiController::class, 'Wwebjs']);
 
 
 

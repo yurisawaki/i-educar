@@ -19,66 +19,58 @@ return new class extends clsCadastro {
     {
         return 'public_configuracao_lst.php';
     }
-
     public function Inicializar()
     {
-        $retorno = __('Novo');
-
-
         $config = Configuracao::first();
 
         if ($config) {
             $this->idconfig = $config->id;
             $this->tempo = $config->tempo;
             $this->distancia = $config->distancia;
-
-            $retorno = __('Cadastrar ou Editar');
         }
 
         $this->url_cancelar = 'public_configuracao_lst.php';
-        $this->nome_url_cancelar = __('Cancelar');
+        $this->nome_url_cancelar = 'Cancelar';
 
-        $nomeMenu = $retorno == __('Editar') ? __('Editar') : __('Cadastrar');
-
-        $this->breadcrumb("{$nomeMenu} " . __('configuração'), [
-            url('intranet/educar_configuracao_index.php') => __('Configuração'),
+        $this->breadcrumb('Configuração', [
+            url('intranet/educar_configuracao_index.php') => 'Configuração',
         ]);
 
-        return $retorno;
-    }
-
-    public function Gerar()
-    {
-        $this->campoOculto('idconfig', $this->idconfig);
-        $this->campoNumero('tempo', __('Tempo (segundos)'), $this->tempo, 3, 5, true);
-        $this->campoNumero('distancia', __('Distância (metros)'), $this->distancia, 3, 5, true);
+        return 'Novo'; // força sempre cair em Novo()
     }
 
     public function Novo()
     {
+        $data = [
+            'tempo' => request()->input('tempo'),
+            'distancia' => request()->input('distancia'),
+        ];
+
         $config = Configuracao::first();
 
         if ($config) {
-            // Se já existe, atualiza
-            return $this->update($config->id, [
-                'tempo' => request('tempo'),
-                'distancia' => request('distancia'),
-            ]);
+            return $config->update($data);
         }
 
-        // Se não existe, cria
-        return $this->create([
-            'tempo' => request('tempo'),
-            'distancia' => request('distancia'),
-        ]);
+        return Configuracao::create($data) ? true : false;
     }
+
+
+    public function Gerar()
+    {
+        $this->campoOculto('idconfig', $this->idconfig);
+        $this->campoNumero('tempo', 'Tempo (segundos)', $this->tempo, 3, 5, true);
+        $this->campoNumero('distancia', 'Distância (metros)', $this->distancia, 3, 5, true);
+    }
+
+
 
     public function Editar()
     {
         // Sempre atualiza o existente
         return $this->update($this->idconfig, [
-            'tempo' => request('tempo'),
-            'distancia' => request('distancia'),
+            'tempo' => request()->input('tempo'),
+            'distancia' => request()->input('distancia'),
         ]);
     }
 
@@ -94,7 +86,7 @@ return new class extends clsCadastro {
 
     public function Formular()
     {
-        $this->title = __('Configuração');
-        $this->processoAp = 69;
+        $this->title = 'Configuração';
+        $this->processoAp = 313131;
     }
 };

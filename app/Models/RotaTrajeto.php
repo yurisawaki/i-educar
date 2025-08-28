@@ -23,6 +23,7 @@ class RotaTrajeto extends Model
         'dh_coordenada',
         'nu_latitude',
         'nu_longitude',
+        'no_imagem',
     ];
 
 

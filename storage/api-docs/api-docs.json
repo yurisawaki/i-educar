@@ -1,0 +1,887 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API i-Educar",
+        "description": "Documentação da API do sistema i-Educar",
+        "contact": {
+            "email": "suporte@seudominio.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/api/transporte",
+            "description": "Servidor Principal"
+        },
+        {
+            "url": "/api/transporte"
+        }
+    ],
+    "paths": {
+        "/rota_ponto": {
+            "get": {
+                "tags": [
+                    "Itinerário"
+                ],
+                "summary": "Lista itinerários de transporte com paginação",
+                "description": "Retorna itinerários do transporte escolar, com suporte a paginação. Autenticado via Sanctum.",
+                "operationId": "4f210c1fa68fce6a4ee7124e7a21c7a8",
+                "parameters": [
+                    {
+                        "name": "pFetch",
+                        "in": "query",
+                        "description": "Quantidade de registros por página",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    },
+                    {
+                        "name": "pOffset",
+                        "in": "query",
+                        "description": "Número da página (offset)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de itinerários retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "usuario": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 8629
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "contadores": {
+                                            "properties": {
+                                                "count": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "pFetch": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "pOffset": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "result": {
+                                            "properties": {
+                                                "itinerarios": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id_itinerario": {
+                                                                "type": "integer",
+                                                                "example": 123
+                                                            },
+                                                            "id_rota": {
+                                                                "type": "integer",
+                                                                "example": 45
+                                                            },
+                                                            "id_ponto": {
+                                                                "type": "integer",
+                                                                "example": 67
+                                                            },
+                                                            "nu_sequencia": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "hr_ponto": {
+                                                                "type": "string",
+                                                                "example": "08:00"
+                                                            },
+                                                            "ds_rota_tipo": {
+                                                                "type": "string",
+                                                                "example": "IDA"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "erro"
+                                        },
+                                        "mensagem": {
+                                            "type": "string",
+                                            "example": "Usuário não autenticado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/out-rota-trajetos": {
+            "get": {
+                "tags": [
+                    "Rotas"
+                ],
+                "summary": "Lista trajetos de rota com paginação",
+                "description": "Retorna trajetos de rota disponíveis no sistema com suporte a paginação. Autenticação via Sanctum.",
+                "operationId": "f3ae762363dc1125155e7f3f632e5ff4",
+                "parameters": [
+                    {
+                        "name": "pFetch",
+                        "in": "query",
+                        "description": "Quantidade de registros por página",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    },
+                    {
+                        "name": "pOffset",
+                        "in": "query",
+                        "description": "Número da página (offset)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de trajetos retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "usuario": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 8629
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "contadores": {
+                                            "properties": {
+                                                "count": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "pFetch": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "pOffset": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "result": {
+                                            "properties": {
+                                                "trajetos": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id_rota_trajeto": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "id_rota": {
+                                                                "type": "integer",
+                                                                "example": 101
+                                                            },
+                                                            "id_ponto_1": {
+                                                                "type": "integer",
+                                                                "example": 5,
+                                                                "nullable": true
+                                                            },
+                                                            "id_ponto_2": {
+                                                                "type": "integer",
+                                                                "example": 6,
+                                                                "nullable": true
+                                                            },
+                                                            "dh_coordenada": {
+                                                                "type": "string",
+                                                                "example": "2025-07-30 14:00:00"
+                                                            },
+                                                            "nu_latitude": {
+                                                                "type": "string",
+                                                                "example": "-1.455833"
+                                                            },
+                                                            "nu_longitude": {
+                                                                "type": "string",
+                                                                "example": "-48.503887"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "erro"
+                                        },
+                                        "mensagem": {
+                                            "type": "string",
+                                            "example": "Usuário não autenticado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/pontos": {
+            "get": {
+                "tags": [
+                    "Pontos"
+                ],
+                "summary": "Lista pontos de transporte com paginação",
+                "description": "Retorna pontos de transporte, com suporte a paginação. Autenticado via Sanctum.",
+                "operationId": "b666609ad54d33fe64d963705545704e",
+                "parameters": [
+                    {
+                        "name": "pFetch",
+                        "in": "query",
+                        "description": "Quantidade de registros por página",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    },
+                    {
+                        "name": "pOffset",
+                        "in": "query",
+                        "description": "Número da página (offset)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de pontos retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "usuario": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 8629
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "contadores": {
+                                            "properties": {
+                                                "count": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "pFetch": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "pOffset": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "result": {
+                                            "properties": {
+                                                "pontos": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id_ponto": {
+                                                                "type": "integer",
+                                                                "example": 101
+                                                            },
+                                                            "no_ponto": {
+                                                                "type": "string",
+                                                                "example": "Ponto Central"
+                                                            },
+                                                            "nu_latitude": {
+                                                                "type": "string",
+                                                                "example": "-1.455833"
+                                                            },
+                                                            "nu_longitude": {
+                                                                "type": "string",
+                                                                "example": "-48.503887"
+                                                            },
+                                                            "no_imagem": {
+                                                                "type": "string",
+                                                                "example": "foto.png",
+                                                                "nullable": true
+                                                            },
+                                                            "tamanho_imagem": {
+                                                                "type": "integer",
+                                                                "example": 2048,
+                                                                "nullable": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "erro"
+                                        },
+                                        "mensagem": {
+                                            "type": "string",
+                                            "example": "Usuário não autenticado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/rota-trajetos": {
+            "post": {
+                "tags": [
+                    "Rotas"
+                ],
+                "summary": "Armazena trajetos de rota com paginação",
+                "description": "Recebe múltiplos trajetos, armazena em uma tabela intermediária e depois salva na tabela final. Autenticado via Sanctum.",
+                "operationId": "ea0ba420e507b0d1e9b73ad874fd3cb2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "trajetos",
+                                    "pFetch",
+                                    "pOffset"
+                                ],
+                                "properties": {
+                                    "trajetos": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id_rota": {
+                                                    "type": "integer",
+                                                    "example": 101
+                                                },
+                                                "id_ponto_1": {
+                                                    "type": "integer",
+                                                    "example": 1,
+                                                    "nullable": true
+                                                },
+                                                "id_ponto_2": {
+                                                    "type": "integer",
+                                                    "example": 2,
+                                                    "nullable": true
+                                                },
+                                                "dh_coordenada": {
+                                                    "type": "string",
+                                                    "example": "2025-07-29 10:30:00",
+                                                    "nullable": true
+                                                },
+                                                "nu_latitude": {
+                                                    "type": "string",
+                                                    "example": "-1.455833"
+                                                },
+                                                "nu_longitude": {
+                                                    "type": "string",
+                                                    "example": "-48.503887"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "pFetch": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "pOffset": {
+                                        "type": "integer",
+                                        "example": 0
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Dados armazenados com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "usuario": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 8629
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "result": {
+                                            "properties": {
+                                                "count": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "final": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "erro"
+                                        },
+                                        "mensagem": {
+                                            "type": "string",
+                                            "example": "Usuário não autenticado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/rotas": {
+            "get": {
+                "tags": [
+                    "Rotas"
+                ],
+                "summary": "Lista rotas de transporte com paginação",
+                "description": "Retorna as rotas de transporte escolar, incluindo destino, transportadora e tipo de rota. Autenticado via Sanctum.",
+                "operationId": "c90799f5efd015bfbe877d92889b817b",
+                "parameters": [
+                    {
+                        "name": "pFetch",
+                        "in": "query",
+                        "description": "Quantidade de registros por página",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    },
+                    {
+                        "name": "pOffset",
+                        "in": "query",
+                        "description": "Número da página (offset)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de rotas retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "usuario": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 8629
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "contadores": {
+                                            "properties": {
+                                                "count": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "pFetch": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "pOffset": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "result": {
+                                            "properties": {
+                                                "rotas": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id_rota": {
+                                                                "type": "integer",
+                                                                "example": 101
+                                                            },
+                                                            "nu_ano": {
+                                                                "type": "integer",
+                                                                "example": 2025
+                                                            },
+                                                            "no_rota": {
+                                                                "type": "string",
+                                                                "example": "Rota Norte"
+                                                            },
+                                                            "id_destino": {
+                                                                "type": "integer",
+                                                                "example": 55
+                                                            },
+                                                            "no_destino": {
+                                                                "type": "string",
+                                                                "example": "Escola Municipal A"
+                                                            },
+                                                            "ds_rota_tipo": {
+                                                                "type": "string",
+                                                                "example": "RURAL"
+                                                            },
+                                                            "is_transportadora": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "no_transportadora": {
+                                                                "type": "string",
+                                                                "example": "Transporte Silva"
+                                                            },
+                                                            "is_terceirizado": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "erro"
+                                        },
+                                        "mensagem": {
+                                            "type": "string",
+                                            "example": "Usuário não autenticado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/usuarios": {
+            "get": {
+                "tags": [
+                    "Usuários de Transporte"
+                ],
+                "summary": "Lista usuários de transporte com paginação",
+                "description": "Retorna a lista de usuários do transporte escolar, incluindo nome, matrícula e senha. Autenticado via Sanctum.",
+                "operationId": "9c8978d4247d118bd6c048282e16edc4",
+                "parameters": [
+                    {
+                        "name": "pFetch",
+                        "in": "query",
+                        "description": "Quantidade de registros por página",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    },
+                    {
+                        "name": "pOffset",
+                        "in": "query",
+                        "description": "Número da página (offset)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuários retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "usuario": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 8629
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "parametros_recebidos": {
+                                            "properties": {
+                                                "pFetch": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "pOffset": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "result": {
+                                            "properties": {
+                                                "count": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "usuarios": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "cod_usuario": {
+                                                                "type": "integer",
+                                                                "example": 1001
+                                                            },
+                                                            "nome": {
+                                                                "type": "string",
+                                                                "example": "João Silva"
+                                                            },
+                                                            "matricula": {
+                                                                "type": "string",
+                                                                "example": "MAT123"
+                                                            },
+                                                            "senha": {
+                                                                "type": "string",
+                                                                "example": "hash_senha"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "erro"
+                                        },
+                                        "mensagem": {
+                                            "type": "string",
+                                            "example": "Usuário não autenticado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Insira o token no formato: Bearer {token}",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Itinerário",
+            "description": "Itinerário"
+        },
+        {
+            "name": "Rotas",
+            "description": "Rotas"
+        },
+        {
+            "name": "Pontos",
+            "description": "Pontos"
+        },
+        {
+            "name": "Usuários de Transporte",
+            "description": "Usuários de Transporte"
+        }
+    ]
+}

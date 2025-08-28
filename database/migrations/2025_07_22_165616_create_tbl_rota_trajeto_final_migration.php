@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->text('dh_coordenada')->nullable();
             $table->text('nu_latitude')->nullable();
             $table->text('nu_longitude')->nullable();
+            $table->string('no_imagem')->nullable();
         });
     }
 

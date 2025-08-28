@@ -8,6 +8,78 @@ use App\Http\Controllers\Controller;
 
 class RotaTransporteApiController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/rotas",
+     *     summary="Lista rotas de transporte com paginação",
+     *     description="Retorna as rotas de transporte escolar, incluindo destino, transportadora e tipo de rota. Autenticado via Sanctum.",
+     *     tags={"Rotas"},
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\Parameter(
+     *         name="pFetch",
+     *         in="query",
+     *         required=true,
+     *         description="Quantidade de registros por página",
+     *         @OA\Schema(type="integer", example=10)
+     *     ),
+     *     @OA\Parameter(
+     *         name="pOffset",
+     *         in="query",
+     *         required=true,
+     *         description="Número da página (offset)",
+     *         @OA\Schema(type="integer", example=0)
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de rotas retornada com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(
+     *                 property="usuario",
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=8629)
+     *             ),
+     *             @OA\Property(
+     *                 property="contadores",
+     *                 type="object",
+     *                 @OA\Property(property="count", type="integer", example=10),
+     *                 @OA\Property(property="pFetch", type="integer", example=10),
+     *                 @OA\Property(property="pOffset", type="integer", example=0)
+     *             ),
+     *             @OA\Property(
+     *                 property="result",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="rotas",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         @OA\Property(property="id_rota", type="integer", example=101),
+     *                         @OA\Property(property="nu_ano", type="integer", example=2025),
+     *                         @OA\Property(property="no_rota", type="string", example="Rota Norte"),
+     *                         @OA\Property(property="id_destino", type="integer", example=55),
+     *                         @OA\Property(property="no_destino", type="string", example="Escola Municipal A"),
+     *                         @OA\Property(property="ds_rota_tipo", type="string", example="RURAL"),
+     *                         @OA\Property(property="is_transportadora", type="integer", example=1),
+     *                         @OA\Property(property="no_transportadora", type="string", example="Transporte Silva"),
+     *                         @OA\Property(property="is_terceirizado", type="boolean", example=true)
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=401,
+     *         description="Usuário não autenticado",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="erro"),
+     *             @OA\Property(property="mensagem", type="string", example="Usuário não autenticado")
+     *         )
+     *     ),
+     * )
+     */
     public function index(Request $request)
     {
         // Autenticação do usuário

@@ -6,13 +6,78 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-//essa APi Deu certo a logica de apagar os dados antigos e inserir os novos
-//ela limpa os dados antigos do token atual e insere os novos dados
-//também limpa os dados antigos de qualquer token com mais de 1 dia
-//e insere os dados atualizados
-//ela retorna os pontos de transporte com paginação baseada no token
+
 class PontoTransporteApiController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/pontos",
+     *     summary="Lista pontos de transporte com paginação",
+     *     description="Retorna pontos de transporte, com suporte a paginação. Autenticado via Sanctum.",
+     *     tags={"Pontos"},
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\Parameter(
+     *         name="pFetch",
+     *         in="query",
+     *         required=true,
+     *         description="Quantidade de registros por página",
+     *         @OA\Schema(type="integer", example=10)
+     *     ),
+     *     @OA\Parameter(
+     *         name="pOffset",
+     *         in="query",
+     *         required=true,
+     *         description="Número da página (offset)",
+     *         @OA\Schema(type="integer", example=0)
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de pontos retornada com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(
+     *                 property="usuario",
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=8629)
+     *             ),
+     *             @OA\Property(
+     *                 property="contadores",
+     *                 type="object",
+     *                 @OA\Property(property="count", type="integer", example=10),
+     *                 @OA\Property(property="pFetch", type="integer", example=10),
+     *                 @OA\Property(property="pOffset", type="integer", example=0)
+     *             ),
+     *             @OA\Property(
+     *                 property="result",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="pontos",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         @OA\Property(property="id_ponto", type="integer", example=101),
+     *                         @OA\Property(property="no_ponto", type="string", example="Ponto Central"),
+     *                         @OA\Property(property="nu_latitude", type="string", example="-1.455833"),
+     *                         @OA\Property(property="nu_longitude", type="string", example="-48.503887"),
+     *                         @OA\Property(property="no_imagem", type="string", nullable=true, example="foto.png"),
+     *                         @OA\Property(property="tamanho_imagem", type="integer", nullable=true, example=2048)
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=401,
+     *         description="Usuário não autenticado",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="erro"),
+     *             @OA\Property(property="mensagem", type="string", example="Usuário não autenticado")
+     *         )
+     *     ),
+     * )
+     */
     public function index(Request $request)
     {
         // Autenticação do usuário
