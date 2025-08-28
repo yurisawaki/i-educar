@@ -148,9 +148,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
-        "ieducar-transport": {
-            "type": "path",
-            "url": "i-educar-transport-package"
+      "ieducar-transport": {
+        "type": "vcs",
+        "url": "https://github.com/yurisawaki/i-educar-transport-package.git"
         },
         "ieducar-library": {
             "type": "path",
