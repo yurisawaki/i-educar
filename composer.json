@@ -67,7 +67,6 @@
     },
     "autoload": {
         "classmap": [
-            "ieducar/intranet/include",
             "ieducar/lib",
             "ieducar/modules/*/Model",
             "ieducar/modules/Avaliacao/Service",
