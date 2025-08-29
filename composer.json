@@ -45,6 +45,7 @@
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpspreadsheet": "^1.8",
         "portabilis/i-educar-library-package": "^2.8",
+        "portabilis/i-educar-transport-package": "^2.8",
         "predis/predis": "^1.1",
         "psr/simple-cache": "^2.0",
         "staudenmeir/laravel-adjacency-list": "^1.0",
@@ -66,6 +67,7 @@
     },
     "autoload": {
         "classmap": [
+            "ieducar/intranet/include",
             "ieducar/lib",
             "ieducar/modules/*/Model",
             "ieducar/modules/Avaliacao/Service",
@@ -146,9 +148,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
-      "ieducar-transport": {
-        "type": "vcs",
-        "url": "https://github.com/yurisawaki/i-educar-transport-package.git"
+        "ieducar-transport": {
+            "type": "path",
+            "url": "i-educar-transport-package"
         },
         "ieducar-library": {
             "type": "path",
