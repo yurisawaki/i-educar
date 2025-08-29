@@ -1,33 +1,12 @@
 <?php
 
-return new class extends clsListagem
-{
-    /**
-     * Referencia pega da session para o idpes do usuario atual
-     *
-     * @var int
-     */
+return new class extends clsListagem {
     public $pessoa_logada;
 
-    /**
-     * Titulo no topo da pagina
-     *
-     * @var int
-     */
     public $titulo;
 
-    /**
-     * Quantidade de registros a ser apresentada em cada pagina
-     *
-     * @var int
-     */
     public $limite;
 
-    /**
-     * Inicio dos registros a serem exibidos (limit)
-     *
-     * @var int
-     */
     public $offset;
 
     public $cod_abandono_tipo;
@@ -48,31 +27,35 @@ return new class extends clsListagem
 
     public function Gerar()
     {
-        $this->titulo = 'Motivo da situação deixou de frequentar - Listagem';
+        $this->titulo = __('Motivo Abandono') . ' - ' . __('Listagem');
 
-        foreach ($_GET as $var => $val) { // passa todos os valores obtidos no GET para atributos do objeto
+        foreach ($_GET as $var => $val) {
             $this->$var = ($val === '') ? null : $val;
         }
 
         $lista_busca = [
-            'Deixou de Frequentar',
+            __('Abandono'),
         ];
 
         $obj_permissao = new clsPermissoes;
         $nivel_usuario = $obj_permissao->nivel_acesso(int_idpes_usuario: $this->pessoa_logada);
         if ($nivel_usuario == 1) {
-            $lista_busca[] = 'Instituição';
+            $lista_busca[] = __('Instituição');
         }
 
         $this->addCabecalhos(coluna: $lista_busca);
 
-        // Filtros de Foreign Keys
         include 'include/pmieducar/educar_campo_lista.php';
 
-        // outros Filtros
-        $this->campoTexto(nome: 'nome', campo: 'Deixou de Frequentar', valor: $this->nome, tamanhovisivel: 30, tamanhomaximo: 255, obrigatorio: false);
+        $this->campoTexto(
+            nome: 'nome',
+            campo: __('Abandono'),
+            valor: $this->nome,
+            tamanhovisivel: 30,
+            tamanhomaximo: 255,
+            obrigatorio: false
+        );
 
-        // Paginador
         $this->limite = 20;
 
         $query = \App\Models\LegacyAbandonmentType::query()
@@ -92,7 +75,6 @@ return new class extends clsListagem
         $lista = $result->items();
         $total = $result->total();
 
-        // monta a lista
         if (is_array(value: $lista) && count(value: $lista)) {
             foreach ($lista as $registro) {
                 $obj_cod_instituicao = new clsPmieducarInstituicao(cod_instituicao: $registro['ref_cod_instituicao']);
@@ -109,22 +91,33 @@ return new class extends clsListagem
                 $this->addLinhas(linha: $lista_busca);
             }
         }
-        $this->addPaginador2(strUrl: 'educar_abandono_tipo_lst.php', intTotalRegistros: $total, mixVariaveisMantidas: $_GET, nome: null, intResultadosPorPagina: $this->limite);
 
-        if ($obj_permissoes->permissao_cadastra(950, $this->pessoa_logada, 7)) {
+        $this->addPaginador2(
+            strUrl: 'educar_abandono_tipo_lst.php',
+            intTotalRegistros: $total,
+            mixVariaveisMantidas: $_GET,
+            nome: null,
+            intResultadosPorPagina: $this->limite
+        );
+
+        if ($obj_permissao->permissao_cadastra(950, $this->pessoa_logada, 7)) {
             $this->acao = 'go("educar_abandono_tipo_cad.php")';
-            $this->nome_acao = 'Novo';
+            $this->nome_acao = __('Novo');
         }
+
         $this->largura = '100%';
 
-        $this->breadcrumb(currentPage: 'Listagem dos tipos da situação deixou de frequentar', breadcrumbs: [
-            url(path: 'intranet/educar_index.php') => 'Escola',
-        ]);
+        $this->breadcrumb(
+            currentPage: __('Listagem de tipos de abandono'),
+            breadcrumbs: [
+                url(path: 'intranet/educar_index.php') => __('Escola'),
+            ]
+        );
     }
 
     public function Formular()
     {
-        $this->title = 'Motivo - Deixou de Frequentar';
+        $this->title = __('Motivo Abandono');
         $this->processoAp = '950';
     }
 };

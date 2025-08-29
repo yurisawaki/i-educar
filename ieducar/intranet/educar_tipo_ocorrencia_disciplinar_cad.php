@@ -2,8 +2,7 @@
 
 use App\Models\LegacyDisciplinaryOccurrenceType;
 
-return new class extends clsCadastro
-{
+return new class extends clsCadastro {
     public $pessoa_logada;
 
     public $cod_tipo_ocorrencia_disciplinar;
@@ -28,7 +27,7 @@ return new class extends clsCadastro
 
     public function Inicializar()
     {
-        $retorno = 'Novo';
+        $retorno = __('Novo');
 
         $this->cod_tipo_ocorrencia_disciplinar = $_GET['cod_tipo_ocorrencia_disciplinar'];
 
@@ -38,40 +37,63 @@ return new class extends clsCadastro
         if (is_numeric($this->cod_tipo_ocorrencia_disciplinar)) {
             $registro = LegacyDisciplinaryOccurrenceType::find($this->cod_tipo_ocorrencia_disciplinar)?->getAttributes();
             if ($registro) {
-                foreach ($registro as $campo => $val) {  // passa todos os valores obtidos no registro para atributos do objeto
+                foreach ($registro as $campo => $val) {
                     $this->$campo = $val;
                 }
 
                 $this->fexcluir = $obj_permissoes->permissao_excluir(580, $this->pessoa_logada, 3);
-                $retorno = 'Editar';
+                $retorno = __('Editar');
             }
         }
-        $this->url_cancelar = ($retorno == 'Editar') ? "educar_tipo_ocorrencia_disciplinar_det.php?cod_tipo_ocorrencia_disciplinar={$registro['cod_tipo_ocorrencia_disciplinar']}" : 'educar_tipo_ocorrencia_disciplinar_lst.php';
 
-        $nomeMenu = $retorno == 'Editar' ? $retorno : 'Cadastrar';
+        $this->url_cancelar = ($retorno == __('Editar')) ?
+            "educar_tipo_ocorrencia_disciplinar_det.php?cod_tipo_ocorrencia_disciplinar={$registro['cod_tipo_ocorrencia_disciplinar']}" :
+            'educar_tipo_ocorrencia_disciplinar_lst.php';
 
-        $this->breadcrumb($nomeMenu . ' tipo de ocorrência disciplinar', [
-            url('intranet/educar_index.php') => 'Escola',
+        $nomeMenu = $retorno == __('Editar') ? $retorno : __('Cadastrar');
+
+        $this->breadcrumb(__($nomeMenu . ' tipo de ocorrência disciplinar'), [
+            url('intranet/educar_index.php') => __('Escola'),
         ]);
 
-        $this->nome_url_cancelar = 'Cancelar';
+        $this->nome_url_cancelar = __('Cancelar');
 
         return $retorno;
     }
 
     public function Gerar()
     {
-        // primary keys
         $this->campoOculto('cod_tipo_ocorrencia_disciplinar', $this->cod_tipo_ocorrencia_disciplinar);
 
-        // foreign keys
         $obrigatorio = true;
         include 'include/pmieducar/educar_campo_lista.php';
 
-        // text
-        $this->campoTexto('nm_tipo', 'Tipo Ocorrência Disciplinar', $this->nm_tipo, 30, 255, true);
-        $this->campoMemo('descricao', 'Descrição', $this->descricao, 60, 5, false);
-        $this->campoNumero('max_ocorrencias', 'Máximo Ocorrências', $this->max_ocorrencias, 4, 4, false);
+        $this->campoTexto(
+            'nm_tipo',
+            __('Tipo Ocorrência Disciplinar'),
+            $this->nm_tipo,
+            30,
+            255,
+            true
+        );
+
+        $this->campoMemo(
+            'descricao',
+            __('Descrição'),
+            $this->descricao,
+            60,
+            5,
+            false
+        );
+
+        $this->campoNumero(
+            'max_ocorrencias',
+            __('Máximo Ocorrências'),
+            $this->max_ocorrencias,
+            4,
+            4,
+            false
+        );
     }
 
     public function Novo()
@@ -84,11 +106,11 @@ return new class extends clsCadastro
         $ocorrencia->ref_cod_instituicao = $this->ref_cod_instituicao;
 
         if ($ocorrencia->save()) {
-            $this->mensagem .= 'Cadastro efetuado com sucesso.<br>';
+            $this->mensagem .= __('Cadastro efetuado com sucesso.') . '<br>';
             $this->simpleRedirect('educar_tipo_ocorrencia_disciplinar_lst.php');
         }
 
-        $this->mensagem = 'Cadastro não realizado.<br>';
+        $this->mensagem = __('Cadastro não realizado.') . '<br>';
 
         return false;
     }
@@ -104,11 +126,11 @@ return new class extends clsCadastro
         $ocorrencia->ativo = 1;
 
         if ($ocorrencia->save()) {
-            $this->mensagem .= 'Edição efetuada com sucesso.<br>';
+            $this->mensagem .= __('Edição efetuada com sucesso.') . '<br>';
             $this->simpleRedirect('educar_tipo_ocorrencia_disciplinar_lst.php');
         }
 
-        $this->mensagem = 'Edição não realizada.<br>';
+        $this->mensagem = __('Edição não realizada.') . '<br>';
 
         return false;
     }
@@ -120,18 +142,18 @@ return new class extends clsCadastro
         $ocorrencia->ref_usuario_exc = $this->pessoa_logada;
 
         if ($ocorrencia->save()) {
-            $this->mensagem .= 'Exclusão efetuada com sucesso.<br>';
+            $this->mensagem .= __('Exclusão efetuada com sucesso.') . '<br>';
             $this->simpleRedirect('educar_tipo_ocorrencia_disciplinar_lst.php');
         }
 
-        $this->mensagem = 'Exclusão não realizada.<br>';
+        $this->mensagem = __('Exclusão não realizada.') . '<br>';
 
         return false;
     }
 
     public function Formular()
     {
-        $this->title = 'Tipo Ocorrência Disciplinar';
+        $this->title = __('Tipo Ocorrência Disciplinar');
         $this->processoAp = '580';
     }
 };

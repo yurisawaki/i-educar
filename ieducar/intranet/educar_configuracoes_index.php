@@ -1,7 +1,6 @@
 <?php
 
-return new class
-{
+return new class {
     public function RenderHTML()
     {
         return '

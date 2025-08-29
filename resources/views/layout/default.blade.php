@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt" class="no-js">
+<html lang="{{ app()->getLocale() }}" class="no-js">
+
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
@@ -7,7 +9,9 @@
     <meta http-equiv="Expires" content="-1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ url('favicon.ico') }}" />
-    <title>@if(isset($title)) {!! html_entity_decode($title) !!} - @endif {{ html_entity_decode(config('legacy.app.entity.name')) }} - i-Educar</title>
+    <title>@if(isset($title)) {!! html_entity_decode($title) !!} - @endif
+        {{ html_entity_decode(config('legacy.app.entity.name')) }} - i-Educar
+    </title>
 
     <script>
         dataLayer = [{
@@ -32,7 +36,7 @@
         <script>
             (function (w, d, s, l, i) {
                 w[l] = w[l] || [];
-                w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+                w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
                 var f = d.getElementsByTagName(s)[0],
                     j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
                 j.async = true;
@@ -57,8 +61,10 @@
     <link rel="stylesheet" type="text/css" href="{{ Asset::get("/intranet/scripts/select2/select2.min.css") }}">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
     <link rel="stylesheet" type='text/css' href='{{ Asset::get('css/base.css') }}'>
-    <link rel="stylesheet" type="text/css" href='{{ Asset::get('/intranet/scripts/jquery/jquery-ui.min-1.9.2/css/custom/jquery-ui-1.9.2.custom.min.css') }}'>
-    <link rel="stylesheet" type="text/css" href='{{ Asset::get('/intranet/scripts/jquery-maxlength/jquery.maxlength.css') }}'>
+    <link rel="stylesheet" type="text/css"
+        href='{{ Asset::get('/intranet/scripts/jquery/jquery-ui.min-1.9.2/css/custom/jquery-ui-1.9.2.custom.min.css') }}'>
+    <link rel="stylesheet" type="text/css"
+        href='{{ Asset::get('/intranet/scripts/jquery-maxlength/jquery.maxlength.css') }}'>
     <link rel="stylesheet" type="text/css" href="{{ Asset::get("/intranet/scripts/summernote/summernote-lite.css") }}">
 
     @stack('styles')
@@ -70,7 +76,7 @@
         })(document, window, 0);
     </script>
 
-    <script src="https://maps.google.com/maps/api/js?sensor=true" charset="utf-8"></script>
+
     <script src="{{ Asset::get("/intranet/scripts/padrao.js") }} "></script>
     <script src="{{ Asset::get("/intranet/scripts/novo.js") }} "></script>
     <script src="{{ Asset::get("/intranet/scripts/dom.js") }} "></script>
@@ -78,179 +84,232 @@
     <script src="{{ Asset::get("/intranet/scripts/ied/phpjs.js") }} "></script>
     <script src="{{ Asset::get("/intranet/scripts/jquery/jquery-1.8.3.min.js") }} "></script>
     <script src="{{ Asset::get("/intranet/scripts/jquery/jquery.modal.min.js") }} "></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.1.0/prototype.min.js" integrity="sha512-BfwTGy/vhB1IOMlnxjnHLDQFX9FAidk1uYzXB6JOj9adeMoKlO3Bi3rZGGOrYfCOhBMZggeXTBmmdkfscYOQ/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.1.0/prototype.min.js"
+        integrity="sha512-BfwTGy/vhB1IOMlnxjnHLDQFX9FAidk1uYzXB6JOj9adeMoKlO3Bi3rZGGOrYfCOhBMZggeXTBmmdkfscYOQ/w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ Asset::get("/intranet/scripts/jquery.mask.min.js") }} "></script>
-    <script src='{{ Asset::get('/vendor/legacy/Portabilis/Assets/Javascripts/Frontend/Inputs/SimpleSearch.js') }}'></script>
+    <script
+        src='{{ Asset::get('/vendor/legacy/Portabilis/Assets/Javascripts/Frontend/Inputs/SimpleSearch.js') }}'></script>
     <script src='{{ Asset::get('/vendor/legacy/Portabilis/Assets/Javascripts/Utils.js') }}'></script>
-    <script src='{{ Asset::get('/intranet/scripts/jquery/jquery-ui.min-1.9.2/js/jquery-ui-1.9.2.custom.min.js') }}'></script>
+    <script
+        src='{{ Asset::get('/intranet/scripts/jquery/jquery-ui.min-1.9.2/js/jquery-ui-1.9.2.custom.min.js') }}'></script>
     <script src='{{ Asset::get('/intranet/scripts/summernote/summernote-lite.js') }}'></script>
     <script src='{{ Asset::get('/intranet/scripts/summernote/summernote-pt-BR.js') }}'></script>
 </head>
+
 <body>
 
-@if(!empty($config['app']['gtm']['id']))
-    <!-- Google Tag Manager (noscript) -->
-    <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id={{$config['app']['gtm']['id']}}" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe>
-    </noscript>
-    <!-- End Google Tag Manager (noscript) -->
-@endif
-<div id="DOM_expansivel" class="DOM_expansivel"></div>
-<table class='tabelanum1' id="tablenum1" style="border: 0; padding: 0; border-collapse: collapse;" role="presentation">
-    <tr id="topo" class="topo">
-        <td colspan="2">
-            <header class="ieducar-header">
-                <div class="ieducar-header-logo">
-                    <h1><a href="{{ Asset::get('/') }}">i-Educar</a></h1>
-                </div>
-                <div class="ieducar-header-links">
-                    <div class="dropdown">
-                        <div class="dropbtn">{{ $loggedUser->name }}</div>
-                        <div class="dropdown-content">
-                            <a href="{{ Asset::get('intranet/agenda.php') }}">Agenda</a>
-                            <a href="{{ Asset::get('intranet/meusdados.php') }}">Meus dados</a>
-                            <a href="{{ Asset::get('intranet/logof.php') }}" id="logout">Sair</a>
-                        </div>
+    @if(!empty($config['app']['gtm']['id']))
+        <!-- Google Tag Manager (noscript) -->
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id={{$config['app']['gtm']['id']}}" height="0" width="0"
+                style="display:none;visibility:hidden" title="Google Tag Manager"></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    @endif
+    <div id="DOM_expansivel" class="DOM_expansivel"></div>
+    <table class='tabelanum1' id="tablenum1" style="border: 0; padding: 0; border-collapse: collapse;"
+        role="presentation">
+        <tr id="topo" class="topo">
+            <td colspan="2">
+                <header class="ieducar-header">
+                    <div class="ieducar-header-logo">
+                        <h1><a href="{{ Asset::get('/') }}">i-Educar</a></h1>
                     </div>
-                    <a href="{{ Asset::get('intranet/meusdados.php') }}" class="avatar" title="Meus dados">
-                        <img class="avatar-35" src="{{ session('logged_user_picture') }}" alt="Perfil">
-                    </a>
-                    <div class="dropdown notifications">
-                        <div class="dropbtn notifications">
-                            <img alt="Notificação" src="{{ Asset::get('intranet/imagens/icon-nav-notifications.png') }}">
-                            <span class="notification-balloon"></span>
+                    <div class="ieducar-header-links">
+                        <div class="dropdown">
+                            <div class="dropbtn">{{ $loggedUser->name }}</div>
+                            <div class="dropdown-content">
+                                <a href="{{ Asset::get('intranet/agenda.php') }}">{{ __('Agenda') }}</a>
+                                <a href="{{ Asset::get('intranet/meusdados.php') }}">{{ __('Meus dados') }}</a>
+                                <a href="{{ Asset::get('intranet/logof.php') }}" id="logout">{{ __('Sair') }}</a>
+                                <a href="#" id="reloadPermissionsLink">{{ __('Reload') }}</a>
+
+
+
+                            </div>
                         </div>
-                        <div class="dropdown-content-notifications">
-                            <div class="notifications-bar">
-                                <span> Notificações </span>
-                                <a href="/notificacoes" class="btn-all-notifications">Ver todas</a>
-                                <a class="btn-mark-all-read">Marcar todas como lidas (<span class="not-read-count">0</span>)</a>
+                        <a href="{{ Asset::get('intranet/meusdados.php') }}" class="avatar" title="Meus dados">
+                            <img class="avatar-35" src="{{ session('logged_user_picture') }}" alt="Perfil">
+                        </a>
+                        <div class="dropdown notifications">
+                            <div class="dropbtn notifications">
+                                <img alt="Notificação"
+                                    src="{{ Asset::get('intranet/imagens/icon-nav-notifications.png') }}">
+                                <span class="notification-balloon"></span>
+                            </div>
+                            <div class="dropdown-content-notifications">
+                                <div class="notifications-bar">
+                                    <span> Notificações </span>
+                                    <a href="/notificacoes" class="btn-all-notifications">Ver todas</a>
+                                    <a class="btn-mark-all-read">Marcar todas como lidas (<span
+                                            class="not-read-count">0</span>)</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </header>
-        </td>
-    </tr>
+                </header>
+            </td>
+        </tr>
 
-    <tr>
-        <td colspan="3">
-            <table class='tabelanum2' style="border: 0; padding: 0; border-collapse: collapse;" role="presentation">
-                <tr>
-                    <td id="menu_lateral" class="r3c1" style="width: 170px">
-                        @include('layout.menu')
-                    </td>
+        <tr>
+            <td colspan="3">
+                <table class='tabelanum2' style="border: 0; padding: 0; border-collapse: collapse;" role="presentation">
+                    <tr>
+                        <td id="menu_lateral" class="r3c1" style="width: 170px">
+                            @include('layout.menu')
+                        </td>
 
-                    <td style="vertical-align: top">
-                        <table class='tabelanum2' style="border: 0; padding: 0; border-collapse: collapse; margin: 0" role="presentation">
-                            <tr>
-                                <td>
-                                    @include('layout.topmenu')
-                                </td>
-                            </tr>
+                        <td style="vertical-align: top">
+                            <table class='tabelanum2'
+                                style="border: 0; padding: 0; border-collapse: collapse; margin: 0" role="presentation">
+                                <tr>
+                                    <td>
+                                        @include('layout.topmenu')
+                                    </td>
+                                </tr>
 
-                            <tr>
-                                <td height="100%" id="corpo" style="vertical-align: top">
-                                    <table class='tablelistagem' style="border: 0; width: 100%" role="presentation">
-                                        <tr style="height: 10px">
-                                            <td class='fundoLocalizacao' colspan='2'>
-                                                @include('layout.breadcrumb')
-                                            </td>
-                                        </tr>
-                                    </table>
+                                <tr>
+                                    <td height="100%" id="corpo" style="vertical-align: top">
+                                        <table class='tablelistagem' style="border: 0; width: 100%" role="presentation">
+                                            <tr style="height: 10px">
+                                                <td class='fundoLocalizacao' colspan='2'>
+                                                    @include('layout.breadcrumb')
+                                                </td>
+                                            </tr>
+                                        </table>
 
-                                    @yield('content')
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+                                        @yield('content')
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
 
-    <tr class="rodape">
-        <td colspan="3" style="text-align: center">
-            @include('layout.footer')
-        </td>
-    </tr>
-</table>
+        <tr class="rodape">
+            <td colspan="3" style="text-align: center">
+                @include('layout.footer')
+            </td>
+        </tr>
+    </table>
 
-@include('partials.flash-message')
+    @include('partials.flash-message')
 
-<script type="text/javascript">
-    function go(url) {
-        document.location = url;
-    }
-
-    var goodIE = (document.all) ? 1 : 0;
-    var netscape6 = (document.getElementById && !document.all) ? 1 : 0;
-    var aux = '';
-    var aberto = false;
-
-    function AdicionaItem(chave, item, nome_pai, submete) {
-        var x = document.getElementById(nome_pai);
-
-        opt = document.createElement('OPTION');
-        opt.value = chave;
-        opt.selected = true;
-        opt.appendChild(document.createTextNode(item));
-
-        x.appendChild(opt);
-        if (submete) {
-
-            document.formcadastro.submit();
+    <script type="text/javascript">
+        function go(url) {
+            document.location = url;
         }
-    }
 
-    function excluir() {
-        document.formcadastro.reset();
+        var goodIE = (document.all) ? 1 : 0;
+        var netscape6 = (document.getElementById && !document.all) ? 1 : 0;
+        var aux = '';
+        var aberto = false;
 
-        if (confirm('Excluir registro?')) {
-            document.formcadastro.tipoacao.value = 'Excluir';
-            document.formcadastro.submit();
+        function AdicionaItem(chave, item, nome_pai, submete) {
+            var x = document.getElementById(nome_pai);
+
+            opt = document.createElement('OPTION');
+            opt.value = chave;
+            opt.selected = true;
+            opt.appendChild(document.createTextNode(item));
+
+            x.appendChild(opt);
+            if (submete) {
+
+                document.formcadastro.submit();
+            }
         }
-    }
 
-    function ExcluirImg() {
-        document.formcadastro.reset();
-        if (confirm('Excluir imagem?')) {
-            document.formcadastro.tipoacao.value = 'ExcluirImg';
-            document.formcadastro.submit();
+        function excluir() {
+            document.formcadastro.reset();
+
+            if (confirm('Excluir registro?')) {
+                document.formcadastro.tipoacao.value = 'Excluir';
+                document.formcadastro.submit();
+            }
         }
-    }
 
-    function goOrClose(url) {
-        if (window.opener) {
-            window.close();
-        } else {
-            go(url);
+        function ExcluirImg() {
+            document.formcadastro.reset();
+            if (confirm('Excluir imagem?')) {
+                document.formcadastro.tipoacao.value = 'ExcluirImg';
+                document.formcadastro.submit();
+            }
         }
-    }
-</script>
 
-<script type='text/javascript'>(function ($) {
-    $(document).ready(function () {
-            fixupFieldsWidth();
-            fixAutoComplete()
+        function goOrClose(url) {
+            if (window.opener) {
+                window.close();
+            } else {
+                go(url);
+            }
+        }
+    </script>
+
+    <script type='text/javascript'>(function ($) {
+            $(document).ready(function () {
+                fixupFieldsWidth();
+                fixAutoComplete()
+            });
+        })(jQuery);
+    </script>
+
+    <script src="{{ Asset::get("/intranet/scripts/custom-file-input.js") }}"></script>
+    <script src="{{ Asset::get("/intranet/scripts/select2/select2.full.min.js") }}"></script>
+    <script src="{{ Asset::get("/intranet/scripts/select2/pt-BR.js") }}"></script>
+    <script src="{{ Asset::get("/intranet/scripts/flash-messages.js") }}"></script>
+    <script src="{{ Asset::get("/js/app.js") }}"></script>
+    <script src="{{ Asset::get("/intranet/scripts/notifications.js") }}"></script>
+    <script src="{{ Asset::get("/intranet/scripts/jquery-maxlength/jquery.plugin.min.js") }}"></script>
+    <script src="{{ Asset::get("/intranet/scripts/jquery-maxlength/jquery.maxlength.min.js") }}"></script>
+    <script>
+        getNotifications();
+    </script>
+
+    @include('layout.vue')
+
+    @stack('scripts')
+
+    @stack('end')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const reloadButton = document.getElementById("reloadPermissionsLink");
+            if (reloadButton) {
+                reloadButton.addEventListener("click", function (e) {
+                    e.preventDefault(); // Previne o comportamento padrão de navegação do link
+                    fixarPermissaoERecarregar(); // Chama a função
+                });
+            }
         });
-    })(jQuery);
-</script>
 
-<script src="{{ Asset::get("/intranet/scripts/custom-file-input.js") }}"></script>
-<script src="{{ Asset::get("/intranet/scripts/select2/select2.full.min.js") }}"></script>
-<script src="{{ Asset::get("/intranet/scripts/select2/pt-BR.js") }}"></script>
-<script src="{{ Asset::get("/intranet/scripts/flash-messages.js") }}"></script>
-<script src="{{ Asset::get("/js/app.js") }}"></script>
-<script src="{{ Asset::get("/intranet/scripts/notifications.js") }}"></script>
-<script src="{{ Asset::get("/intranet/scripts/jquery-maxlength/jquery.plugin.min.js") }}"></script>
-<script src="{{ Asset::get("/intranet/scripts/jquery-maxlength/jquery.maxlength.min.js") }}"></script>
+        function fixarPermissaoERecarregar() {
+            fetch("{{ route('fix.log') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name=csrf-token]').content
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Permissões corrigidas com sucesso.");
+                        location.reload(); // Recarrega a página
+                    } else {
+                        alert("Erro: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Erro na requisição:", error);
+                    alert("Erro ao corrigir permissões.");
+                });
+        }
+    </script>
 
-@include('layout.vue')
 
-@stack('scripts')
-
-@stack('end')
 
 </body>
+
 </html>

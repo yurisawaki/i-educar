@@ -26,6 +26,7 @@
         "ankurk91/laravel-eloquent-relationships": "^2.1",
         "aws/aws-sdk-php-laravel": "^3.7",
         "composer/semver": "^3.2",
+        "darkaonline/l5-swagger": "^9.0",
         "dex/composer-plug-and-play": "^0.24",
         "dex/frontier": "^0.15.0",
         "google/recaptcha": "^1.2",
@@ -44,6 +45,8 @@
         "league/flysystem-sftp-v3": "^3.0",
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpspreadsheet": "^1.8",
+        "portabilis/i-educar-library-package": "dev-main",
+        "portabilis/i-educar-transport-package": "dev-main",
         "predis/predis": "^1.1",
         "psr/simple-cache": "^2.0",
         "socialiteproviders/laravelpassport": "^4.3",
@@ -59,6 +62,7 @@
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^8.1",
         "pestphp/pest": "^2.33",
+        "psy/psysh": "^0.12.17",
         "spatie/laravel-ignition": "^2.0",
         "symfony/yaml": "^7.0",
         "uderline/openapi-php-attributes": "^2.1"
@@ -144,5 +148,15 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "ieducar-transport": {
+            "type": "path",
+            "url": "i-educar-transport-package"
+        },
+        "ieducar-library": {
+            "type": "path",
+            "url": "i-educar-library-package"
+        }
+    }
 }

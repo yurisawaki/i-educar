@@ -7,7 +7,7 @@ class EditController extends Core_Controller_Page_EditController
 {
     protected $_dataMapper = 'FormulaMedia_Model_FormulaDataMapper';
 
-    protected $_titulo = 'Cadastro de fórmula de cálculo de média';
+    protected $_titulo;
 
     protected $_processoAp = 948;
 
@@ -17,18 +17,26 @@ class EditController extends Core_Controller_Page_EditController
 
     protected $_deleteOption = true;
 
-    protected $_formMap = [
-        'instituicao' => [
-            'label' => 'Instituição',
-            'help' => '',
-        ],
-        'nome' => [
-            'label' => 'Nome',
-            'help' => '',
-        ],
-        'formulaMedia' => [
-            'label' => 'Fórmula de média final',
-            'help' => 'A fórmula de cálculo.<br />
+    protected $_formMap;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->_titulo = __('Cadastro de fórmula de cálculo de média');
+
+        $this->_formMap = [
+            'instituicao' => [
+                'label' => __('Instituição'),
+                'help' => '',
+            ],
+            'nome' => [
+                'label' => __('Nome'),
+                'help' => '',
+            ],
+            'formulaMedia' => [
+                'label' => __('Fórmula de média final'),
+                'help' => __('A fórmula de cálculo.<br />
                    Variáveis disponíveis:<br />
                    &middot; En - Etapa n (de 1 a 10)<br />
                    &middot; Cn - Considera etapa n (de 1 a 10): 1 - Sim, 0 - Não<br />
@@ -40,37 +48,38 @@ class EditController extends Core_Controller_Page_EditController
                    &middot; RSPMN - Média das etapas ou Média das etapas com Recuperação específica (Pega maior) n (de 1 a 10)<br />
                    Símbolos disponíveis:<br />
                    &middot; (), +, /, *, x<br />
-                   &middot; < > ? :
+                   &middot; < > ? :<br />
                    A variável "Rc" está disponível apenas<br />
-                   quando Tipo de fórmula for "Recuperação".',
-        ],
-        'tipoFormula' => [
-            'label' => 'Tipo de fórmula',
-            'help' => '',
-        ],
-        'substituiMenorNotaRc' => [
-            'label' => 'Substitui menor nota por recuperação ',
-            'help' => 'Substitui menor nota (En) por nota de recuperação (Rc) em ordem descrescente.<br/>
+                   quando Tipo de fórmula for "Recuperação".'),
+            ],
+            'tipoFormula' => [
+                'label' => __('Tipo de fórmula'),
+                'help' => '',
+            ],
+            'substituiMenorNotaRc' => [
+                'label' => __('Substitui menor nota por recuperação'),
+                'help' => __('Substitui menor nota (En) por nota de recuperação (Rc) em ordem descrescente.<br/>
                    Somente substitui quando Rc é maior que En.
                    Ex: E1 = 2, E2 = 3, E3 = 2, Rc = 5.
-                   Na fórmula será considerado: E1 = 2, E2 = 3, E3 = 5, Rc = 5.',
-        ],
-    ];
+                   Na fórmula será considerado: E1 = 2, E2 = 3, E3 = 5, Rc = 5.'),
+            ],
+        ];
+    }
 
     public function _preRender()
     {
         Portabilis_View_Helper_Application::loadJavascript($this, '/vendor/legacy/FormulaMedia/Assets/Javascripts/FormulaMedia.js');
 
-        $nomeMenu = $this->getRequest()->id == null ? 'Cadastrar' : 'Editar';
+        $nomeMenu = $this->getRequest()->id == null ? __('Cadastrar') : __('Editar');
 
-        $this->breadcrumb("$nomeMenu fórmula de média", [
-            url('intranet/educar_index.php') => 'Escola',
-        ]);
+        $this->breadcrumb(
+            "$nomeMenu " . __('fórmula de média'),
+            [
+                url('intranet/educar_index.php') => __('Escola'),
+            ]
+        );
     }
 
-    /**
-     * @see clsCadastro#Gerar()
-     */
     public function Gerar()
     {
         $this->campoOculto('id', $this->getEntity()->id);
@@ -79,7 +88,7 @@ class EditController extends Core_Controller_Page_EditController
         $instituicoes = App_Model_IedFinder::getInstituicoes();
         $this->campoLista(
             'instituicao',
-            $this->_getLabel('instituicao'),
+            $this->_formMap['instituicao']['label'],
             $instituicoes,
             $this->getEntity()->instituicao
         );
@@ -87,51 +96,46 @@ class EditController extends Core_Controller_Page_EditController
         // Nome
         $this->campoTexto(
             'nome',
-            $this->_getLabel('nome'),
+            $this->_formMap['nome']['label'],
             $this->getEntity()->nome,
             40,
             50,
             true,
             false,
             false,
-            $this->_getHelp('nome')
+            $this->_formMap['nome']['help']
         );
 
         // Fórmula de média
         $this->campoTexto(
             'formulaMedia',
-            $this->_getLabel('formulaMedia'),
+            $this->_formMap['formulaMedia']['label'],
             $this->getEntity()->formulaMedia,
             40,
             200,
             true,
             false,
             false,
-            $this->_getHelp('formulaMedia')
+            $this->_formMap['formulaMedia']['help']
         );
 
         // Substitui menor nota
         $this->campoCheck(
             'substituiMenorNotaRc',
-            $this->_getLabel('substituiMenorNotaRc'),
+            $this->_formMap['substituiMenorNotaRc']['label'],
             $this->getEntity()->substituiMenorNotaRc,
             '',
             false,
             false,
             false,
-            $this->_getHelp('substituiMenorNotaRc')
+            $this->_formMap['substituiMenorNotaRc']['help']
         );
-
-        // Fórmula de recuperação
-        /*$this->campoTexto('formulaRecuperacao', $this->_getLabel('formulaRecuperacao'),
-          $this->getEntity()->formulaRecuperacao, 40, 50, TRUE, FALSE, FALSE,
-          $this->_getHelp('formulaRecuperacao'));*/
 
         // Tipo de fórmula
         $tipoFormula = FormulaMedia_Model_TipoFormula::getInstance();
         $this->campoRadio(
             'tipoFormula',
-            $this->_getLabel('tipoFormula'),
+            $this->_formMap['tipoFormula']['label'],
             $tipoFormula->getEnums(),
             $this->getEntity()->get('tipoFormula')
         );
@@ -146,16 +150,10 @@ class EditController extends Core_Controller_Page_EditController
             ->exists();
     }
 
-    /**
-     * Apaga um registro no banco de dados e redireciona para a página indicada
-     * pela opção "delete_success".
-     *
-     * @see clsCadastro::Excluir()
-     */
     public function Excluir()
     {
         if ($this->usedInExamRule()) {
-            $this->mensagem = 'Não foi possível excluir a fórmula de cálculo de média, pois a mesma possui vínculo com regras de avaliação.';
+            $this->mensagem = __('Não foi possível excluir a fórmula de cálculo de média, pois a mesma possui vínculo com regras de avaliação.');
 
             return false;
         }
@@ -171,16 +169,6 @@ class EditController extends Core_Controller_Page_EditController
         return true;
     }
 
-    /**
-     * Implementa uma rotina de criação ou atualização de registro padrão para
-     * uma instância de CoreExt_Entity que use um campo identidade.
-     *
-     * @return bool
-     *
-     * @todo Atualizar todas as Exception de CoreExt_Validate, para poder ter
-     *   certeza que o erro ocorrido foi gerado de alguma camada diferente, como
-     *   a de conexão com o banco de dados.
-     */
     protected function _save()
     {
         $data = [];
@@ -191,12 +179,10 @@ class EditController extends Core_Controller_Page_EditController
             }
         }
 
-        // fixup for checkbox nota geral
         if (!isset($data['substituiMenorNotaRc'])) {
             $data['substituiMenorNotaRc'] = '0';
         }
 
-        // Verifica pela existência do field identity
         if (isset($this->getRequest()->id) && $this->getRequest()->id > 0) {
             $entity = $this->setEntity($this->getDataMapper()->find($this->getRequest()->id));
         }
@@ -212,8 +198,7 @@ class EditController extends Core_Controller_Page_EditController
 
             return true;
         } catch (Exception) {
-            // TODO: ver @todo do docblock
-            $this->mensagem = 'Erro no preenchimento do formulário. ';
+            $this->mensagem = __('Erro no preenchimento do formulário.');
 
             return false;
         }

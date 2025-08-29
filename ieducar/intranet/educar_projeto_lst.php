@@ -2,8 +2,7 @@
 
 use App\Models\LegacyProject;
 
-return new class extends clsListagem
-{
+return new class extends clsListagem {
     /**
      * Referencia pega da session para o idpes do usuario atual
      *
@@ -40,18 +39,24 @@ return new class extends clsListagem
 
     public function Gerar()
     {
-        $this->titulo = 'Projetos - Listagem';
+        $this->titulo = __('Projetos - Listagem');
 
         foreach ($_GET as $var => $val) {
             $this->$var = ($val === '') ? null : $val;
         }
 
         $this->addCabecalhos(coluna: [
-            'Nome do projeto',
-            'Observação',
+            __('Nome do projeto'),
+            __('Observação'),
         ]);
 
-        $this->campoTexto(nome: 'nome', campo: 'Nome do projeto', valor: $this->nome, tamanhovisivel: 30, tamanhomaximo: 255);
+        $this->campoTexto(
+            nome: 'nome',
+            campo: __('Nome do projeto'),
+            valor: $this->nome,
+            tamanhovisivel: 30,
+            tamanhomaximo: 255
+        );
 
         // Paginador
         $this->limite = 20;
@@ -73,32 +78,49 @@ return new class extends clsListagem
         if (is_array(value: $lista) && count(value: $lista)) {
             foreach ($lista as $registro) {
                 $this->addLinhas(linha: [
-                    "<a href=\"educar_projeto_det.php?cod_projeto={$registro['cod_projeto']}\">{$registro['nome']}</a>",
-                    "<a href=\"educar_projeto_det.php?cod_projeto={$registro['cod_projeto']}\">{$registro['observacao']}</a>",
+                    "<a href=\"educar_projeto_det.php?cod_projeto={$registro['cod_projeto']}\">" . __($registro['nome']) . "</a>",
+                    "<a href=\"educar_projeto_det.php?cod_projeto={$registro['cod_projeto']}\">" . __($registro['observacao']) . "</a>",
                 ]);
             }
         }
-        $this->addPaginador2(strUrl: 'educar_projeto_lst.php', intTotalRegistros: $total, mixVariaveisMantidas: $_GET, nome: null, intResultadosPorPagina: $this->limite);
+
+        $this->addPaginador2(
+            strUrl: 'educar_projeto_lst.php',
+            intTotalRegistros: $total,
+            mixVariaveisMantidas: $_GET,
+            nome: null,
+            intResultadosPorPagina: $this->limite
+        );
 
         // ** Verificacao de permissao para cadastro
         $obj_permissao = new clsPermissoes;
 
-        if ($obj_permissao->permissao_cadastra(int_processo_ap: 21250, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 3)) {
+        if (
+            $obj_permissao->permissao_cadastra(
+                int_processo_ap: 21250,
+                int_idpes_usuario: $this->pessoa_logada,
+                int_soma_nivel_acesso: 3
+            )
+        ) {
             $this->acao = 'go("educar_projeto_cad.php")';
-            $this->nome_acao = 'Novo';
+            $this->nome_acao = __('Novo');
         }
         // **
 
         $this->largura = '100%';
 
-        $this->breadcrumb(currentPage: 'Listagem de projetos', breadcrumbs: [
-            url(path: 'intranet/educar_index.php') => 'Escola',
-        ]);
+        $this->breadcrumb(
+            currentPage: __('Listagem de projetos'),
+            breadcrumbs: [
+                url(path: 'intranet/educar_index.php') => __('Escola'),
+            ]
+        );
     }
 
     public function Formular()
     {
-        $this->title = 'Projeto';
+        $this->title = __('Projeto');
         $this->processoAp = '21250';
+
     }
 };

@@ -27,6 +27,6 @@ class Portabilis_View_Helper_Input_Resource_SimpleSearchEmpresa extends Portabil
 
     protected function inputPlaceholder($inputOptions)
     {
-        return 'Informe o código ou nome da empresa';
+        return __('Informe o código ou nome da empresa');
     }
 }

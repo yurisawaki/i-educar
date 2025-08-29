@@ -9,8 +9,7 @@ use App\Services\iDiarioService;
 use App\Services\SchoolLevelsService;
 use Illuminate\Support\Arr;
 
-return new class extends clsCadastro
-{
+return new class extends clsCadastro {
     public $ref_cod_escola_;
 
     public $ref_cod_serie;
@@ -202,9 +201,9 @@ return new class extends clsCadastro
             'required' => true,
             'size' => 50,
             'options' => [
-                'values' => $this->anos_letivos,
-                'all_values' => $this->getAnosLetivosDisponiveis(),
-            ],
+                    'values' => $this->anos_letivos,
+                    'all_values' => $this->getAnosLetivosDisponiveis(),
+                ],
         ];
         $this->inputsHelper()->multipleSearchCustom(attrName: '', inputOptions: $options, helperOptions: $helperOptions);
 
@@ -757,8 +756,8 @@ return new class extends clsCadastro
             foreach ($analise['inserir'] as $insert) {
                 $anos = $insert['anos_letivos'] ?? [];
                 $componente = Portabilis_Utils_Database::fetchPreparedQuery(
-                    sql: 'SELECT nome FROM modules.componente_curricular WHERE id = $1',
-                    options: ['params' => [(int) $insert['ref_cod_disciplina']]]
+                sql: 'SELECT nome FROM modules.componente_curricular WHERE id = $1',
+                options: ['params' => [(int) $insert['ref_cod_disciplina']]]
                 )[0]['nome'];
 
                 foreach ($anos as $ano) {
@@ -769,11 +768,13 @@ return new class extends clsCadastro
                             AND componente_curricular_id = $1
                             AND ano_escolar_id = $2
                             AND $3 = ANY(anos_letivos)
-                    ', options: ['params' => [
-                        (int) $insert['ref_cod_disciplina'],
-                        $this->ref_cod_serie,
-                        $ano,
-                    ]]);
+                    ', options: [
+                        'params' => [
+                            (int) $insert['ref_cod_disciplina'],
+                            $this->ref_cod_serie,
+                            $ano,
+                        ]
+                    ]);
 
                     $count = (int) $info[0]['count'] ?? 0;
 
@@ -803,11 +804,13 @@ return new class extends clsCadastro
                         AND cct.escola_id = $3
                         AND t.ativo = 1
                     GROUP BY cc.nome
-                ', options: ['params' => [
-                    (int) $componenteId,
-                    $this->ref_cod_serie,
-                    $this->ref_cod_escola,
-                ]]);
+                ', options: [
+                    'params' => [
+                        (int) $componenteId,
+                        $this->ref_cod_serie,
+                        $this->ref_cod_escola,
+                    ]
+                ]);
 
                 $count = (int) $info[0]['count'] ?? 0;
 
@@ -856,8 +859,8 @@ return new class extends clsCadastro
 
                 if (!empty($update['anos_letivos_acrescentar'])) {
                     $componente = Portabilis_Utils_Database::fetchPreparedQuery(
-                        sql: 'SELECT nome FROM modules.componente_curricular WHERE id = $1',
-                        options: ['params' => [(int) $update['ref_cod_disciplina']]]
+                    sql: 'SELECT nome FROM modules.componente_curricular WHERE id = $1',
+                    options: ['params' => [(int) $update['ref_cod_disciplina']]]
                     )[0]['nome'];
 
                     foreach ($update['anos_letivos_acrescentar'] as $ano) {
@@ -868,11 +871,13 @@ return new class extends clsCadastro
                                 AND componente_curricular_id = $1
                                 AND ano_escolar_id = $2
                                 AND $3 = ANY(anos_letivos)
-                        ', options: ['params' => [
-                            (int) $update['ref_cod_disciplina'],
-                            $this->ref_cod_serie,
-                            $ano,
-                        ]]);
+                        ', options: [
+                            'params' => [
+                                (int) $update['ref_cod_disciplina'],
+                                $this->ref_cod_serie,
+                                $ano,
+                            ]
+                        ]);
 
                         $count = (int) $info[0]['count'] ?? 0;
 

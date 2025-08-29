@@ -1,0 +1,7 @@
+tree e26a6c301339507ba7d3ec96a136096f237665e2
+parent 6ad11724f33002aaeb6da93532edc3e7925207ab
+author Caroline <carolinesalibc@gmail.com> 1468002275 -0300
+committer Caroline <carolinesalibc@gmail.com> 1468002275 -0300
+
+Ajustado validação dos campos 18 ao 26 do registro 30;
+Refs #1071

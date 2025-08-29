@@ -2,34 +2,13 @@
 
 use App\Models\LegacyBenefit;
 
-return new class extends clsListagem
-{
-    /**
-     * Referencia pega da session para o idpes do usuario atual
-     *
-     * @var int
-     */
+return new class extends clsListagem {
     public $pessoa_logada;
 
-    /**
-     * Titulo no topo da pagina
-     *
-     * @var int
-     */
     public $titulo;
 
-    /**
-     * Quantidade de registros a ser apresentada em cada pagina
-     *
-     * @var int
-     */
     public $limite;
 
-    /**
-     * Inicio dos registros a serem exibidos (limit)
-     *
-     * @var int
-     */
     public $offset;
 
     public $cod_aluno_beneficio;
@@ -50,18 +29,25 @@ return new class extends clsListagem
 
     public function Gerar()
     {
-        $this->titulo = 'Benefício Aluno - Listagem';
+        $this->titulo = __('Benefício Aluno - Listagem');
 
-        foreach ($_GET as $var => $val) { // passa todos os valores obtidos no GET para atributos do objeto
+        foreach ($_GET as $var => $val) {
             $this->$var = ($val === '') ? null : $val;
         }
 
         $this->addCabecalhos(coluna: [
-            'Beneficio',
+            __('Benefício'),
         ]);
 
         // outros Filtros
-        $this->campoTexto(nome: 'nm_beneficio', campo: 'Benefício', valor: $this->nm_beneficio, tamanhovisivel: 30, tamanhomaximo: 255, obrigatorio: false);
+        $this->campoTexto(
+            nome: 'nm_beneficio',
+            campo: __('Benefício'),
+            valor: $this->nm_beneficio,
+            tamanhovisivel: 30,
+            tamanhomaximo: 255,
+            obrigatorio: false
+        );
 
         // Paginador
         $this->limite = 20;
@@ -75,12 +61,11 @@ return new class extends clsListagem
             $query->where(column: 'nm_beneficio', operator: 'ilike', value: '%' . $this->nm_beneficio . '%');
         }
 
-        $result = $query->paginate(perPage: $this->limite, pageName: 'pagina_'.$this->nome);
+        $result = $query->paginate(perPage: $this->limite, pageName: 'pagina_' . $this->nome);
 
         $lista = $result->items();
         $total = $result->total();
 
-        // monta a lista
         if (is_array(value: $lista) && count(value: $lista)) {
             foreach ($lista as $registro) {
                 $this->addLinhas(linha: [
@@ -88,25 +73,38 @@ return new class extends clsListagem
                 ]);
             }
         }
-        $this->addPaginador2(strUrl: 'educar_aluno_beneficio_lst.php', intTotalRegistros: $total, mixVariaveisMantidas: $_GET, nome: $this->nome, intResultadosPorPagina: $this->limite);
+
+        $this->addPaginador2(
+            strUrl: 'educar_aluno_beneficio_lst.php',
+            intTotalRegistros: $total,
+            mixVariaveisMantidas: $_GET,
+            nome: $this->nome,
+            intResultadosPorPagina: $this->limite
+        );
 
         $obj_permissao = new clsPermissoes;
 
-        if ($obj_permissao->permissao_cadastra(int_processo_ap: 581, int_idpes_usuario: $this->pessoa_logada, int_soma_nivel_acesso: 3)) {
+        if (
+            $obj_permissao->permissao_cadastra(
+                int_processo_ap: 581,
+                int_idpes_usuario: $this->pessoa_logada,
+                int_soma_nivel_acesso: 3
+            )
+        ) {
             $this->acao = 'go("educar_aluno_beneficio_cad.php")';
-            $this->nome_acao = 'Novo';
+            $this->nome_acao = __('Novo');
         }
 
         $this->largura = '100%';
 
-        $this->breadcrumb(currentPage: 'Tipos de benefício do aluno', breadcrumbs: [
-            url(path: 'intranet/educar_index.php') => 'Escola',
+        $this->breadcrumb(currentPage: __('Tipos de benefício do aluno'), breadcrumbs: [
+            url(path: 'intranet/educar_index.php') => __('Escola'),
         ]);
     }
 
     public function Formular()
     {
-        $this->title = 'Benefício do aluno';
+        $this->title = __('Benefício do aluno');
         $this->processoAp = '581';
     }
 };

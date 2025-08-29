@@ -11,6 +11,12 @@ use App\Http\Middleware\AnnouncementMiddleware;
 use App\Process;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CoordenadaController;
+use App\Http\Controllers\FixController;
+use App\Http\Controllers\MapController;
+use App\Http\Controllers\FotoController;
+use Illuminate\Support\Facades\DB;
+
 
 Auth::routes(['register' => false]);
 
@@ -181,6 +187,29 @@ Route::group(['middleware' => ['ieducar.navigation', 'ieducar.footer', 'ieducar.
         ->name('enrollments.promotion');
 
     Route::fallback([WebController::class, 'fallback']);
+
+    Route::get('/googlemap', 'App\Http\Controllers\MapController@googlemap')->name('googlemap');
+
+    Route::get('/osmmap', [MapController::class, 'osmmap'])->name('osmmap');
+
+    Route::get('/itinerario/mapa-osm', [CoordenadaController::class, 'mapaItinerarioOsm']);
+
+
+
+    Route::post('/coordenadas', [CoordenadaController::class, 'store'])->name('coordenadas.store');
+
+    Route::get('/itinerario/mapa', [App\Http\Controllers\CoordenadaController::class, 'mapaItinerario'])->name('itinerario.mapa');
+
+    // Em routes/web.php
+    Route::post('/fix-log-permission', [FixController::class, 'fixLogPermission'])->name('fix.log');
+
+
+
+    Route::post('/upload-foto', [FotoController::class, 'upload']);
+
+
+
+
 });
 
 Route::get('/auth/redirect', SocialiteRedirectController::class)->name('socialite.redirect');

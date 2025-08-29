@@ -2,8 +2,7 @@
 
 use App\Models\LegacyRole;
 
-return new class extends clsDetalhe
-{
+return new class extends clsDetalhe {
     /**
      * Titulo no topo da pagina
      *
@@ -33,7 +32,7 @@ return new class extends clsDetalhe
 
     public function Gerar()
     {
-        $this->titulo = 'Função - Detalhe';
+        $this->titulo = __('Função - Detalhe');
 
         $this->cod_funcao = $_GET['cod_funcao'];
         $this->ref_cod_instituicao = $_GET['ref_cod_instituicao'];
@@ -45,27 +44,29 @@ return new class extends clsDetalhe
 
         $obj_permissoes = new clsPermissoes;
         $nivel_usuario = $obj_permissoes->nivel_acesso($this->pessoa_logada);
+
         if ($nivel_usuario == 1) {
             if ($registro['ref_cod_instituicao']) {
-                $this->addDetalhe(['Instituição', "{$registro['ref_cod_instituicao']}"]);
+                $this->addDetalhe([__('Instituição'), "{$registro['ref_cod_instituicao']}"]);
             }
         }
         if ($registro['cod_funcao']) {
-            $this->addDetalhe(['Funcão', "{$registro['cod_funcao']}"]);
+            $this->addDetalhe([__('Função'), "{$registro['cod_funcao']}"]);
         }
         if ($registro['nm_funcao']) {
-            $this->addDetalhe(['Nome Funcão', "{$registro['nm_funcao']}"]);
+            $this->addDetalhe([__('Nome Função'), "{$registro['nm_funcao']}"]);
         }
         if ($registro['abreviatura']) {
-            $this->addDetalhe(['Abreviatura', "{$registro['abreviatura']}"]);
+            $this->addDetalhe([__('Abreviatura'), "{$registro['abreviatura']}"]);
         }
 
-        $opcoes = ['1' => 'Sim',
-            '0' => 'Não',
+        $opcoes = [
+            '1' => __('Sim'),
+            '0' => __('Não'),
         ];
 
         if (is_numeric($registro['professor'])) {
-            $this->addDetalhe(['Professor', "{$opcoes[$registro['professor']]}"]);
+            $this->addDetalhe([__('Professor'), "{$opcoes[$registro['professor']]}"]);
         }
 
         if ($obj_permissoes->permissao_cadastra(634, $this->pessoa_logada, 3)) {
@@ -76,14 +77,14 @@ return new class extends clsDetalhe
         $this->url_cancelar = 'educar_funcao_lst.php';
         $this->largura = '100%';
 
-        $this->breadcrumb('Detalhe da função', [
-            url('intranet/educar_servidores_index.php') => 'Servidores',
+        $this->breadcrumb(__('Detalhe da função'), [
+            url('intranet/educar_servidores_index.php') => __('Servidores'),
         ]);
     }
 
     public function Formular()
     {
-        $this->title = 'Servidores -  Funções do servidor';
+        $this->title = __('Servidores - Funções do servidor');
         $this->processoAp = '634';
     }
 };
